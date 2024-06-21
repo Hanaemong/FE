@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Hana-Heavy";
+  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Heavy.otf")
+      format("opentype"),
+    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Heavy.ttf")
+      format("truetype");
+}
+
+@font-face {
+  font-family: "Hana-Bold";
+  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Bold.otf")
+      format("opentype"),
+    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Bold.ttf")
+      format("truetype");
+}
+
+@font-face {
+  font-family: "Hana-CM";
+  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-CM.otf")
+      format("opentype"),
+    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-CM.ttf")
+      format("truetype");
+}
+
+@font-face {
+  font-family: "Hana-Medium";
+  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Medium.otf")
+      format("opentype"),
+    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Medium.ttf")
+      format("truetype");
+}
+
+@font-face {
+  font-family: "Hana-Regular";
+  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Regular.otf")
+      format("opentype"),
+    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Regular.ttf")
+      format("truetype");
+}
+
+@font-face {
+  font-family: "Hana-Light";
+  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Light.otf")
+      format("opentype"),
+    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Light.ttf")
+      format("truetype");
+}
+
+html,
+body {
+  margin: 0 auto;
+  padding: 0;
+  font-size: 10px;
+  max-width: 500px;
+  background-color: #e4e4e4;
+  min-height: 100vh;
+}
+#root {
+  margin: 0;
+  box-sizing: border-box;
+  max-width: 500px;
+  background-color: #f2f2f2;
+  min-height: 100vh;
+}
+li {
+  list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+input {
+  outline: none;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#news-list::-webkit-scrollbar {
+  display: none;
+}
+
+b {
+  font-family: "Hana-Bold";
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>하나링크</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        // Register a service worker hosted at the root of the
+        // site using the default scope.
+        navigator.serviceWorker
+          .register("/sw.js")
+          .then((registration) => {
+            console.log("Service worker registration succeeded:", registration);
+          })
+          .catch((err) => {
+            console.log("Service worker registration failed:", err);
+          });
+      } else {
+        console.log("Service workers are not supported.");
+      }
+
+      let defferedPrompt;
+      //설치 가능한지 확인
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        defferedPrompt = e;
+      });
+
+      // 특정 버튼 클릭 시에 앱 설치
+      btn.addEventListener("click", (e) => {
+        defferedPrompt.prompt();
+        defferedPrompt.userChoice.then((res) => {
+          if (res === "accepted") {
+            console.log("The app has been installed");
+          }
+          defferedPromts = null;
+        });
+      });
+    </script>
+  </body>
+</html>
