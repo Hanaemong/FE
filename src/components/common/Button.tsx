@@ -6,7 +6,7 @@ interface Iprops {
   isActive?: boolean;
 }
 
-export const Button: FC<Iprops> = ({ text, onClick, isActive }) => {
+const Button: FC<Iprops> = ({ text, onClick, isActive }) => {
   const clickHandler = () => {
     if (isActive == null || isActive) {
       onClick();
@@ -24,3 +24,5 @@ export const Button: FC<Iprops> = ({ text, onClick, isActive }) => {
     </div>
   );
 };
+
+export default Button;
