@@ -33,11 +33,11 @@ export default {
         hanaPink: "#DE3BBA",
       },
     },
-    //   minHeight: {
-    //     'real-screen': 'calc(100vh - 100px)',
-    //     'real-screen2': 'calc(100vh - 50px)',
-    //     'real-screen3': 'calc(100vh - 150px)',
-    //   },
+    minHeight: {
+      "real-screen": "calc(100vh - 100px)",
+      //     'real-screen2': 'calc(100vh - 50px)',
+      //     'real-screen3': 'calc(100vh - 150px)',
+    },
   },
   plugins: [],
 };
