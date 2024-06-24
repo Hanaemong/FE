@@ -13,7 +13,7 @@ const Navbar = () => {
       <div className="min-h-real-screen">
         <Outlet />
       </div>
-      <div className="sticky w-full bottom-0 z-20 flex items-end text-2xl max-w-[500px] h-[150px]">
+      <div className="sticky w-full bottom-0 z-20 flex items-end text-2xl max-w-[500px] h-[75px]">
         <div className="flex flex-row  w-full justify-around gap-20 items-center bg-white drop-shadow-xl py-4 px-7">
           <div
             className={`flex flex-col justify-center items-center text-3xl font-hanaCM ${
