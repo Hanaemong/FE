@@ -30,6 +30,7 @@ export default {
         hanaLightMint: "#C3EBEA",
         hanaBlue: "#3F99CB",
         hanaGray: "#F5F6FA",
+        hanaPink: "#DE3BBA",
       },
     },
     minHeight: {
