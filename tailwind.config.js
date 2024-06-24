@@ -32,6 +32,10 @@ export default {
         hanaGray: "#F5F6FA",
         hanaPink: "#DE3BBA",
       },
+      backgroundImage: {
+        "custom-gradient":
+          "linear-gradient(to bottom right, #3bbfb2 5%, #5cbbd9 33%, #884cc5 70%, #de3bba 99%)",
+      },
     },
     minHeight: {
       "real-screen": "calc(100vh - 100px)",
