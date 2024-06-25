@@ -3,8 +3,11 @@ import { PiMegaphone } from "react-icons/pi";
 import { CategoryItem, TeamItem } from "../../components";
 import categories from "../../utils/categories";
 import { GoPlus } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="relative min-h-real-screen bg-hanaGray">
       <div className="flex flex-col gap-4">
@@ -72,9 +75,12 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="sticky flex bottom-0 right-0">
-        <div className="flex w-28 h-28 bg-custom-gradient rounded-full justify-center items-center">
-          <GoPlus color="ffffff" size={50} />
+      <div className="fixed flex bottom-36 right-10">
+        <div
+          className="flex w-20 h-20 bg-custom-gradient rounded-full justify-center items-center"
+          onClick={() => navigate("/createTeam")}
+        >
+          <GoPlus color="ffffff" size={40} />
         </div>
       </div>
     </section>
