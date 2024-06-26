@@ -16,7 +16,7 @@ const Navbar = () => {
       <div className="sticky w-full bottom-0 z-20 flex items-end text-2xl max-w-[500px] h-[75px]">
         <div className="flex flex-row  w-full justify-around gap-20 items-center bg-white drop-shadow-xl py-4 px-7">
           <div
-            className={`flex flex-col justify-center items-center text-3xl font-hanaCM ${
+            className={`flex flex-col justify-center items-center text-3xl font-hanaRegular ${
               selected == 1 && "text-hanaPurple"
             }`}
             onClick={() => setSelected(1)}
@@ -27,7 +27,7 @@ const Navbar = () => {
             <p>홈</p>
           </div>
           <div
-            className={`flex flex-col justify-center items-center text-3xl font-hanaCM ${
+            className={`flex flex-col justify-center items-center text-3xl font-hanaRegular ${
               selected == 2 && "text-hanaPurple"
             }`}
             onClick={() => setSelected(2)}
@@ -38,7 +38,7 @@ const Navbar = () => {
             <p>알림</p>
           </div>
           <div
-            className={`flex flex-col justify-center items-center text-3xl font-hanaCM ${
+            className={`flex flex-col justify-center items-center text-3xl font-hanaRegular ${
               selected == 3 && "text-hanaPurple"
             }`}
             onClick={() => setSelected(3)}
@@ -49,8 +49,8 @@ const Navbar = () => {
             <p>채팅</p>
           </div>
           <div
-            className={`flex flex-col justify-center items-center text-3xl font-hanaCM ${
-              selected == 4 && "text-hanaPurple"
+            className={`flex flex-col justify-center items-center text-3xl font-hanaRegular ${
+              selected == 4 && "text-hanaPurple "
             }`}
             onClick={() => setSelected(4)}
           >

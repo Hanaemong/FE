@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{html,ts,tsx}"],
-  safelist: ["bg-[#EBEBEB]", "bg-[#9E9E9E]"],
+  safelist: ["bg-[#EBEBEB]", "bg-[#9E9E9E]", "bg-[#A0A0A0]"],
   theme: {
     fontFamily: {
       hanaHeavy: ["Hana-Heavy"],
@@ -34,5 +34,5 @@ export default {
       "real-screen3": "calc(100vh - 125px)",
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };

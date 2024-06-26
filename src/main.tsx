@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Hello } from "./pages/hello.tsx";
-import { Home, Join } from "./pages/index.ts";
+import { Home, Join, Search } from "./pages/index.ts";
 import { Navbar } from "./components/index.ts";
 
 const router = createBrowserRouter([
@@ -14,12 +14,10 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Hello /> },
       { path: "join", element: <Join /> },
+      { path: "search", element: <Search /> },
       {
         element: <Navbar />,
-        children: [
-          { path: "hello", element: <Hello /> },
-          { path: "home", element: <Home /> },
-        ],
+        children: [{ path: "home", element: <Home /> }],
       },
     ],
   },
