@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
-import { Button, Topbar } from "../../components";
+import { Button, SelectAccount, Topbar } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { GoPerson, GoPlus } from "react-icons/go";
 import { SlPicture } from "react-icons/sl";
+import { HiOutlineExclamationCircle } from "react-icons/hi2";
 
 const CreateTeam = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const CreateTeam = () => {
     image: "sports",
   });
   const [memberText, setMemberText] = useState<string>("");
+  const [account, setAccount] = useState<string>("");
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const nameRef = useRef<HTMLInputElement | null>(null);
@@ -20,8 +22,12 @@ const CreateTeam = () => {
   const memberRef = useRef<HTMLInputElement | null>(null);
 
   const stepHandler = () => {
-    if (step === 1) {
-      setStep(2);
+    if (step === 1 || step === 2) {
+      setIsActive(false);
+      setStep(step + 1);
+    } else if (step === 3) {
+      // 모임 개설 api request
+      navigate("/home");
     }
   };
 
@@ -52,7 +58,8 @@ const CreateTeam = () => {
   const checkStep1Value = () => {
     if (
       nameRef.current!.value.length === 0 ||
-      descRef.current!.value.length === 0
+      descRef.current!.value.length === 0 ||
+      memberRef.current!.value.length === 0
     ) {
       setIsActive(false);
       return;
@@ -74,7 +81,7 @@ const CreateTeam = () => {
                 <img
                   src={`/img/${category.image}.png`}
                   alt="image"
-                  className="w-12 h-12"
+                  className="w-10 h-10"
                 />
               </div>
               <input
@@ -135,6 +142,34 @@ const CreateTeam = () => {
                 </div>
               </div>
             </div>
+          </div>
+        )}
+        {/* 2 페이지 */}
+        {step === 2 && (
+          <div className="flex flex-col px-10">
+            <p className="font-hanaRegular text-3xl my-14">
+              어떤 계좌로 시작할까요?
+            </p>
+            <SelectAccount
+              onClick={() => {
+                alert("모달이 뜰거예요");
+                setIsActive(true);
+              }}
+              account={account}
+            />
+            <div className="mt-4 flex flex-row gap-3 items-center">
+              <HiOutlineExclamationCircle size={20} color="#FF0000" />
+              <p className="font-hanaRegular text-xl">
+                한 모임당 하나의 계좌만 등록할 수 있어요.
+              </p>
+            </div>
+          </div>
+        )}
+        {/* 3 페이지 */}
+        {step === 3 && (
+          // confirm component 사용
+          <div>
+            <div></div>
           </div>
         )}
         <div className="flex flex-row justify-center mb-7">
