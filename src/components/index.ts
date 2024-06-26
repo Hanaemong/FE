@@ -7,3 +7,4 @@ export { default as SearchCard } from "./team/SearchCard";
 export { default as HistroyItem } from "./team/HistoryItem";
 export { default as CategoryCard } from "./team/CategoryCard";
 export { default as SelectAccount } from "./account/SelectAccount";
+export { default as AlarmItem } from "./alarm/AlarmItem";
