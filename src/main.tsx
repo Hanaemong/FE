@@ -3,9 +3,9 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Navbar from "./components/common/Navbar.tsx";
 import { Hello } from "./pages/hello.tsx";
-import { Join } from "./pages/index.ts";
+import { Home, Join, Search } from "./pages/index.ts";
+import { Navbar } from "./components/index.ts";
 
 const router = createBrowserRouter([
   {
@@ -14,9 +14,10 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Hello /> },
       { path: "join", element: <Join /> },
+      { path: "search", element: <Search /> },
       {
         element: <Navbar />,
-        children: [{ path: "hello", element: <Hello /> }],
+        children: [{ path: "home", element: <Home /> }],
       },
     ],
   },
