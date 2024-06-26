@@ -1,7 +1,6 @@
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { PiMegaphone } from "react-icons/pi";
-import { CategoryItem, TeamItem } from "../../components";
-import categories from "../../utils/categories";
+import { CategoryCard, TeamItem } from "../../components";
 import { GoPlus } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
@@ -47,14 +46,7 @@ const Home = () => {
         <div className="flex flex-col p-7 gap-7">
           {/* 카테고리 영역 */}
           <div className="w-full h-72 rounded-3xl bg-white grid grid-cols-4 gap-2 p-7">
-            {categories.map((item, index) => (
-              <CategoryItem
-                key={index}
-                name={item.name}
-                image={item.image}
-                onClick={onClickCategory}
-              />
-            ))}
+            <CategoryCard onClick={onClickCategory} />
           </div>
           {/* 체인 등급이 높은 모임 */}
           <div className="w-full px-7 py-12 flex flex-col gap-4 bg-white rounded-3xl">
@@ -97,7 +89,7 @@ const Home = () => {
       <div className="fixed flex bottom-36 right-10">
         <div
           className="flex w-20 h-20 bg-custom-gradient rounded-full justify-center items-center"
-          onClick={() => navigate("/createTeam")}
+          onClick={() => navigate("/create-team")}
         >
           <GoPlus color="ffffff" size={40} />
         </div>

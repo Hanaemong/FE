@@ -21,7 +21,7 @@ const Navbar = () => {
             }`}
             onClick={() => setSelected(1)}
           >
-            <Link to="#">
+            <Link to="/home">
               <LiaHomeSolid size={30} />
             </Link>
             <p>홈</p>

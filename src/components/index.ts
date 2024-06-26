@@ -5,3 +5,4 @@ export { default as CategoryItem } from "./team/CategoryItem";
 export { default as TeamItem } from "./team/TeamItem";
 export { default as SearchCard } from "./team/SearchCard";
 export { default as HistroyItem } from "./team/HistoryItem";
+export { default as CategoryCard } from "./team/CategoryCard";
