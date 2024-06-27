@@ -20,6 +20,8 @@ export default {
         hanaGray: "#F5F6FA",
         hanaPink: "#DE3BBA",
         hanaSilver: "#DED6E0",
+        hanaGray2: "#EBEBEB",
+        hanaSilver2: "#9E9E9E",
       },
       backgroundImage: {
         "custom-gradient":
