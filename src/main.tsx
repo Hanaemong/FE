@@ -6,6 +6,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Hello } from "./pages/hello.tsx";
 import {
   Alarm,
+  ChatList,
+  ChatRoom,
   CreateTeam,
   Home,
   Join,
@@ -26,11 +28,13 @@ const router = createBrowserRouter([
       { path: "create-team", element: <CreateTeam /> },
       { path: "survey", element: <Survey /> },
       { path: "login", element: <Login /> },
+      { path: "chat-room", element: <ChatRoom /> },
       {
         element: <Navbar />,
         children: [
           { path: "home", element: <Home /> },
           { path: "alarm", element: <Alarm /> },
+          { path: "chats", element: <ChatList /> },
         ],
       },
     ],
