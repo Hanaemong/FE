@@ -4,9 +4,16 @@ import App from "./App.tsx";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Hello } from "./pages/hello.tsx";
-import { CreateTeam, Home, Join, Search } from "./pages/index.ts";
+import {
+  Alarm,
+  CreateTeam,
+  Home,
+  Join,
+  Login,
+  Search,
+  Survey,
+} from "./pages/index.ts";
 import { Navbar } from "./components/index.ts";
-import Login from "./pages/auth/Login.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,10 +24,14 @@ const router = createBrowserRouter([
       { path: "join", element: <Join /> },
       { path: "search", element: <Search /> },
       { path: "create-team", element: <CreateTeam /> },
+      { path: "survey", element: <Survey /> },
       { path: "login", element: <Login /> },
       {
         element: <Navbar />,
-        children: [{ path: "home", element: <Home /> }],
+        children: [
+          { path: "home", element: <Home /> },
+          { path: "alarm", element: <Alarm /> },
+        ],
       },
     ],
   },
