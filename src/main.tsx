@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Hello } from "./pages/hello.tsx";
 import { Home, Join, Search } from "./pages/index.ts";
 import { Navbar } from "./components/index.ts";
+import Login from "./pages/auth/Login.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       { index: true, element: <Hello /> },
       { path: "join", element: <Join /> },
       { path: "search", element: <Search /> },
+      { path: "login", element: <Login /> },
       {
         element: <Navbar />,
         children: [{ path: "home", element: <Home /> }],

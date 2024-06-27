@@ -2,18 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .bg-custom-gradient {
-    background-image: linear-gradient(
-      to bottom right,
-      #3bbfb2 5%,
-      #5cbbd9 33%,
-      #884cc5 70%,
-      #de3bba 99%
-    );
-  }
-}
-
 @font-face {
   font-family: "Hana-Heavy";
   src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Heavy.otf")

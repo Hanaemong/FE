@@ -27,6 +27,21 @@ export default {
         "custom-light-gradient":
           "linear-gradient(to bottom right,rgba(59, 191, 178, 0.4) 5%,rgba(92, 187, 217, 0.4) 33%, rgba(136, 76, 197, 0.4) 70%,rgba(222, 59, 186, 0.4) 99%)",
       },
+      backgroundImage: {
+        "custom-gradient":
+          "linear-gradient(to bottom right, #3bbfb2 5%, #5cbbd9 33%, #884cc5 70%, #de3bba 99%)",
+        "custom-light-gradient":
+          "linear-gradient(to bottom right,rgba(59, 191, 178, 0.4) 5%,rgba(92, 187, 217, 0.4) 33%, rgba(136, 76, 197, 0.4) 70%,rgba(222, 59, 186, 0.4) 99%)",
+      },
+      keyframes: {
+        flash: {
+          "0%, 100%": { backgroundColor: "transparent" },
+          "50%": { backgroundColor: "#F5F6FA" },
+        },
+      },
+      animation: {
+        flash: "flash 0.5s",
+      },
     },
     minHeight: {
       "real-screen": "calc(100vh - 75px)",
