@@ -3,7 +3,7 @@ import categories from "../../utils/categories";
 import CategoryItem from "./CategoryItem";
 
 interface Iprops {
-  onClick: (name: string) => void;
+  onClick: (index: number) => void;
 }
 
 const CategoryCard: FC<Iprops> = ({ onClick }) => {
@@ -12,6 +12,7 @@ const CategoryCard: FC<Iprops> = ({ onClick }) => {
       {categories.map((item, index) => (
         <CategoryItem
           key={index}
+          index={index}
           name={item.name}
           image={item.image}
           onClick={onClick}

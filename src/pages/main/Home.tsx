@@ -3,14 +3,15 @@ import { PiMegaphone } from "react-icons/pi";
 import { CategoryCard, TeamItem } from "../../components";
 import { GoPlus } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
+import categories from "../../utils/categories";
 
 const Home = () => {
   const navigate = useNavigate();
 
-  const onClickCategory = (category: string) => {
+  const onClickCategory = (index: number) => {
     navigate("/search", {
       state: {
-        category: category,
+        category: categories[index].name,
       },
     });
   };
