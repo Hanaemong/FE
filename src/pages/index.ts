@@ -5,3 +5,5 @@ export { default as CreateTeam } from "./team/CreateTeam";
 export { default as Alarm } from "./alarm/Alarm";
 export { default as Survey } from "./team/Survey";
 export { default as Login } from "./auth/Login";
+export { default as My } from "./my/My";
+export { default as CertiRegion } from "./my/CertiRegion";
