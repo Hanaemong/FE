@@ -1,13 +1,17 @@
 import { FC, useEffect, useState } from "react";
 import { MdOutlineBackspace } from "react-icons/md";
 import { shuffleArray } from "../../utils/shuffleArray";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   confirm?: boolean;
+  join?: boolean;
   onPasswordComplete: (password: string) => void;
 }
 
-const Password: FC<IProps> = ({ confirm, onPasswordComplete }) => {
+const Password: FC<IProps> = ({ confirm, join, onPasswordComplete }) => {
+  const navigate = useNavigate();
+
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [backspaceActive, setBackspaceActive] = useState<boolean>(false);
   const [shuffledNumbers, setShuffledNumbers] = useState<number[]>([]);
@@ -62,7 +66,16 @@ const Password: FC<IProps> = ({ confirm, onPasswordComplete }) => {
             비밀번호가 일치하지 않습니다.
           </div>
         )}
+        {join && (
+          <div
+            className="font-hanaRegular text-lg text-center pt-8 text-hanaPurple underline underline-offset-2"
+            onClick={() => navigate("/join")}
+          >
+            회원가입
+          </div>
+        )}
       </div>
+      {/* 비밀번호 키패드 */}
       <div className="grid grid-cols-4 gap-12 text-4xl font-hanaBold">
         {shuffledNumbers.map((item, index) => (
           <div
@@ -73,9 +86,9 @@ const Password: FC<IProps> = ({ confirm, onPasswordComplete }) => {
             onClick={() => handleClick(index)}
           >
             {item === 10 ? (
-              <img src="/public/img/별돌이1.png" className="size-10" />
+              <img src="/img/별돌이1.png" className="size-10" />
             ) : item === 11 ? (
-              <img src="/public/img/별돌이1.png" className="size-10" />
+              <img src="/img/별돌이1.png" className="size-10" />
             ) : (
               item
             )}
