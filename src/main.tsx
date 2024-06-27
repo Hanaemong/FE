@@ -9,6 +9,7 @@ import {
   CreateTeam,
   Home,
   Join,
+  Login,
   Search,
   Survey,
 } from "./pages/index.ts";
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "search", element: <Search /> },
       { path: "create-team", element: <CreateTeam /> },
       { path: "survey", element: <Survey /> },
+      { path: "login", element: <Login /> },
       {
         element: <Navbar />,
         children: [

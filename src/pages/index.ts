@@ -4,3 +4,4 @@ export { default as Search } from "./main/Search";
 export { default as CreateTeam } from "./team/CreateTeam";
 export { default as Alarm } from "./alarm/Alarm";
 export { default as Survey } from "./team/Survey";
+export { default as Login } from "./auth/Login";
