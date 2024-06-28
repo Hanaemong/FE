@@ -37,9 +37,10 @@ const My = () => {
       {/* 가입한 모임 */}
       <div className="px-7 pt-7 pb-3 font-hanaMedium text-2xl">가입한 모임</div>
       <div className="w-full px-7 flex flex-col ">
-        <div className="w-full flex flex-col px-9    py-7 gap-4 bg-white rounded-2xl">
+        <div className="w-full flex flex-col px-9 py-7 gap-4 bg-white rounded-2xl">
           <div className="flex flex-col gap-10">
             <TeamItem
+              teamId={1}
               name="배드민턴 동호회"
               image="temp"
               category="운동/스포츠"
@@ -47,6 +48,7 @@ const My = () => {
               rating={4.0}
             />
             <TeamItem
+              teamId={2}
               name="소소한 문화생활"
               image="temp"
               category="공연/문화"
@@ -54,6 +56,7 @@ const My = () => {
               rating={3.5}
             />
             <TeamItem
+              teamId={3}
               name="하나은행 면접 스터디"
               image="temp"
               category="자기계발"
@@ -61,6 +64,7 @@ const My = () => {
               rating={4.2}
             />
             <TeamItem
+              teamId={4}
               name="배드민턴 동호회"
               image="temp"
               category="운동/스포츠"

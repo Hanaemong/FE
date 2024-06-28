@@ -1,9 +1,12 @@
+export { default as Alarm } from "./alarm/Alarm";
 export { default as Join } from "./auth/Join";
+export { default as Login } from "./auth/Login";
 export { default as Home } from "./main/Home";
 export { default as Search } from "./main/Search";
-export { default as CreateTeam } from "./team/CreateTeam";
-export { default as Alarm } from "./alarm/Alarm";
-export { default as Survey } from "./team/Survey";
-export { default as Login } from "./auth/Login";
-export { default as My } from "./my/My";
 export { default as CertiRegion } from "./my/CertiRegion";
+export { default as My } from "./my/My";
+export { default as CreateTeam } from "./team/CreateTeam";
+export { default as Dues } from "./team/Dues";
+export { default as Members } from "./team/Members";
+export { default as Survey } from "./team/Survey";
+export { default as Team } from "./team/Team";

@@ -6,6 +6,7 @@ export { default as TeamItem } from "./team/TeamItem";
 export { default as SurveyCard } from "./team/SurveyCard";
 export { default as HistroyItem } from "./team/HistoryItem";
 export { default as CategoryCard } from "./team/CategoryCard";
+export { default as PlanItem } from "./team/PlanItem";
 export { default as SelectAccount } from "./account/SelectAccount";
 export { default as AlarmItem } from "./alarm/AlarmItem";
 export { default as SelectModal } from "./common/SelectModal";

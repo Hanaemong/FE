@@ -8,12 +8,15 @@ import {
   Alarm,
   CertiRegion,
   CreateTeam,
+  Dues,
   Home,
   Join,
   Login,
+  Members,
   My,
   Search,
   Survey,
+  Team,
 } from "./pages/index.ts";
 import { Navbar } from "./components/index.ts";
 
@@ -29,6 +32,9 @@ const router = createBrowserRouter([
       { path: "survey", element: <Survey /> },
       { path: "login", element: <Login /> },
       { path: "certificate-region", element: <CertiRegion /> },
+      { path: "team", element: <Team /> },
+      { path: "team/members", element: <Members /> },
+      { path: "team/dues", element: <Dues /> },
       {
         element: <Navbar />,
         children: [

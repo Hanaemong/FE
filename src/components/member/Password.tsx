@@ -55,14 +55,14 @@ const Password: FC<IProps> = ({ confirm, join, onPasswordComplete }) => {
               key={i}
               className={`size-7 rounded-full ${
                 i < password.length
-                  ? "bg-[#EBEBEB]"
+                  ? "bg-[#A0A0A0]"
                   : "border-[2.5px] border-[#EBEBEB]"
               }`}
             ></div>
           ))}
         </div>
         {confirm && (
-          <div className="font-hanaMedium text-2xl text-center pt-10 text-red-600">
+          <div className="font-hanaMedium text-2xl text-center pt-10 text-red-500">
             비밀번호가 일치하지 않습니다.
           </div>
         )}
