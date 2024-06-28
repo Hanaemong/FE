@@ -13,3 +13,4 @@ export { default as Team } from "./team/Team";
 export { default as Survey } from "./team/Survey";
 export { default as ChatList } from "./team/ChatList";
 export { default as ChatRoom } from "./team/ChatRoom";
+export { default as Plan } from "./team/Plan";

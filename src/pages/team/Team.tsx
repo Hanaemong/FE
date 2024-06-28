@@ -134,7 +134,9 @@ const Team = () => {
               {/* 일정 추가 버튼 */}
               <div
                 className="w-full flex justify-center p-12 bg-white rounded-3xl drop-shadow-lg cursor-pointer"
-                onClick={() => {}}
+                onClick={() => {
+                  navigate("/create-plan");
+                }}
               >
                 <div className="flex w-20 h-20 bg-custom-light-gradient rounded-full justify-center items-center">
                   <GoPlus color="ffffff" size={40} />
