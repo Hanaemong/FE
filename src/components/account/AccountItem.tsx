@@ -8,7 +8,7 @@ interface Iprops {
   onClick: (
     clickedAccountId: number,
     clickedAccountNumber: string,
-    clickedBalance?: number
+    clickedBalance: number
   ) => void;
 }
 

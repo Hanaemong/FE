@@ -13,6 +13,7 @@ import {
   Join,
   Login,
   Search,
+  Sending,
   Survey,
 } from "./pages/index.ts";
 import { Navbar } from "./components/index.ts";
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
       { path: "survey", element: <Survey /> },
       { path: "login", element: <Login /> },
       { path: "chat-room", element: <ChatRoom /> },
+      { path: "sending", element: <Sending /> },
       {
         element: <Navbar />,
         children: [

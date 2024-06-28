@@ -12,9 +12,15 @@ const ChatTopbar: FC<IProps> = ({ title, member, teamId }) => {
   const navigate = useNavigate();
 
   const onClickTeam = () => {
-    navigate("/team", {
+    // navigate("/team", {
+    //   state: {
+    //     teamId: teamId,
+    //   },
+    // });
+    navigate("/sending", {
       state: {
-        teamId: teamId,
+        receiveName: "배드민턴 동호회",
+        receiveAccount: "123-123456-12345",
       },
     });
   };
