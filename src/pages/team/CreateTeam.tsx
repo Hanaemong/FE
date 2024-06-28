@@ -1,9 +1,18 @@
 import { useRef, useState } from "react";
-import { Button, SelectAccount, Topbar } from "../../components";
+import {
+  AccountItem,
+  Button,
+  CategoryCard,
+  ConfirmCard,
+  SelectAccount,
+  SelectModal,
+  Topbar,
+} from "../../components";
 import { useNavigate } from "react-router-dom";
 import { GoPerson, GoPlus } from "react-icons/go";
 import { SlPicture } from "react-icons/sl";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
+import categories from "../../utils/categories";
 
 const CreateTeam = () => {
   const navigate = useNavigate();
@@ -14,17 +23,24 @@ const CreateTeam = () => {
     image: "sports",
   });
   const [memberText, setMemberText] = useState<string>("");
-  const [account, setAccount] = useState<string>("");
+  const [account, setAccount] = useState({
+    accountId: 0,
+    accountNumber: "",
+  });
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [categoryModal, setCategoryModal] = useState<boolean>(false);
+  const [accountModal, setAccountModal] = useState<boolean>(false);
 
   const nameRef = useRef<HTMLInputElement | null>(null);
   const descRef = useRef<HTMLTextAreaElement | null>(null);
   const memberRef = useRef<HTMLInputElement | null>(null);
 
   const stepHandler = () => {
-    if (step === 1 || step === 2) {
+    if (step === 1) {
       setIsActive(false);
-      setStep(step + 1);
+      setStep(2);
+    } else if (step === 2) {
+      setStep(3);
     } else if (step === 3) {
       // 모임 개설 api request
       navigate("/home");
@@ -34,9 +50,24 @@ const CreateTeam = () => {
   const onClickBack = () => {
     if (step === 1) {
       navigate(-1);
+      setIsActive(true);
     } else {
       setStep(step - 1);
     }
+  };
+
+  const onClickCategory = (index: number) => {
+    setCategory(categories[index]);
+    setCategoryModal(false);
+  };
+
+  const onClickAccount = (accountId: number, accountNumber: string) => {
+    setAccount({
+      accountId: accountId,
+      accountNumber: accountNumber,
+    });
+    setAccountModal(false);
+    setIsActive(true);
   };
 
   const onBlurMember = () => {
@@ -70,6 +101,27 @@ const CreateTeam = () => {
 
   return (
     <section>
+      {categoryModal && (
+        <SelectModal
+          title="카테고리 선택"
+          onClose={() => setCategoryModal(false)}
+        >
+          <div className="w-full h-72 rounded-3xl bg-white grid grid-cols-4 gap-2 p-7">
+            <CategoryCard onClick={onClickCategory} />
+          </div>
+        </SelectModal>
+      )}
+      {accountModal && (
+        <SelectModal title="계좌 선택" onClose={() => setAccountModal(false)}>
+          <AccountItem
+            accountId={1}
+            title="영하나 플러스"
+            accountNumber="111-111-111111"
+            balance={200000}
+            onClick={onClickAccount}
+          />
+        </SelectModal>
+      )}
       <Topbar title="모임 개설" onClick={onClickBack} />
       <div className="flex flex-col min-h-real-screen2 justify-between">
         {/* 1페이지 */}
@@ -77,7 +129,10 @@ const CreateTeam = () => {
           <div className="flex flex-col py-7 px-10 gap-10">
             {/* 모임 이름 */}
             <div className="flex flex-row w-full justify-between items-center gap-4">
-              <div className="flex justify-center items-center w-[4.5rem] h-[4.5rem] bg-[#EBEBEB] rounded-full cursor-pointer">
+              <div
+                className="flex justify-center items-center w-[4.5rem] h-[4.5rem] bg-[#EBEBEB] rounded-full cursor-pointer"
+                onClick={() => setCategoryModal(true)}
+              >
                 <img
                   src={`/img/${category.image}.png`}
                   alt="image"
@@ -152,10 +207,9 @@ const CreateTeam = () => {
             </p>
             <SelectAccount
               onClick={() => {
-                alert("모달이 뜰거예요");
-                setIsActive(true);
+                setAccountModal(true);
               }}
-              account={account}
+              account={account.accountNumber}
             />
             <div className="mt-4 flex flex-row gap-3 items-center">
               <HiOutlineExclamationCircle size={20} color="#FF0000" />
@@ -166,15 +220,10 @@ const CreateTeam = () => {
           </div>
         )}
         {/* 3 페이지 */}
-        {step === 3 && (
-          // confirm component 사용
-          <div>
-            <div></div>
-          </div>
-        )}
+        {step === 3 && <ConfirmCard text="모임 등록 완료!" />}
         <div className="flex flex-row justify-center mb-7">
           <Button
-            text="다음"
+            text={step <= 2 ? "다음" : "완료"}
             onClick={() => stepHandler()}
             isActive={isActive}
           />

@@ -49,7 +49,7 @@ const Navbar = () => {
             }`}
             onClick={() => setSelected(3)}
           >
-            <Link to="#">
+            <Link to="/chats">
               <PiWechatLogo size={30} />
               <p>채팅</p>
             </Link>

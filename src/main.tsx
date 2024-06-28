@@ -7,6 +7,8 @@ import { Hello } from "./pages/hello.tsx";
 import {
   Alarm,
   CertiRegion,
+  ChatList,
+  ChatRoom,
   CreateTeam,
   Dues,
   Home,
@@ -15,6 +17,7 @@ import {
   Members,
   My,
   Search,
+  Sending,
   Survey,
   Team,
 } from "./pages/index.ts";
@@ -35,12 +38,15 @@ const router = createBrowserRouter([
       { path: "team", element: <Team /> },
       { path: "team/members", element: <Members /> },
       { path: "team/dues", element: <Dues /> },
+      { path: "chat-room", element: <ChatRoom /> },
+      { path: "sending", element: <Sending /> },
       {
         element: <Navbar />,
         children: [
           { path: "home", element: <Home /> },
           { path: "alarm", element: <Alarm /> },
           { path: "my", element: <My /> },
+          { path: "chats", element: <ChatList /> },
         ],
       },
     ],

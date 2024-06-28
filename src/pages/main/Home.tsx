@@ -3,14 +3,15 @@ import { PiMegaphone } from "react-icons/pi";
 import { CategoryCard, TeamItem } from "../../components";
 import { GoPlus } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
+import categories from "../../utils/categories";
 
 const Home = () => {
   const navigate = useNavigate();
 
-  const onClickCategory = (category: string) => {
+  const onClickCategory = (index: number) => {
     navigate("/search", {
       state: {
-        category: category,
+        category: categories[index].name,
       },
     });
   };
@@ -49,7 +50,7 @@ const Home = () => {
             <CategoryCard onClick={onClickCategory} />
           </div>
           {/* 체인 등급이 높은 모임 */}
-          <div className="w-full px-7 py-12 flex flex-col gap-4 bg-white rounded-3xl">
+          <div className="w-full px-7 pt-8 pb-12 flex flex-col gap-4 bg-white rounded-3xl">
             <p className="text-3xl font-hanaMedium ml-2">
               체인 등급이 높은 모임
             </p>
