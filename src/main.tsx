@@ -6,15 +6,20 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Hello } from "./pages/hello.tsx";
 import {
   Alarm,
+  CertiRegion,
   ChatList,
   ChatRoom,
   CreateTeam,
+  Dues,
   Home,
   Join,
   Login,
+  Members,
+  My,
   Search,
   Sending,
   Survey,
+  Team,
 } from "./pages/index.ts";
 import { Navbar } from "./components/index.ts";
 
@@ -29,6 +34,10 @@ const router = createBrowserRouter([
       { path: "create-team", element: <CreateTeam /> },
       { path: "survey", element: <Survey /> },
       { path: "login", element: <Login /> },
+      { path: "certificate-region", element: <CertiRegion /> },
+      { path: "team", element: <Team /> },
+      { path: "team/members", element: <Members /> },
+      { path: "team/dues", element: <Dues /> },
       { path: "chat-room", element: <ChatRoom /> },
       { path: "sending", element: <Sending /> },
       {
@@ -36,6 +45,7 @@ const router = createBrowserRouter([
         children: [
           { path: "home", element: <Home /> },
           { path: "alarm", element: <Alarm /> },
+          { path: "my", element: <My /> },
           { path: "chats", element: <ChatList /> },
         ],
       },

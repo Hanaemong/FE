@@ -8,6 +8,7 @@ export { default as TeamItem } from "./team/TeamItem";
 export { default as SurveyCard } from "./team/SurveyCard";
 export { default as HistroyItem } from "./team/HistoryItem";
 export { default as CategoryCard } from "./team/CategoryCard";
+export { default as PlanItem } from "./team/PlanItem";
 export { default as ChatListItem } from "./team/ChatListItem";
 export { default as ChatTopbar } from "./team/ChatTopbar";
 export { default as SelectAccount } from "./account/SelectAccount";

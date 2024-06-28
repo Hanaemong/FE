@@ -1,7 +1,9 @@
 import { FC } from "react";
 import chainCalc from "../../utils/chainCalc";
+import { useNavigate } from "react-router-dom";
 
 interface Iprops {
+  teamId: number;
   name: string;
   image: string;
   category: string;
@@ -9,9 +11,25 @@ interface Iprops {
   rating: number;
 }
 
-const TeamItem: FC<Iprops> = ({ name, image, category, member, rating }) => {
+const TeamItem: FC<Iprops> = ({
+  teamId,
+  name,
+  image,
+  category,
+  member,
+  rating,
+}) => {
+  const navigate = useNavigate();
+  const onClickItem = () => {
+    navigate("/team", {
+      state: {
+        teamId: teamId,
+      },
+    });
+  };
+
   return (
-    <div className="flex flex-row gap-4">
+    <div className="flex flex-row gap-4" onClick={() => onClickItem()}>
       <img
         src="/img/배드민턴.png"
         alt="image"

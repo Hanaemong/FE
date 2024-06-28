@@ -60,7 +60,7 @@ const Navbar = () => {
             }`}
             onClick={() => setSelected(4)}
           >
-            <Link to="#">
+            <Link to="/my">
               <GoPerson size={30} />
               <p>MY</p>
             </Link>

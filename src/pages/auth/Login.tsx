@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Password } from "../../components";
+import { Password, Topbar } from "../../components";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -13,6 +13,7 @@ const Login = () => {
 
   return (
     <section className="min-h-screen">
+      <Topbar title="" />
       <div className="h-full w-full flex flex-col items-center justify-between py-8 pb-16">
         <div className="w-5/6 mt-20 px-6 flex flex-col items-center gap-6">
           <Password onPasswordComplete={onPasswordComplete} join={true} />

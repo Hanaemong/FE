@@ -106,6 +106,7 @@ const Search = () => {
           </p>
           <div className="flex flex-col gap-4 ">
             <TeamItem
+              teamId={1}
               name="배드민턴 동호회"
               image="temp"
               category="운동/스포츠"
@@ -113,6 +114,7 @@ const Search = () => {
               rating={4.0}
             />
             <TeamItem
+              teamId={2}
               name="소소한 문화생활"
               image="temp"
               category="공연/문화"
@@ -120,6 +122,7 @@ const Search = () => {
               rating={3.5}
             />
             <TeamItem
+              teamId={3}
               name="하나은행 면접 스터디"
               image="temp"
               category="자기계발"
@@ -127,6 +130,7 @@ const Search = () => {
               rating={4.2}
             />
             <TeamItem
+              teamId={4}
               name="배드민턴 동호회"
               image="temp"
               category="운동/스포츠"
@@ -134,6 +138,7 @@ const Search = () => {
               rating={2.5}
             />
             <TeamItem
+              teamId={5}
               name="배드민턴 동호회"
               image="temp"
               category="운동/스포츠"
@@ -141,6 +146,7 @@ const Search = () => {
               rating={4.0}
             />
             <TeamItem
+              teamId={6}
               name="소소한 문화생활"
               image="temp"
               category="공연/문화"
@@ -148,6 +154,7 @@ const Search = () => {
               rating={3.5}
             />
             <TeamItem
+              teamId={7}
               name="하나은행 면접 스터디"
               image="temp"
               category="자기계발"
@@ -155,6 +162,7 @@ const Search = () => {
               rating={4.2}
             />
             <TeamItem
+              teamId={8}
               name="배드민턴 동호회"
               image="temp"
               category="운동/스포츠"
@@ -162,6 +170,7 @@ const Search = () => {
               rating={2.5}
             />
             <TeamItem
+              teamId={9}
               name="배드민턴 동호회"
               image="temp"
               category="운동/스포츠"
@@ -169,6 +178,7 @@ const Search = () => {
               rating={4.0}
             />
             <TeamItem
+              teamId={10}
               name="소소한 문화생활"
               image="temp"
               category="공연/문화"
@@ -176,6 +186,7 @@ const Search = () => {
               rating={3.5}
             />
             <TeamItem
+              teamId={11}
               name="하나은행 면접 스터디"
               image="temp"
               category="자기계발"
@@ -183,6 +194,7 @@ const Search = () => {
               rating={4.2}
             />
             <TeamItem
+              teamId={12}
               name="배드민턴 동호회"
               image="temp"
               category="운동/스포츠"
