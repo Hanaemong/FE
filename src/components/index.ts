@@ -16,3 +16,4 @@ export { default as AlarmItem } from "./alarm/AlarmItem";
 export { default as RegionModal } from "./member/RegionModal";
 export { default as RegionItem } from "./member/RegionItem";
 export { default as Password } from "./member/Password";
+export { default as SendingModal } from "./account/SendingModal";

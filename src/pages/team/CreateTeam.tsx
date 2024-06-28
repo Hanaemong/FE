@@ -50,6 +50,7 @@ const CreateTeam = () => {
   const onClickBack = () => {
     if (step === 1) {
       navigate(-1);
+      setIsActive(true);
     } else {
       setStep(step - 1);
     }

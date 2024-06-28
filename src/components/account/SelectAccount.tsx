@@ -14,13 +14,13 @@ const SelectAccount: FC<Iprops> = ({ onClick, account }) => {
     >
       <div className="flex m-full justify-between flex-row">
         <div className="flex flex-row gap-4">
-          <img src="img/hanaLogo.png" alt="logo" className="w-12 h-12" />
+          <img src="img/hanaLogo.png" alt="logo" className="w-9 h-9" />
           <p
             className={`flex my-auto font-hanaLight text-xl pt-2 ${
               account == null ? "text-gray-400" : ""
             }`}
           >
-            {account == "" ? "계좌를 선택해주세요." : account}
+            {account == "" ? "계좌를 선택해주세요." : `하나 ${account}`}
           </p>
         </div>
         <div className="flex justify-center items-center pt-2">
