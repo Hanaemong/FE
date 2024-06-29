@@ -16,6 +16,7 @@ import {
   Login,
   Members,
   My,
+  Plan,
   Search,
   Sending,
   Survey,
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: "team/dues", element: <Dues /> },
       { path: "chat-room", element: <ChatRoom /> },
       { path: "sending", element: <Sending /> },
+      { path: "create-plan", element: <Plan /> },
       {
         element: <Navbar />,
         children: [
