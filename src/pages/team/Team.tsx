@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, PlanItem, Topbar } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GoPlus } from "react-icons/go";
+import { HiPencilSquare } from "react-icons/hi2";
 
 const Team = () => {
   const navigate = useNavigate();
@@ -45,9 +46,11 @@ const Team = () => {
         )}
         {/* 배너 */}
         <div
-          className="w-full h-80 bg-contain"
+          className="w-full flex justify-end h-80 bg-contain"
           style={{ backgroundImage: "url(/img/배드민턴.png)" }}
-        ></div>
+        >
+          <HiPencilSquare size={20} className="text-hanaSilver2 mt-3 mr-7" />
+        </div>
         {isJoined && (
           <>
             {/* 내용 or 일정 메뉴 */}
