@@ -11,6 +11,7 @@ export { default as CategoryCard } from "./team/CategoryCard";
 export { default as PlanItem } from "./team/PlanItem";
 export { default as ChatListItem } from "./team/ChatListItem";
 export { default as ChatTopbar } from "./team/ChatTopbar";
+export { default as MemberItem } from "./team/MemberItem";
 export { default as SelectAccount } from "./account/SelectAccount";
 export { default as AccountItem } from "./account/AccountItem";
 export { default as AlarmItem } from "./alarm/AlarmItem";
