@@ -1,11 +1,30 @@
 import { useState } from "react";
 import { Button, DueHistoryItem, Topbar } from "../../components";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+import { dateMonth, dateYear } from "../../utils/getDate";
 
 const Dues = () => {
+  const navigate = useNavigate();
+
   const [isDeposit, setIsDeposit] = useState<boolean>(true);
-  const [year, setYear] = useState<number>(2024);
-  const [month, setMonth] = useState<number>(6);
+  const [year, setYear] = useState<number>(dateYear);
+  const [month, setMonth] = useState<number>(dateMonth);
+
+  const onClickArrow = (value: number) => {
+    if (year === dateYear && month === dateMonth && value === 1) return;
+    if (year === 2000 && month === 1 && value === -1) return;
+
+    if (month + value == 0) {
+      setMonth(12);
+      setYear(year - 1);
+    } else if (month + value == 13) {
+      setMonth(1);
+      setYear(year + 1);
+    } else {
+      setMonth(month + value);
+    }
+  };
 
   return (
     <section>
@@ -46,7 +65,7 @@ const Dues = () => {
                 className={`my-auto ${
                   year === 2000 && month === 1 && "text-gray-400"
                 }`}
-                // onClick={() => onClickArrow(-1)}
+                onClick={() => onClickArrow(-1)}
               />
               <p className="font-hanaCM text-3xl leading-9 mx-5">
                 {year}년 {String(month).padStart(2, "0")}월
@@ -54,39 +73,11 @@ const Dues = () => {
               <IoIosArrowForward
                 size={20}
                 className={`my-auto ${
-                  year === 2024 && month === 6 && "text-gray-400"
+                  year === dateYear && month === dateMonth && "text-gray-400"
                 }`}
-                // onClick={() => onClickArrow(1)}
+                onClick={() => onClickArrow(1)}
               />
             </div>
-            <DueHistoryItem
-              name="김현우"
-              gender="M"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="김지윤"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="안나영"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="신명지"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
             <DueHistoryItem
               name="김현우"
               gender="M"
@@ -202,7 +193,18 @@ const Dues = () => {
           </div>
         </div>
         <div className="flex flex-row justify-center pb-10">
-          <Button text="회비 납부하기" onClick={() => console.log("ㅎㅇ")} />
+          <Button
+            text="회비 납부하기"
+            onClick={() =>
+              navigate("/sending", {
+                state: {
+                  receiveName: "성동구 미나리 모임",
+                  receiveAccount: "542-116273-43174",
+                  teamId: 1,
+                },
+              })
+            }
+          />
         </div>
       </div>
     </section>

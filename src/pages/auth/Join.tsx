@@ -17,10 +17,10 @@ const Join = () => {
   const [step, setStep] = useState<number>(1);
   const nameRef = useRef<HTMLInputElement | null>(null);
   const phoneNumRef = useRef<HTMLInputElement | null>(null);
+  const codeRef = useRef<HTMLInputElement | null>(null);
   const [modal, openModal] = useState<boolean>(false);
   const [telecom, setTelecom] = useState<string>("");
   const [phoneNum, setPhoneNum] = useState<string>("");
-  const [code, setCode] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [sigun, setSigun] = useState<string>("");
@@ -193,18 +193,18 @@ const Join = () => {
                   setType("telecom");
                 }}
               >
-                <input
+                <div
                   id="telecom"
-                  className={`w-full h-[4rem] rounded-2xl border border-spacing-1 text-2xl text-left px-4 font-hanaMedium ${
+                  className={`w-full h-[4rem] rounded-2xl border border-spacing-1 flex items-center text-2xl text-left px-4 font-hanaMedium ${
                     !telecom && "text-[#979797]"
                   }`}
-                  type="button"
-                  value={telecom || "통신사 선택"}
-                />
-                <PiCaretDown
-                  size={20}
-                  className="text-[#979797] absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
-                />
+                >
+                  {telecom === "" ? "통신사 선택" : telecom}
+                  <PiCaretDown
+                    size={20}
+                    className="text-[#979797] absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                  />
+                </div>
               </div>
               <input
                 className="w-full h-[4rem] rounded-2xl border border-spacing-1 text-2xl font-hanaMedium px-4 placeholder-[#979797]"
@@ -224,9 +224,10 @@ const Join = () => {
               </span>
               <div className="w-full flex justify-between gap-1">
                 <input
+                  type="number"
                   className="w-5/6 h-[4rem] rounded-2xl border border-spacing-1 text-2xl font-hanaMedium px-4 placeholder-[#979797]"
                   placeholder="인증코드"
-                  value={code}
+                  ref={codeRef}
                 />
                 <button className="px-5 py-3 bg-hanaPurple rounded-2xl text-white font-hanaRegular text-xl">
                   확인

@@ -19,6 +19,7 @@ const Sending = () => {
   const locationState = location.state as {
     receiveName: string;
     receiveAccount: string;
+    teamId: number;
   };
 
   const [step, setStep] = useState<number>(1);
@@ -111,7 +112,11 @@ const Sending = () => {
       setIsActive(true);
     } else if (step === 5) {
       // api 전송하고 모임상세 페이지로 되돌아가기
-      navigate("/home");
+      navigate("/team", {
+        state: {
+          teamId: 1,
+        },
+      });
     }
     setStep(step + 1);
   };
