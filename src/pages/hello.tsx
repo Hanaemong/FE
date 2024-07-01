@@ -4,8 +4,7 @@ import { userApi } from "../apis/domains/userApi";
 export const Hello = () => {
   const { mutate: login, data } = useMutation({
     mutationFn: (user: { phone: string; password: string }) => {
-      const api = new userApi();
-      return api.postLogin(user);
+      return userApi.getInstance().postLogin(user);
     },
     onSuccess: (data) => {
       console.log(data);
