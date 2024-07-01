@@ -13,14 +13,42 @@ import { GoPerson, GoPlus } from "react-icons/go";
 import { SlPicture } from "react-icons/sl";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
 import categories from "../../utils/categories";
+import { useMutation } from "@tanstack/react-query";
+import { teamApi } from "../../apis/domains/teamApi";
 
 const CreateTeam = () => {
   const navigate = useNavigate();
+
+  const { mutate: createTeam } = useMutation({
+    mutationFn: (team: TeamCreateType) => {
+      const response = teamApi.getInstance().postTeam({
+        teamName: team.teamName,
+        teamDesc: team.teamDesc,
+        category: team.category,
+        capacity: team.capacity,
+        thumbNail: team.thumbNail,
+      });
+      return response;
+    },
+    onSuccess: () => {
+      navigate("/home");
+    },
+    onError: (err) => {
+      console.log(err.message);
+      alert("모임 생성에 실패했습니다.");
+    },
+  });
 
   const [step, setStep] = useState<number>(1);
   const [category, setCategory] = useState<CategoryType>({
     name: "운동/스포츠",
     image: "sports",
+  });
+  const [content, setContent] = useState({
+    teamName: "",
+    teamDesc: "",
+    capacity: 0,
+    thumbNail: "",
   });
   const [memberText, setMemberText] = useState<string>("");
   const [account, setAccount] = useState({
@@ -37,13 +65,30 @@ const CreateTeam = () => {
 
   const stepHandler = () => {
     if (step === 1) {
+      console.log(
+        nameRef.current!.value,
+        descRef.current!.value,
+        category.name,
+        Number(memberRef.current!.value)
+      );
+      setContent({
+        teamName: nameRef.current!.value,
+        teamDesc: descRef.current!.value,
+        capacity: Number(memberRef.current!.value),
+        thumbNail: "/img/별돌이.png",
+      });
       setIsActive(false);
       setStep(2);
     } else if (step === 2) {
       setStep(3);
     } else if (step === 3) {
-      // 모임 개설 api request
-      navigate("/home");
+      createTeam({
+        teamName: content.teamName,
+        teamDesc: content.teamDesc,
+        category: category.name,
+        capacity: content.capacity,
+        thumbNail: content.thumbNail,
+      });
     }
   };
 

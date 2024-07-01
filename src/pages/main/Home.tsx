@@ -4,9 +4,26 @@ import { CategoryCard, TeamItem } from "../../components";
 import { GoPlus } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import categories from "../../utils/categories";
+import { getCookie } from "../../utils/cookie";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { teamApi } from "../../apis/domains/teamApi";
+import { useEffect } from "react";
 
 const Home = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const {
+    data: teams,
+    error,
+    isError,
+  } = useQuery({
+    queryKey: ["teams"],
+    queryFn: () => {
+      const res = teamApi.getInstance().getEntireTeam();
+      return res;
+    },
+  });
 
   const onClickCategory = (index: number) => {
     navigate("/search", {
@@ -15,6 +32,17 @@ const Home = () => {
       },
     });
   };
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["teams"] });
+  }, []);
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error.message);
+      alert("모임을 불러오는 데 실패했습니다.");
+    }
+  }, [isError]);
 
   return (
     <section className="relative min-h-real-screen bg-hanaGray">
@@ -29,7 +57,7 @@ const Home = () => {
                   alt="logo"
                   className="w-8 h-8"
                 />
-                <p className="text-3xl font-hanaBold">혜화동</p>
+                <p className="text-3xl font-hanaBold">{getCookie("siGunGu")}</p>
               </div>
               <div className="flex justify-center items-center gap-7">
                 <HiMagnifyingGlass
@@ -55,38 +83,22 @@ const Home = () => {
               체인 등급이 높은 모임
             </p>
             <div className="flex flex-col gap-4">
-              <TeamItem
-                teamId={1}
-                name="배드민턴 동호회"
-                image="temp"
-                category="운동/스포츠"
-                member={70}
-                rating={4.0}
-              />
-              <TeamItem
-                teamId={2}
-                name="소소한 문화생활"
-                image="temp"
-                category="공연/문화"
-                member={15}
-                rating={3.5}
-              />
-              <TeamItem
-                teamId={3}
-                name="하나은행 면접 스터디"
-                image="temp"
-                category="자기계발"
-                member={50}
-                rating={4.2}
-              />
-              <TeamItem
-                teamId={4}
-                name="배드민턴 동호회"
-                image="temp"
-                category="운동/스포츠"
-                member={30}
-                rating={2.5}
-              />
+              {teams?.data!.map((item, index) => (
+                <TeamItem
+                  key={index}
+                  teamId={item.teamId}
+                  name={item.teamName}
+                  image={item.thumbNail}
+                  category={item.category}
+                  member={item.memberCnt}
+                  rating={item.score}
+                />
+              ))}
+              {teams?.data!.length == 0 && (
+                <p className="w-full pt-16 text-center text-3xl font-hanaLight">
+                  현재 지역에 모임이 존재하지 않아요 :(
+                </p>
+              )}
             </div>
           </div>
         </div>
