@@ -2,20 +2,31 @@ import axios, { AxiosInstance } from "axios";
 import { getCookie } from "../utils/cookie";
 
 export class ApiClient {
-  protected static instance: ApiClient;
   protected axiosInstance: AxiosInstance;
 
   constructor() {
     this.axiosInstance = this.createAxiosInstance();
   }
 
-  static getInstance(): ApiClient {
-    return this.instance || (this.instance = new this());
-  }
+  // static getInstance(): ApiClient {
+  //   return this.instance || (this.instance = new this());
+  // }
 
   logout() {
     this.axiosInstance = this.createAxiosInstance();
   }
+
+  // async postLogin(user: { phone: string; password: string }) {
+  //   const response = await this.axiosInstance.request<{
+  //     accessToken: string;
+  //     memberId: number;
+  //   }>({
+  //     method: "post",
+  //     url: "/member/login",
+  //     data: user,
+  //   });
+  //   return response.data;
+  // }
 
   private createAxiosInstance = () => {
     const headers: any = {
