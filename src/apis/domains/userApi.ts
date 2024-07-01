@@ -1,7 +1,7 @@
 import { ApiClient } from "../apiClient";
 
 export class userApi extends ApiClient {
-  protected static instance: userApi;
+  private static instance: userApi;
 
   static getInstance(): userApi {
     return this.instance || (this.instance = new this());
