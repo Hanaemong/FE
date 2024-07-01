@@ -21,7 +21,7 @@ const CreateTeam = () => {
 
   const { mutate: createTeam } = useMutation({
     mutationFn: (team: TeamCreateType) => {
-      const response = teamApi.getInstance().postTeam({
+      const response = teamApi.getInstance().postCreateTeam({
         teamName: team.teamName,
         teamDesc: team.teamDesc,
         category: team.category,
