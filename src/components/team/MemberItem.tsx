@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { MdFemale, MdMale } from "react-icons/md";
 
 interface IProps {
@@ -49,13 +49,17 @@ const MemberItem: FC<IProps> = ({
           총무변경
         </div>
       ) : role === "모임원" ? (
-        <div className="flex flex-row gap-3 font-hanaRegular">
-          <button className="py-1 px-5 bg-[#F5C4EA] rounded-3xl">
+        <div className="flex flex-row gap-3 font-hanaRegular text-white">
+          <button
+            className={`py-1 px-5 ${
+              changeBtn ? "bg-hanaLightMint text-hanaSilver2" : "bg-hanaPink"
+            } rounded-3xl`}
+          >
             {changeBtn ? "임명하기" : "내보내기"}
           </button>
         </div>
       ) : role === "가입요청" ? (
-        <div className="flex flex-row gap-3 font-hanaRegular">
+        <div className="flex flex-row gap-3 font-hanaRegular text-white">
           <button className="py-1 px-7 bg-[#A891D9] rounded-3xl">거절</button>
           <button className="py-1 px-7 bg-[#65AFBF] rounded-3xl">수락</button>
         </div>
