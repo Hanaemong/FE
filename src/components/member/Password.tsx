@@ -18,6 +18,10 @@ const Password: FC<IProps> = ({ confirm, join, onPasswordComplete }) => {
   const [password, setPassword] = useState<number[]>([]);
 
   const handleClick = (index: number) => {
+    if (shuffledNumbers[index] === 10 || shuffledNumbers[index] === 11) {
+      return;
+    }
+
     if (password.length < 6) {
       const newPassword = [...password, shuffledNumbers[index]];
       setPassword(newPassword);

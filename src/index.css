@@ -50,6 +50,71 @@
       format("truetype");
 }
 
+/* 달력 아이콘 숨기기 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+
+input[type="date"]::before {
+  content: attr(placeholder);
+  position: absolute;
+  color: #9e9e9e;
+}
+
+input[type="date"] {
+  color: #f5f6fa;
+  position: relative;
+}
+
+input[type="date"]:focus,
+input[type="date"]:valid {
+  color: #000000;
+}
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+  content: "";
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+
+input[type="time"]::before {
+  content: attr(placeholder);
+  position: absolute;
+  color: #9e9e9e;
+}
+
+input[type="time"] {
+  color: #f5f6fa;
+  position: relative;
+}
+
+input[type="time"]:focus,
+input[type="time"]:valid {
+  color: #000000;
+}
+
+input[type="time"]:focus::before,
+input[type="time"]:valid::before {
+  content: "";
+}
+
 html,
 body {
   margin: 0 auto;
