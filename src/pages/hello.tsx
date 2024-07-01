@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { userApi } from "../apis/domains/userApi";
+import { memberApi } from "../apis/domains/memberApi";
 
 export const Hello = () => {
   const { mutate: login, data } = useMutation({
     mutationFn: (user: { phone: string; password: string }) => {
-      return userApi.getInstance().postLogin2(user);
+      return memberApi.getInstance().postLogin(user);
     },
     onSuccess: (data) => {
       console.log(data);
