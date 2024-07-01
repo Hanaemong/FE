@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GoPerson } from "react-icons/go";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { LiaHomeSolid } from "react-icons/lia";
 import { PiWechatLogo } from "react-icons/pi";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [selected, setSelected] = useState<number>(1);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname.includes("alarm")) {
+      setSelected(2);
+    } else if (location.pathname.includes("chats")) {
+      setSelected(3);
+    } else if (location.pathname.includes("my")) {
+      setSelected(4);
+    }
+  }, [location]);
 
   return (
     <div>

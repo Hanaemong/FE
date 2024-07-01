@@ -1,20 +1,30 @@
 import { FC } from "react";
 import { formatter } from "../../utils/datetimeFormat";
+import { useNavigate } from "react-router-dom";
 
 interface Iprops {
-  idx: number;
+  teamId: number;
   title: string;
   content: string;
   date: Date;
-  onClick?: () => void;
 }
 
-const AlarmItem: FC<Iprops> = ({ idx, title, content, date, onClick }) => {
+const AlarmItem: FC<Iprops> = ({ teamId, title, content, date }) => {
+  const navigate = useNavigate();
+
+  const onClickItem = () => {
+    navigate("/survey", {
+      state: {
+        teamId: teamId,
+      },
+    });
+  };
+
   return (
     <div
       className="flex flex-col mt-10 gap-5"
       onClick={() => {
-        onClick && onClick();
+        onClickItem();
       }}
     >
       <div className="flex flex-row justify-between">

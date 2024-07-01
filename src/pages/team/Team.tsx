@@ -12,7 +12,7 @@ const Team = () => {
     teamId: number;
   };
 
-  const [isJoined, setJoined] = useState<boolean>(false);
+  const [isJoined, setJoined] = useState<boolean>(true);
   const [selected, setSelected] = useState<string>("desc");
   const [modal, openModal] = useState<boolean>(false);
 
