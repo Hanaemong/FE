@@ -18,4 +18,12 @@ export class userApi extends ApiClient {
     });
     return response.data;
   }
+
+  async postLogin2(user: { phone: string; password: string }) {
+    const response = await this._http.post<{
+      accessToken: string;
+      memberId: number;
+    }>(`/member/login`, user);
+    return response;
+  }
 }

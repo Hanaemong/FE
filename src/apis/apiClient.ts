@@ -1,32 +1,47 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { Axios, AxiosInstance, AxiosResponse } from "axios";
 import { getCookie } from "../utils/cookie";
 
 export class ApiClient {
   protected axiosInstance: AxiosInstance;
 
+  _getResponseFromBody = <T>(
+    response: AxiosResponse<BaseResponse<T>>
+  ): BaseResponse<T> => {
+    const { data: body } = response;
+
+    return body;
+  };
+
+  protected _http = {
+    get: <T = unknown>(...args: Parameters<Axios["get"]>) =>
+      this.axiosInstance
+        .get<BaseResponse<T>>(...args)
+        .then(this._getResponseFromBody)
+        .catch(this.handleError),
+    post: <T = unknown>(...args: Parameters<Axios["post"]>) =>
+      this.axiosInstance
+        .post<BaseResponse<T>>(...args)
+        .then(this._getResponseFromBody)
+        .catch(this.handleError),
+    put: <T = unknown>(...args: Parameters<Axios["put"]>) =>
+      this.axiosInstance
+        .put<BaseResponse<T>>(...args)
+        .then(this._getResponseFromBody)
+        .catch(this.handleError),
+    delete: <T = unknown>(...args: Parameters<Axios["delete"]>) =>
+      this.axiosInstance
+        .delete<BaseResponse<T>>(...args)
+        .then(this._getResponseFromBody)
+        .catch(this.handleError),
+  };
+
   constructor() {
     this.axiosInstance = this.createAxiosInstance();
   }
 
-  // static getInstance(): ApiClient {
-  //   return this.instance || (this.instance = new this());
-  // }
-
   logout() {
     this.axiosInstance = this.createAxiosInstance();
   }
-
-  // async postLogin(user: { phone: string; password: string }) {
-  //   const response = await this.axiosInstance.request<{
-  //     accessToken: string;
-  //     memberId: number;
-  //   }>({
-  //     method: "post",
-  //     url: "/member/login",
-  //     data: user,
-  //   });
-  //   return response.data;
-  // }
 
   private createAxiosInstance = () => {
     const headers: any = {
@@ -55,6 +70,31 @@ export class ApiClient {
       }
     );
 
+    newInstance.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        // 기본 응답 형태로 오류 처리
+        if (error.response && error.response.data) {
+          const customError = {
+            success: false,
+            type: "",
+            data: null,
+            message: error.response.data.message || error.message,
+          } as BaseResponse<null>;
+          return Promise.reject(customError);
+        }
+        return Promise.reject({
+          data: null,
+          message: error.message,
+        } as BaseResponse<null>);
+      }
+    );
+
     return newInstance;
+  };
+
+  private handleError = (error: BaseResponse<null>) => {
+    console.error("API call failed:", error);
+    return Promise.reject(error);
   };
 }
