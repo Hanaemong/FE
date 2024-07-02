@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, PlanItem, Topbar } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GoPlus } from "react-icons/go";
@@ -11,6 +11,8 @@ const Team = () => {
   const locationState = location.state as {
     teamId: number;
   };
+
+  console.log(locationState);
 
   const [isJoined, setJoined] = useState<boolean>(true);
   const [selected, setSelected] = useState<string>("desc");

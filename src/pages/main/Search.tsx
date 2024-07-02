@@ -1,21 +1,45 @@
 import { useLocation } from "react-router-dom";
 import { TeamItem, Topbar } from "../../components";
 import { HiMagnifyingGlass } from "react-icons/hi2";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import HistoryItem from "../../components/team/HistoryItem";
+import { getCookie } from "../../utils/cookie";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { teamApi } from "../../apis/domains/teamApi";
 
 const Search = () => {
   const location = useLocation();
+  const history = localStorage.getItem("history");
+  const queryClient = useQueryClient();
 
   const locationState = location.state as {
     category: string;
   };
 
-  const history = localStorage.getItem("history");
-
   const [refresh, setRefresh] = useState<boolean>(false);
   const [initial, setInitial] = useState<boolean>(true);
+  const [teamList, setTeamList] = useState<TeamItemType[]>([]);
+  const [keyword, setKeyword] = useState<string>("");
+  const [category, setCateogry] = useState<string>("");
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const listQuery = useQuery({
+    queryKey: ["teamList", keyword, category],
+    queryFn: () => {
+      if (locationState && locationState.category) {
+        const res = teamApi
+          .getInstance()
+          .getCategoryTeam(locationState.category);
+        return res;
+      } else if (keyword !== "") {
+        const res = teamApi.getInstance().getSearchTeam(keyword);
+        return res;
+      } else {
+        const res = teamApi.getInstance().getEntireTeam();
+        return res;
+      }
+    },
+  });
 
   const activeEnter = (e: any) => {
     if (e.key === "Enter") {
@@ -27,7 +51,7 @@ const Search = () => {
     inputRef.current!.value = keyword;
     onDeleteHistory(index);
     onClickSearch(keyword);
-    // keyword로 검색 결과 변경
+    setKeyword(keyword);
   };
 
   const onDeleteHistory = (index: number) => {
@@ -39,18 +63,36 @@ const Search = () => {
   };
 
   const onClickSearch = (keyword: string) => {
-    // keyword로 검색 결과 변경
-    let newHistory =
+    setKeyword(keyword);
+    let newHistory: Array<string> =
       history != null
         ? JSON.parse(localStorage.getItem("history")!)
         : new Array();
 
-    newHistory.length === 5 && newHistory.splice(-1);
-    newHistory.unshift(keyword);
+    if (!newHistory.includes(keyword)) {
+      newHistory.length === 5 && newHistory.splice(-1);
+      newHistory.unshift(keyword);
+    }
+
     localStorage.setItem("history", JSON.stringify(newHistory));
 
     initial && setInitial(false);
   };
+
+  useEffect(() => {
+    if (locationState && locationState.category) {
+      setCateogry(locationState.category);
+    }
+    queryClient.resetQueries({ queryKey: ["teamList"] });
+    queryClient.invalidateQueries({ queryKey: ["teamList"] });
+  }, []);
+
+  // 여기가 잘못됨
+  useEffect(() => {
+    if (!!listQuery.data?.data) {
+      setTeamList(listQuery.data.data!);
+    }
+  }, [listQuery.data]);
 
   return (
     <section className="min-h-real-screen2">
@@ -101,106 +143,46 @@ const Search = () => {
         )}
         {/* 검색 결과 리스트 */}
         <div className="my-4 flex flex-col">
-          <p className="font-hanaRegular text-2xl mb-4">
-            <span className="text-hanaBlue">서울특별시</span>의 모임 리스트
+          <p
+            className="font-hanaRegular text-2xl mb-4"
+            onClick={() => {
+              console.log(listQuery.data, keyword);
+              console.log(listQuery.isLoading);
+            }}
+          >
+            <span className="text-hanaBlue">{getCookie("siGunGu")}</span>의 모임
+            리스트
           </p>
-          <div className="flex flex-col gap-4 ">
-            <TeamItem
-              teamId={1}
-              name="배드민턴 동호회"
-              image="temp"
-              category="운동/스포츠"
-              member={70}
-              rating={4.0}
-            />
-            <TeamItem
-              teamId={2}
-              name="소소한 문화생활"
-              image="temp"
-              category="공연/문화"
-              member={15}
-              rating={3.5}
-            />
-            <TeamItem
-              teamId={3}
-              name="하나은행 면접 스터디"
-              image="temp"
-              category="자기계발"
-              member={50}
-              rating={4.2}
-            />
-            <TeamItem
-              teamId={4}
-              name="배드민턴 동호회"
-              image="temp"
-              category="운동/스포츠"
-              member={30}
-              rating={2.5}
-            />
-            <TeamItem
-              teamId={5}
-              name="배드민턴 동호회"
-              image="temp"
-              category="운동/스포츠"
-              member={70}
-              rating={4.0}
-            />
-            <TeamItem
-              teamId={6}
-              name="소소한 문화생활"
-              image="temp"
-              category="공연/문화"
-              member={15}
-              rating={3.5}
-            />
-            <TeamItem
-              teamId={7}
-              name="하나은행 면접 스터디"
-              image="temp"
-              category="자기계발"
-              member={50}
-              rating={4.2}
-            />
-            <TeamItem
-              teamId={8}
-              name="배드민턴 동호회"
-              image="temp"
-              category="운동/스포츠"
-              member={30}
-              rating={2.5}
-            />
-            <TeamItem
-              teamId={9}
-              name="배드민턴 동호회"
-              image="temp"
-              category="운동/스포츠"
-              member={70}
-              rating={4.0}
-            />
-            <TeamItem
-              teamId={10}
-              name="소소한 문화생활"
-              image="temp"
-              category="공연/문화"
-              member={15}
-              rating={3.5}
-            />
-            <TeamItem
-              teamId={11}
-              name="하나은행 면접 스터디"
-              image="temp"
-              category="자기계발"
-              member={50}
-              rating={4.2}
-            />
-            <TeamItem
-              teamId={12}
-              name="배드민턴 동호회"
-              image="temp"
-              category="운동/스포츠"
-              member={30}
-              rating={2.5}
-            />
+          <div className="flex flex-col gap-4">
+            {listQuery.isLoading && (
+              <p className="w-full pt-16 text-center text-3xl font-hanaLight">
+                데이터를 불러오고 있어요!
+              </p>
+            )}
+            {!listQuery.isLoading && (
+              <>
+                {teamList.map((item, index) => (
+                  <TeamItem
+                    key={index}
+                    teamId={item.teamId}
+                    name={item.teamName}
+                    image={item.thumbNail}
+                    category={item.category}
+                    member={item.memberCnt}
+                    rating={item.score}
+                  />
+                ))}
+                {teamList.length === 0 && (
+                  <p className="w-full pt-16 text-center text-3xl font-hanaLight">
+                    {locationState && locationState.category
+                      ? "해당 카테고리의 모임이 존재하지 않아요 :("
+                      : !initial
+                      ? "해당 검색어의 모임이 존재하지 않아요 :("
+                      : "현재 지역에 모임이 존재하지 않아요 :("}
+                  </p>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
