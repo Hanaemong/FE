@@ -65,7 +65,7 @@ const Password: FC<IProps> = ({ confirm, join, onPasswordComplete }) => {
             ></div>
           ))}
         </div>
-        {confirm && (
+        {!confirm && (
           <div className="font-hanaMedium text-2xl text-center pt-10 text-red-500">
             비밀번호가 일치하지 않습니다.
           </div>

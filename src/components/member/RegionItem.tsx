@@ -2,6 +2,8 @@ import { FC } from "react";
 
 interface IProps {
   title: string;
+  siGunId?: number;
+  siGunGuId?: number;
   region: string;
   onClick: () => void;
 }
