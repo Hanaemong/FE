@@ -1,4 +1,3 @@
-import React from "react";
 import { GoChevronRight } from "react-icons/go";
 import { TeamItem } from "../../components";
 import { useNavigate } from "react-router-dom";

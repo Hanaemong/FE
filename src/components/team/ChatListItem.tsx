@@ -17,7 +17,6 @@ const ChatListItem: FC<Iprops> = ({
   member,
   lastMsg,
   date,
-  image,
   teamId,
   isNew,
 }) => {

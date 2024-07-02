@@ -44,6 +44,7 @@ const Join = () => {
       nextStep();
     } else if (step === 7) {
       setConfirmPwd(password);
+      console.log(confirmPwd);
       if (password === pwd) {
         nextStep();
       } else {

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../utils/cookie";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const Landing = () => {
   const navigate = useNavigate();

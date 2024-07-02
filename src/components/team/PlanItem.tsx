@@ -8,7 +8,7 @@ interface IProps {
   image: string;
 }
 
-const PlanItem: FC<IProps> = ({ title, date, place, cost, image }) => {
+const PlanItem: FC<IProps> = ({ title, date, place, cost }) => {
   return (
     <div className="w-full flex gap-20 p-7 bg-white rounded-3xl drop-shadow-lg">
       <div className="flex flex-col gap-4">
