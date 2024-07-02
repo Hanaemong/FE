@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Hello } from "./pages/hello.tsx";
 import {
   Alarm,
   CertiRegion,
@@ -13,6 +12,7 @@ import {
   Dues,
   Home,
   Join,
+  Landing,
   Login,
   Members,
   My,
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { index: true, element: <Hello /> },
+      { index: true, element: <Landing /> },
       { path: "join", element: <Join /> },
       { path: "search", element: <Search /> },
       { path: "create-team", element: <CreateTeam /> },

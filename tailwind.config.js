@@ -36,9 +36,47 @@ export default {
           "0%, 100%": { backgroundColor: "transparent" },
           "50%": { backgroundColor: "#F5F6FA" },
         },
+        "fade-in-bounce-right": {
+          "0%": {
+            opacity: 0,
+            transform: "translate3d(100%, 0%, 0)",
+          },
+          "33%": {
+            opacity: 0.5,
+            transform: "translate3d(0%, 0%, 0)",
+          },
+          "66%": {
+            opacity: 0.7,
+            transform: "translate3d(20%, 0%, 0)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translate3d(0, 0, 0)",
+          },
+        },
+        "fade-in-bounce-left": {
+          "0%": {
+            opacity: 0,
+            transform: "translate3d(-100%, 0%, 0)",
+          },
+          "33%": {
+            opacity: 0.5,
+            transform: "translate3d(0%, 0%, 0)",
+          },
+          "66%": {
+            opacity: 0.7,
+            transform: "translate3d(-20%, 0%, 0)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translate3d(0, 0, 0)",
+          },
+        },
       },
       animation: {
         flash: "flash 0.5s",
+        fadeinbounceright: "fade-in-bounce-right 1s ease-in-out 0.25s 1",
+        fadeinbounceleft: "fade-in-bounce-left 1s ease-in-out 0.25s 1",
       },
     },
     minHeight: {
