@@ -18,6 +18,6 @@ interface TeamCreateType {
 
 interface TeamDetailType extends TeamItemType {
   teamDesc: string;
-  banner: string;
-  role: string;
+  banner: string | null;
+  role: string | null;
 }

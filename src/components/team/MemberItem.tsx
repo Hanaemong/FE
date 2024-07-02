@@ -6,6 +6,7 @@ interface IProps {
   gender: string;
   role: string;
   changeBtn?: boolean;
+  isChair?: boolean;
   setChangeBtn?: (value: boolean) => void;
   changeLeader?: () => void;
   onRefuse?: () => void;
@@ -18,14 +19,15 @@ const MemberItem: FC<IProps> = ({
   gender,
   role,
   changeBtn,
+  isChair,
   setChangeBtn = () => {},
 }) => {
   //   const [changeBtn, setChangeBtn] = useState<boolean>(false);
 
   return (
     <div
-      className={`flex flex-row justify-between items-center ${
-        role === "총무" ? "" : "pb-1 border-b-2 border-hanaGray"
+      className={`flex flex-row justify-between items-center py-4 ${
+        role === "총무" ? "" : "border-b-2 border-hanaGray"
       } `}
     >
       <div className="flex flex-row items-center">
@@ -34,32 +36,32 @@ const MemberItem: FC<IProps> = ({
           alt="profile"
           className="w-12 h-12"
         />
-        <p className="font-hanaRegular text-2xl ml-4">{name}</p>
+        <p className="font-hanaRegular text-3xl ml-4">{name}</p>
         {gender === "M" ? (
           <MdMale color="#002CC9" size={18} />
         ) : (
           <MdFemale color="#DD0092" size={18} />
         )}
       </div>
-      {role === "총무" ? (
+      {role === "총무" && isChair ? (
         <div
           className="font-hanaMedium underline underline-offset-2 pr-3"
           onClick={() => setChangeBtn(!changeBtn)}
         >
           총무변경
         </div>
-      ) : role === "모임원" ? (
+      ) : role === "모임원" && isChair ? (
         <div className="flex flex-row gap-3 font-hanaRegular text-white">
           <button
-            className={`py-1 px-5 ${
-              changeBtn ? "bg-hanaLightMint text-hanaSilver2" : "bg-hanaPink"
+            className={`py-1 px-5 text-lg ${
+              changeBtn ? "bg-hanaLightMint text-black" : "bg-hanaPink"
             } rounded-3xl`}
           >
             {changeBtn ? "임명하기" : "내보내기"}
           </button>
         </div>
       ) : role === "가입요청" ? (
-        <div className="flex flex-row gap-3 font-hanaRegular text-white">
+        <div className="flex flex-row gap-3 font-hanaRegular text-lg text-white">
           <button className="py-1 px-7 bg-[#A891D9] rounded-3xl">거절</button>
           <button className="py-1 px-7 bg-[#65AFBF] rounded-3xl">수락</button>
         </div>
