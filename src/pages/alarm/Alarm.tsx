@@ -1,6 +1,11 @@
 import { AlarmItem, Topbar } from "../../components";
+import firebase from "firebase/app";
 
 const Alarm = () => {
+  const messaging = firebase.messaging();
+  messaging.onMessage((payload) => {
+    console.log(payload);
+  });
   return (
     <section className="min-h-real-screen3">
       <Topbar title="알림" prohibit />
