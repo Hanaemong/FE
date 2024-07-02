@@ -19,3 +19,12 @@ interface JoinType {
   fcmToken: string;
   profile: string;
 }
+
+interface CheckMsgReqType {
+  phone: string;
+  code: string;
+}
+
+interface CheckMsgResType {
+  check: string;
+}
