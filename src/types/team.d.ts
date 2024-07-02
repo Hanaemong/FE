@@ -7,10 +7,17 @@ interface TeamItemType {
   thumbNail: string;
   memberCnt: number;
 }
+
 interface TeamCreateType {
   teamName: string;
   teamDesc: string;
   capacity: number;
   category: string;
   thumbNail: string;
+}
+
+interface TeamDetailType extends TeamItemType {
+  teamDesc: string;
+  banner: string;
+  role: string;
 }
