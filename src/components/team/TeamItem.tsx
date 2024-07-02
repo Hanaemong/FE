@@ -11,14 +11,7 @@ interface Iprops {
   rating: number;
 }
 
-const TeamItem: FC<Iprops> = ({
-  teamId,
-  name,
-  image,
-  category,
-  member,
-  rating,
-}) => {
+const TeamItem: FC<Iprops> = ({ teamId, name, category, member, rating }) => {
   const navigate = useNavigate();
   const onClickItem = () => {
     navigate("/team", {

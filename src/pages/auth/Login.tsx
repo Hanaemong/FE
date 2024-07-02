@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Password, Topbar } from "../../components";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ const Login = () => {
 
   const onPasswordComplete = (password: string) => {
     setPwd(password);
+    console.log(pwd);
     navigate("/home");
   };
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { Button, ConfirmCard, Topbar } from "../../components";
 import {
   PiCalendarDots,
