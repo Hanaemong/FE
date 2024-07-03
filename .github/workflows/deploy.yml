@@ -48,9 +48,8 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
 
       - name: Delete old pods
-        run: kubectl delete pods -l app=hanalink-react-app
+        run: kubectl delete pods -l app=new-hanalink-react-app
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl set image deployment/hanalink-react-app hanalink-react-app=${{ secrets.DOCKER_USERNAME }}/hanalink-react:latest
-
+          kubectl set image deployment/new-hanalink-react-app new-hanalink-react-app=${{ secrets.DOCKER_USERNAME }}/hanalink-react:latest
