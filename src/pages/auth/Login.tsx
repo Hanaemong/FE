@@ -7,7 +7,6 @@ import { memberApi } from "../../apis/domains/memberApi";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [password, setPassword] = useState<string>("");
   const [confirm, setConfirm] = useState<boolean>(true);
 
   const phone = getCookie("phone");
@@ -30,7 +29,6 @@ const Login = () => {
   });
 
   const onPasswordComplete = (password: string) => {
-    setPassword(password);
     login({ phone, password });
   };
 

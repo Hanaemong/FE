@@ -5,12 +5,9 @@ import { getCookie } from "../../utils/cookie";
 import { useQuery } from "@tanstack/react-query";
 import { memberApi } from "../../apis/domains/memberApi";
 import { accountApi } from "../../apis/domains/accountApi";
-import { teamApi } from "../../apis/domains/teamApi";
-import { useEffect } from "react";
 
 const My = () => {
   const navigate = useNavigate();
-  const balance = 50000000;
 
   const { data: memberInfo } = useQuery({
     queryKey: ["memberInfo"],
@@ -27,25 +24,6 @@ const My = () => {
       return response;
     },
   });
-
-  const {
-    data: list,
-    error,
-    isError,
-  } = useQuery({
-    queryKey: ["list"],
-    queryFn: () => {
-      const res = teamApi.getInstance().getMyTeam();
-      return res;
-    },
-  });
-
-  useEffect(() => {
-    if (isError) {
-      console.log(error.message);
-      alert("채팅방을 불러오는 데 실패했습니다.");
-    }
-  }, [isError]);
 
   return (
     <section className="min-h-real-screen bg-hanaGray">
