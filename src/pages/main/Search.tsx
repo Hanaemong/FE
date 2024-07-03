@@ -83,7 +83,6 @@ const Search = () => {
     if (locationState && locationState.category) {
       setCateogry(locationState.category);
     }
-    queryClient.resetQueries({ queryKey: ["teamList"] });
     queryClient.invalidateQueries({ queryKey: ["teamList"] });
   }, []);
 
