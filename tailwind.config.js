@@ -72,11 +72,32 @@ export default {
             transform: "translate3d(0, 0, 0)",
           },
         },
+        "slide-in-down": {
+          "0%": {
+            opacity: 0.5,
+            transform: "translate3d(0, -100%, 0)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translate3d(0, 0, 0)",
+          },
+        },
+        "slide-out-up": {
+          "0%": {
+            transform: "translate3d(0, 0, 0)",
+          },
+          "100%": {
+            visibility: "hidden",
+            transform: "translate3d(0, -100%, 0)",
+          },
+        },
       },
       animation: {
         flash: "flash 0.5s",
         fadeinbounceright: "fade-in-bounce-right 1s ease-in-out 0.25s 1",
         fadeinbounceleft: "fade-in-bounce-left 1s ease-in-out 0.25s 1",
+        slideindown: "1.0s ease-in-out slide-in-down",
+        slideoutup: "slide-out-up 1s ease-in-out 0.25s 1",
       },
     },
     minHeight: {

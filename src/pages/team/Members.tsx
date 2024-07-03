@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, MemberItem, Topbar } from "../../components";
 import { useLocation } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -78,6 +78,10 @@ const Members = () => {
   const onDeny = (teamMemberId: number) => {
     deleteMember({ teamMemberId: teamMemberId, type: "REJECT" });
   };
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["memberList"] });
+  }, []);
 
   return (
     <section>
