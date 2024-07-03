@@ -14,5 +14,8 @@ export class surveyApi extends ApiClient {
     return response;
   }
 
-  // 설문조사 요청 api 구현 필요
+  async postRequestSurvey(teamId: number) {
+    const response = await this._http.post(`/survey/request/${teamId}`);
+    return response;
+  }
 }

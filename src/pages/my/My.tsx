@@ -5,6 +5,8 @@ import { getCookie } from "../../utils/cookie";
 import { useQuery } from "@tanstack/react-query";
 import { memberApi } from "../../apis/domains/memberApi";
 import { accountApi } from "../../apis/domains/accountApi";
+import { teamApi } from "../../apis/domains/teamApi";
+import { useEffect } from "react";
 
 const My = () => {
   const navigate = useNavigate();
@@ -24,6 +26,25 @@ const My = () => {
       return response;
     },
   });
+
+  const {
+    data: list,
+    error,
+    isError,
+  } = useQuery({
+    queryKey: ["list"],
+    queryFn: () => {
+      const res = teamApi.getInstance().getMyTeam();
+      return res;
+    },
+  });
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error.message);
+      alert("내 모임을 불러오는 데 실패했습니다.");
+    }
+  }, [isError]);
 
   return (
     <section className="min-h-real-screen bg-hanaGray">
@@ -53,43 +74,22 @@ const My = () => {
           </div>
         </div>
       </div>
-      {/* 가입한 모임 */}
-      <div className="px-7 pt-7 pb-3 font-hanaMedium text-2xl">가입한 모임</div>
+      {/* 내 모임 */}
+      <div className="px-7 pt-7 pb-3 font-hanaMedium text-2xl">내 모임</div>
       <div className="w-full px-7 flex flex-col ">
         <div className="w-full flex flex-col px-9 py-7 gap-4 bg-white rounded-2xl">
           <div className="flex flex-col gap-10">
-            <TeamItem
-              teamId={1}
-              name="배드민턴 동호회"
-              image="temp"
-              category="운동/스포츠"
-              member={70}
-              rating={4.0}
-            />
-            <TeamItem
-              teamId={2}
-              name="소소한 문화생활"
-              image="temp"
-              category="공연/문화"
-              member={15}
-              rating={3.5}
-            />
-            <TeamItem
-              teamId={3}
-              name="하나은행 면접 스터디"
-              image="temp"
-              category="자기계발"
-              member={50}
-              rating={4.2}
-            />
-            <TeamItem
-              teamId={4}
-              name="배드민턴 동호회"
-              image="temp"
-              category="운동/스포츠"
-              member={30}
-              rating={2.5}
-            />
+            {list?.data?.map((item, index) => (
+              <TeamItem
+                key={index}
+                teamId={item.teamId}
+                name={item.teamName}
+                image={item.thumbNail}
+                category={item.category}
+                member={item.memberCnt}
+                rating={item.score}
+              />
+            ))}
           </div>
         </div>
       </div>

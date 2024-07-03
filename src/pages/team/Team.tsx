@@ -37,8 +37,8 @@ const Team = () => {
       setRole("PENDING");
     },
     onError: (err) => {
-      console.log(err.message);
       alert("가입 신청에 실패했습니다.");
+      console.log(err.message);
     },
   });
 
@@ -122,6 +122,7 @@ const Team = () => {
                         navigate("/team/members", {
                           state: {
                             role: role,
+                            teamId: locationState.teamId,
                           },
                         })
                       }
