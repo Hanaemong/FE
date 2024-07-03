@@ -28,3 +28,8 @@ interface CheckMsgReqType {
 interface CheckMsgResType {
   check: string;
 }
+
+interface UpdateRegionReqType {
+  siGunId: number;
+  siGunGuId: number;
+}

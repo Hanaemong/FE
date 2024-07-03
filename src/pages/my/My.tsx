@@ -1,10 +1,12 @@
 import { GoChevronRight } from "react-icons/go";
 import { TeamItem } from "../../components";
 import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../utils/cookie";
 
 const My = () => {
   const navigate = useNavigate();
   const balance = 50000000;
+
   return (
     <section className="min-h-real-screen bg-hanaGray">
       <div className="flex flex-col p-7 gap-4 bg-custom-light-gradient h-88">
@@ -12,7 +14,7 @@ const My = () => {
           className="flex items-center font-hanaBold text-3xl py-3"
           onClick={() => navigate("/certificate-region")}
         >
-          망원제1동
+          {getCookie("siGunGu")}
           <GoChevronRight size={25} />
         </div>
         {/* 사용자 정보 */}

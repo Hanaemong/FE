@@ -18,7 +18,7 @@ import { memberApi } from "../../apis/domains/memberApi";
 import { setCookie } from "../../utils/cookie";
 
 const geolocationOptions = {
-  enableHighAccuracy: true,
+  enableHighAccuracy: false,
   timeout: 0,
 };
 
@@ -41,7 +41,7 @@ const Join = () => {
     name: "",
   });
   const [sigungu, setSigungu] = useState<{ id: number; name: string }>();
-  const [region, setRegion] = useState<string>();
+  const [region, setRegion] = useState<string>("");
   const [pwd, setPwd] = useState<string>("");
   const [confirm, checkConfirm] = useState<boolean>(true);
   const [regionCheckResult, setRegionCheckResult] = useState<string>("");
@@ -181,6 +181,19 @@ const Join = () => {
 
     if (step === 4 && gender !== "") {
       setInputs({ ...inputs, gender: gender });
+      if (gender === "m") {
+        setInputs({
+          ...inputs,
+          profile:
+            "https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/%E1%84%87%E1%85%A7%E1%86%AF%E1%84%83%E1%85%A9%E1%86%AF%E1%84%8B%E1%85%B5.svg",
+        });
+      } else {
+        setInputs({
+          ...inputs,
+          profile:
+            "https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/%E1%84%87%E1%85%A7%E1%86%AF%E1%84%89%E1%85%A9%E1%86%BC%E1%84%8B%E1%85%B5.svg",
+        });
+      }
       setStep((prev) => prev + 1);
       setIsActive(false);
     }
@@ -283,6 +296,9 @@ const Join = () => {
     const longitude = location?.longitude!;
     console.log(latitude);
     console.log(longitude);
+
+    setRegionCheckResult("");
+    setIsActive(false);
 
     checkRegion({
       latitude,
@@ -535,9 +551,9 @@ const Join = () => {
                 <input
                   className={`w-3/4 h-[4rem] rounded-2xl border ${
                     data?.success && data.data?.match && "border-blue-500"
-                  }  ${
+                  } ${
                     data?.success && !data.data?.match && "border-red-500"
-                  }border-spacing-1 text-left text-2xl font-hanaMedium px-4 text-[#979797]`}
+                  } border-spacing-1 text-left text-2xl font-hanaMedium px-4 text-[#979797]`}
                   type="button"
                   value={region || "지역 선택"}
                   onClick={() => {

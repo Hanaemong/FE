@@ -39,4 +39,12 @@ export class memberApi extends ApiClient {
     );
     return response;
   }
+
+  async updateRegion(updatereq: UpdateRegionReqType) {
+    const response = await this._http.put<null>(
+      "/member/regionChange",
+      updatereq
+    );
+    return response;
+  }
 }
