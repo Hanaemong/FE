@@ -34,7 +34,7 @@ export function requestPermission() {
           console.log(`푸시 토큰 발급 완료 : ${token}`);
           setCookie("fcmToken", token);
         })
-        .catch((e) => {
+        .catch((e: any) => {
           console.log("푸시 토큰 가져오는 중에 에러 발생", e);
           const error =
             "AbortError: Failed to execute 'subscribe' on 'PushManager': Subscription failed - no active Service Worker";

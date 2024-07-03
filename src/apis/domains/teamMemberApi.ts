@@ -14,8 +14,10 @@ export class teamMemberApi extends ApiClient {
     return response;
   }
 
-  async deleteTeamMember(teamMemberId: number) {
-    const response = await this._http.delete(`/teamMember/${teamMemberId}`);
+  async deleteTeamMember(teamMemberId: number, type: string) {
+    const response = await this._http.delete(
+      `/teamMember/${teamMemberId}?type=${type}`
+    );
     return response;
   }
 
