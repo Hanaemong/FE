@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Password, Topbar } from "../../components";
+import { Password } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { getCookie, setCookie } from "../../utils/cookie";
 import { useMutation } from "@tanstack/react-query";
