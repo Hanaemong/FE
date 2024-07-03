@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { memberApi } from "../apis/domains/memberApi";
 
 export const Hello = () => {
-  const { mutate: login, data } = useMutation({
+  const { mutate: login } = useMutation({
     mutationFn: (user: { phone: string; password: string }) => {
       return memberApi.getInstance().postLogin(user);
     },
