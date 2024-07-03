@@ -35,15 +35,15 @@
       });
 
       // 특정 버튼 클릭 시에 앱 설치
-      btn.addEventListener("click", (e) => {
-        defferedPrompt.prompt();
-        defferedPrompt.userChoice.then((res) => {
-          if (res === "accepted") {
-            console.log("The app has been installed");
-          }
-          defferedPromts = null;
-        });
-      });
+      // btn.addEventListener("click", (e) => {
+      //   defferedPrompt.prompt();
+      //   defferedPrompt.userChoice.then((res) => {
+      //     if (res === "accepted") {
+      //       console.log("The app has been installed");
+      //     }
+      //     defferedPromts = null;
+      //   });
+      // });
     </script>
   </body>
 </html>
