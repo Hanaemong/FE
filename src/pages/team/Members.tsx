@@ -67,6 +67,11 @@ const Members = () => {
                 changeBtn={changeBtn}
                 isChair={locationState.role === "CHAIR"}
               />
+              {locationState.role !== "CHAIR" && (
+                <p className="w-full text-end text-xl font-hanaMedium underline underline-offset-2 text-hanaSilver2 mt-7 pr-3">
+                  탈퇴하기
+                </p>
+              )}
             </div>
           </div>
         </div>

@@ -45,7 +45,7 @@ const MemberItem: FC<IProps> = ({
       </div>
       {role === "총무" && isChair ? (
         <div
-          className="font-hanaMedium underline underline-offset-2 pr-3"
+          className="font-hanaMedium underline underline-offset-2 pr-3 text-xl"
           onClick={() => setChangeBtn(!changeBtn)}
         >
           총무변경

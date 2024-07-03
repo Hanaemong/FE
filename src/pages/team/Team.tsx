@@ -42,18 +42,18 @@ const Team = () => {
     },
   });
 
+  useEffect(() => {
+    if (isError) {
+      console.log(error.message);
+      alert("모임 정보를 불러오는 데 실패했습니다.");
+    }
+  }, [isError]);
+
   const [role, setRole] = useState<string | null>("");
-  const [isJoined, setJoined] = useState<boolean>(true);
   const [selected, setSelected] = useState<string>("desc");
   const [modal, openModal] = useState<boolean>(false);
 
   const helloRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    if (role == null || role == "PENDING") {
-      setJoined(false);
-    }
-  }, [role]);
 
   useEffect(() => {
     if (detail?.data) {
@@ -90,7 +90,10 @@ const Team = () => {
                 className="py-3 px-9 bg-hanaMint text-white rounded-3xl"
                 onClick={() => {
                   openModal(false);
-                  // joinTeam(locationState.teamId, helloRef.current!.value);
+                  joinTeam({
+                    teamId: locationState.teamId,
+                    hello: helloRef.current!.value,
+                  });
                 }}
               >
                 확인
@@ -109,7 +112,7 @@ const Team = () => {
           >
             <div className="flex flex-col">
               {/* 모임원 or 회비내역 메뉴 */}
-              {isJoined && (
+              {(role === "CHAIR" || role === "REGULAR") && (
                 <>
                   <div className="w-full bg-custom-straight-gradient h-[1px]"></div>
                   <div className="w-full flex font-hanaMedium text-2xl py-3 text-center divide-x-2 bg-white">
@@ -139,13 +142,16 @@ const Team = () => {
               <div
                 className="w-full flex justify-end h-80 bg-contain"
                 style={{ backgroundImage: "url(/img/배드민턴.png)" }}
+                onClick={() =>
+                  console.log(role, role === "CHAIR" || role === "REGULAR")
+                }
               >
                 <HiPencilSquare
                   size={20}
                   className="text-hanaSilver2 mt-3 mr-7"
                 />
               </div>
-              {isJoined && (
+              {(role === "CHAIR" || role === "REGULAR") && (
                 <>
                   {/* 내용 or 일정 메뉴 */}
                   <div className="w-full bg-custom-straight-gradient h-[1px]"></div>
@@ -253,7 +259,7 @@ const Team = () => {
               )}
             </div>
             {/* 가입하기 버튼 */}
-            {!isJoined && role == null && (
+            {!(role === "CHAIR" || role === "REGULAR") && (
               <div className="w-full flex justify-center py-5">
                 <Button
                   text={role === "PENDING" ? "가입 대기중" : "가입하기"}
