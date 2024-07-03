@@ -7,8 +7,13 @@ export class planApi extends ApiClient {
     return this.instance || (this.instance = new this());
   }
 
-  async postPlan(teamId: number, plan: PlanType) {
-    const response = await this._http.post(`/plan/${teamId}`, plan);
+  async postPlan(req: { teamId: number; plan: FormData }) {
+    const response = await this._http2.post(`/plan/${req.teamId}`, req.plan);
+    return response;
+  }
+
+  async getPlan(teamId: number) {
+    const response = await this._http.get<PlanResType[]>(`/plan/${teamId}`);
     return response;
   }
 }

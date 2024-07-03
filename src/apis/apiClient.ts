@@ -3,6 +3,7 @@ import { getCookie } from "../utils/cookie";
 
 export class ApiClient {
   protected axiosInstance: AxiosInstance;
+  protected axiosInstance2: AxiosInstance;
 
   _getResponseFromBody = <T>(
     response: AxiosResponse<BaseResponse<T>>
@@ -35,17 +36,37 @@ export class ApiClient {
         .catch(this.handleError),
   };
 
+  protected _http2 = {
+    get: <T = unknown>(...args: Parameters<Axios["get"]>) =>
+      this.axiosInstance2
+        .get<BaseResponse<T>>(...args)
+        .then(this._getResponseFromBody)
+        .catch(this.handleError),
+    post: <T = unknown>(...args: Parameters<Axios["post"]>) =>
+      this.axiosInstance2
+        .post<BaseResponse<T>>(...args)
+        .then(this._getResponseFromBody)
+        .catch(this.handleError),
+    put: <T = unknown>(...args: Parameters<Axios["put"]>) =>
+      this.axiosInstance2
+        .put<BaseResponse<T>>(...args)
+        .then(this._getResponseFromBody)
+        .catch(this.handleError),
+    delete: <T = unknown>(...args: Parameters<Axios["delete"]>) =>
+      this.axiosInstance2
+        .delete<BaseResponse<T>>(...args)
+        .then(this._getResponseFromBody)
+        .catch(this.handleError),
+  };
+
   constructor() {
-    this.axiosInstance = this.createAxiosInstance();
+    this.axiosInstance = this.createAxiosInstance(true);
+    this.axiosInstance2 = this.createAxiosInstance(false);
   }
 
-  logout() {
-    this.axiosInstance = this.createAxiosInstance();
-  }
-
-  private createAxiosInstance = () => {
+  private createAxiosInstance = (type: boolean) => {
     const headers: any = {
-      "content-type": "application/json",
+      "content-type": type ? "application/json" : "multipart/form-data",
     };
 
     const newInstance = axios.create({
@@ -61,7 +82,9 @@ export class ApiClient {
           config.headers["Authorization"] = `Bearer ${TOKEN}`;
         }
 
-        config.headers["Content-Type"] = "application/json";
+        config.headers["Content-Type"] = type
+          ? "application/json"
+          : "multipart/form-data";
         return config;
       },
       (error) => {

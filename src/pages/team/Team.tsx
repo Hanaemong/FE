@@ -5,6 +5,7 @@ import { GoPlus } from "react-icons/go";
 import { HiPencilSquare } from "react-icons/hi2";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { teamApi } from "../../apis/domains/teamApi";
+import { planApi } from "../../apis/domains/planApi";
 
 const Team = () => {
   const navigate = useNavigate();
@@ -23,6 +24,14 @@ const Team = () => {
     queryKey: ["teamDetail"],
     queryFn: () => {
       const res = teamApi.getInstance().getTeamDetail(locationState.teamId);
+      return res;
+    },
+  });
+
+  const { data: plans } = useQuery({
+    queryKey: ["plan"],
+    queryFn: () => {
+      const res = planApi.getInstance().getPlan(locationState.teamId);
       return res;
     },
   });
@@ -195,29 +204,6 @@ const Team = () => {
                     </div>
                     {/* 모임 내용 */}
                     <div className="font-hanaRegular text-2xl whitespace-pre-wrap leading-10 mt-4 bg-hanaGray rounded-2xl p-7">
-                      {/* 오직 방탈출만을 위한 모임 <br />
-                      <br /> 방탈출을 하고 싶은데 같이 갈 사람이 없으신 분!
-                      <br /> 인생테마 방탈출을 하고 싶으신 분! <br />
-                      같이 모여서 방탈출해요 🤩🤩🤩🤩🤩
-                      <br />
-                      <br /> #판타지 #감성 #코믹 #스릴러 #공포 #문제방
-                      <br /> #다양한 테마 #크라임씬 #클라이밍
-                      <br />
-                      <br /> 방탈출 후 커피👀 나 맥주 🍺 한 잔하면서 같이
-                      <br /> 얘기도 나눠요
-                      <br />
-                      <br /> 방탈출이 메인이지만
-                      <br /> 보드게임, 볼링, 영화 등 다양한 활동 OK
-                      <br />
-                      <br /> ❗️❗️ 가입 조건 ❗️❗️ <br />
-                      91년생 ~00년생
-                      <br /> 같이 꽃밭길을 걸으실 분 환영
-                      <br /> 방탈출 처음 해보는 사람도 환영
-                      <br />
-                      <br /> 🚫 테마 내용 스포금지
-                      <br /> 🚫 연애목적으로 가입 금지 <br />
-                      🚫 한 달에 한번 참여 하지 않을 시 강퇴
-                      <br /> */}
                       {detail.data.teamDesc}
                     </div>
                   </div>
@@ -228,26 +214,26 @@ const Team = () => {
                 <>
                   <div className="w-full p-7 flex flex-col gap-4 ">
                     <p className="font-hanaMedium text-2xl">일정</p>
-                    <PlanItem
-                      title="배드민턴 모임"
-                      date="6/22(토) 16:00"
-                      place="성수역 2번 출구"
-                      cost={15000}
-                      image="temp"
-                    />
-                    <PlanItem
-                      title="맛집 탐방"
-                      date="6/29(토) 16:00"
-                      place="을지로 입구역 3번 출구"
-                      cost={15000}
-                      image="temp"
-                    />
+                    {plans?.data?.map((item) => (
+                      <PlanItem
+                        key={item.planId}
+                        title={item.planName}
+                        date={item.planDate}
+                        place={item.place}
+                        cost={item.cost}
+                        image={item.planImg}
+                      />
+                    ))}
                     {/* 일정 추가 버튼 */}
                     {role === "CHAIR" && (
                       <div
                         className="w-full flex justify-center p-12 bg-white rounded-3xl drop-shadow-lg cursor-pointer"
                         onClick={() => {
-                          navigate("/create-plan");
+                          navigate("/create-plan", {
+                            state: {
+                              teamId: locationState.teamId,
+                            },
+                          });
                         }}
                       >
                         <div className="flex w-20 h-20 bg-custom-light-gradient rounded-full justify-center items-center">

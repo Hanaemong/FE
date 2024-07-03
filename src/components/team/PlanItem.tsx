@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { formatter3 } from "../../utils/datetimeFormat";
 
 interface IProps {
   title: string;
@@ -8,20 +9,20 @@ interface IProps {
   image: string;
 }
 
-const PlanItem: FC<IProps> = ({ title, date, place, cost }) => {
+const PlanItem: FC<IProps> = ({ title, date, place, cost, image }) => {
   return (
     <div className="w-full flex gap-20 p-7 bg-white rounded-3xl drop-shadow-lg">
       <div className="flex flex-col gap-4">
-        <div className="font-hanaMedium text-3xl">{title}</div>
+        <div className="w-40 font-hanaMedium text-2xl truncate">{title}</div>
         <div
           className="w-40 h-24 rounded-2xl bg-cover bg-center"
-          style={{ backgroundImage: "url(/img/뱁새.png)" }}
+          style={{ backgroundImage: `url(${image})` }}
         ></div>
       </div>
       <div className="w-64 mt-10 flex flex-col gap-3 font-hanaRegular text-xl">
         <div className="flex justify-between">
           <div className="text-hanaSilver2">일시</div>
-          <div className="text-right">{date}</div>
+          <div className="text-right">{formatter3(new Date(date))}</div>
         </div>
         <div className="w-full flex justify-between truncate">
           <p className="text-hanaSilver2">장소</p>

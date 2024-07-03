@@ -11,7 +11,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
 function App() {
   requestPermission();
   useEffect(() => {
@@ -22,7 +21,6 @@ function App() {
       });
     }
   }, []);
-
   return (
     <div className="min-h-screen">
       <QueryClientProvider client={queryClient}>
