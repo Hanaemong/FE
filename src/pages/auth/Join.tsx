@@ -15,7 +15,7 @@ import { useGeolocation } from "../../hooks/useGeolocation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { regionApi } from "../../apis/domains/regionApi";
 import { memberApi } from "../../apis/domains/memberApi";
-import { setCookie } from "../../utils/cookie";
+import { getCookie, setCookie } from "../../utils/cookie";
 
 const geolocationOptions = {
   enableHighAccuracy: false,
@@ -119,8 +119,10 @@ const Join = () => {
       console.log(response);
       if (response.data?.match) {
         setRegionCheckResult("위치가 인증되었습니다");
+        setIsActive(true);
       } else {
         setRegionCheckResult("선택한 지역과 일치하지 않습니다");
+        setIsActive(false);
       }
     },
     onError: (err) => {
@@ -207,7 +209,12 @@ const Join = () => {
     if (step === 7) {
       console.log(pwd);
       setInputs((prevInputs) => {
-        const updatedInputs = { ...prevInputs, password: pwd };
+        const fcmToken = getCookie("fcmToken");
+        const updatedInputs = {
+          ...prevInputs,
+          password: pwd,
+          fcmToken: fcmToken,
+        };
         join(updatedInputs);
         return updatedInputs;
       });
@@ -485,6 +492,7 @@ const Join = () => {
                     "border-red-500"
                   } border-spacing-1 text-2xl font-hanaMedium px-4 placeholder-[#979797]`}
                   placeholder="인증코드"
+                  maxLength={7}
                   ref={codeRef}
                 />
                 <button
