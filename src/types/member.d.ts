@@ -33,3 +33,12 @@ interface UpdateRegionReqType {
   siGunId: number;
   siGunGuId: number;
 }
+
+interface MemberInfoType {
+  name: string;
+  phone: string;
+  gender: string;
+  profile: string;
+  siGun: string;
+  siGunGu: string;
+}

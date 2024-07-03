@@ -65,7 +65,7 @@ const CertiRegion = () => {
     },
   });
 
-  const { mutate: changeRegion, data: result } = useMutation({
+  const { mutate: changeRegion } = useMutation({
     mutationFn: (region: UpdateRegionReqType) => {
       return memberApi.getInstance().updateRegion(region);
     },
