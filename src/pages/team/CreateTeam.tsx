@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AccountItem,
   Button,
@@ -13,8 +13,9 @@ import { GoPerson, GoPlus } from "react-icons/go";
 import { SlPicture } from "react-icons/sl";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
 import categories from "../../utils/categories";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { teamApi } from "../../apis/domains/teamApi";
+import { accountApi } from "../../apis/domains/accountApi";
 
 const CreateTeam = () => {
   const navigate = useNavigate();
@@ -30,6 +31,14 @@ const CreateTeam = () => {
     onError: (err) => {
       console.log(err.message);
       alert("모임 생성에 실패했습니다.");
+    },
+  });
+
+  const { data: accountInfo } = useQuery({
+    queryKey: ["accountInfo"],
+    queryFn: () => {
+      const response = accountApi.getInstance().getAccount();
+      return response;
     },
   });
 
@@ -141,7 +150,8 @@ const CreateTeam = () => {
     if (
       nameRef.current!.value.length === 0 ||
       descRef.current!.value.length === 0 ||
-      memberRef.current!.value.length === 0
+      memberRef.current!.value.length === 0 ||
+      attachment === ""
     ) {
       setIsActive(false);
       return;
@@ -163,6 +173,10 @@ const CreateTeam = () => {
     }
   };
 
+  useEffect(() => {
+    attachment !== "" && checkStep1Value();
+  }, [attachment]);
+
   return (
     <section>
       {categoryModal && (
@@ -178,10 +192,10 @@ const CreateTeam = () => {
       {accountModal && (
         <SelectModal title="계좌 선택" onClose={() => setAccountModal(false)}>
           <AccountItem
-            accountId={1}
-            title="영하나 플러스"
-            accountNumber="111-111-111111"
-            balance={200000}
+            accountId={accountInfo?.data?.accountId!}
+            title={accountInfo?.data?.accountName!}
+            accountNumber={accountInfo?.data?.accountNumber!}
+            balance={accountInfo?.data?.balance!}
             onClick={onClickAccount}
           />
         </SelectModal>
@@ -254,13 +268,18 @@ const CreateTeam = () => {
                 <div className="flex w-full h-48 bg-[#EBEBEB] rounded-2xl justify-center items-center">
                   <label
                     htmlFor="imgInput"
-                    className="flex w-36 h-36 justify-center items-center border-dashed border-[3px] border-white my-2 rounded-3xl"
+                    className={`flex w-36 h-36 justify-center items-center ${
+                      !attachment && "border-dashed border-[3px] border-white"
+                    }  my-2 rounded-3xl`}
                   >
-                    {/* <div
-                    className="flex w-36 h-36 justify-center items-center border-dashed border-[3px] border-white my-2 rounded-3xl"
-                    onClick={() => console.log("이미지 추가")}
-                  > */}
-                    <GoPlus color="ffffff" size={64} />
+                    {attachment ? (
+                      <div
+                        className="flex w-36 h-36 justify-center items-center rounded-3xl bg-cover bg-center"
+                        style={{ backgroundImage: `url(${attachment})` }}
+                      ></div>
+                    ) : (
+                      <GoPlus color="ffffff" size={64} />
+                    )}
                     <input
                       id="imgInput"
                       type="file"

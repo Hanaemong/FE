@@ -14,7 +14,7 @@ import { getCookie } from "../../utils/cookie";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { accountApi } from "../../apis/domains/accountApi";
 import { memberApi } from "../../apis/domains/memberApi";
-import { transacionApi } from "../../apis/domains/transactionApi";
+import { transactionApi } from "../../apis/domains/transactionApi";
 
 const Sending = () => {
   const navigate = useNavigate();
@@ -73,7 +73,7 @@ const Sending = () => {
 
   const { mutate: postDue } = useMutation({
     mutationFn: (req: { teamId: number; due: DueType }) => {
-      return transacionApi.getInstance().postDue(req.teamId, req.due);
+      return transactionApi.getInstance().postDue(req.teamId, req.due);
     },
     onSuccess: (res) => {
       console.log(res.data);

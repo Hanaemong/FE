@@ -17,6 +17,7 @@ const Plan = () => {
   const [complete, setComlpete] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [attachment, setAttachment] = useState<string>("");
+  const [price, setPrice] = useState<number>();
   const nameRef = useRef<HTMLInputElement | null>(null);
   const dateRef = useRef<HTMLInputElement | null>(null);
   const timeRef = useRef<HTMLInputElement | null>(null);
@@ -96,7 +97,20 @@ const Plan = () => {
       postPlan({ teamId: locationState.teamId, plan: formData });
     }
 
-    if (complete) navigate("/team");
+    if (complete)
+      navigate("/team", {
+        state: {
+          teamId: locationState.teamId,
+        },
+      });
+  };
+
+  const priceChangeHandler = (e: any) => {
+    let inputPrice = e.target.value;
+
+    inputPrice = Number(inputPrice.replace(/[^0-9]/g, ""));
+
+    setPrice(inputPrice.toLocaleString());
   };
 
   const handleImg = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -160,9 +174,12 @@ const Plan = () => {
               <PiCurrencyKrw size={32} />
               <input
                 placeholder="비용"
-                type="number"
+                type="text"
                 className="w-full rounded-2xl p-5 bg-hanaGray font-hanaRegular placeholder:text-hanaSilver2 placeholder:text-3xl text-3xl"
                 ref={costRef}
+                value={price}
+                onChange={(e) => priceChangeHandler(e)}
+                maxLength={13}
                 onBlur={() => checkCondition()}
               />
             </div>
