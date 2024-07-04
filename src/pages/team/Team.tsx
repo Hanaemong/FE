@@ -218,7 +218,7 @@ const Team = () => {
                       <PlanItem
                         key={item.planId}
                         title={item.planName}
-                        date={item.planDate}
+                        date={item.planDate.toString()}
                         place={item.place}
                         cost={item.cost}
                         image={item.planImg}
