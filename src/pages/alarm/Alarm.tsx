@@ -1,58 +1,51 @@
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AlarmItem, Topbar } from "../../components";
-import firebase from "firebase/app";
+import { alarmApi } from "../../apis/domains/alarmApi";
+import { useEffect } from "react";
 
 const Alarm = () => {
-  const messaging = firebase.messaging();
-  messaging.onMessage((payload) => {
-    console.log(payload);
+  const queryClient = useQueryClient();
+
+  const {
+    data: alarms,
+    error,
+    isError,
+  } = useQuery({
+    queryKey: ["alarms"],
+    queryFn: () => {
+      const res = alarmApi.getInstance().getAlarmList();
+      return res;
+    },
   });
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["alarms"] });
+  }, []);
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error.message);
+      alert("알람을 불러오는 데 실패했습니다.");
+    }
+  }, [isError]);
+
   return (
     <section className="min-h-real-screen3">
       <Topbar title="알림" prohibit />
       <div className="w-full bg-custom-light-gradient h-[0.15rem]"></div>
-      <div className="flex flex-col px-10 pb-7">
-        <AlarmItem
-          teamId={1}
-          title="방탈출 모임 설문조사 알림"
-          date={new Date()}
-          content="지금 당장 설문조사를 작성해주세요 ~!
-          (48시간내에 등록하지 못하면 무효처리 됩니다.)"
-        />
-        <AlarmItem
-          teamId={1}
-          title="방탈출 모임 설문조사 알림"
-          date={new Date()}
-          content="지금 당장 설문조사를 작성해주세요 ~!
-          (48시간내에 등록하지 못하면 무효처리 됩니다.)"
-        />
-        <AlarmItem
-          teamId={1}
-          title="방탈출 모임 설문조사 알림"
-          date={new Date()}
-          content="지금 당장 설문조사를 작성해주세요 ~!
-          (48시간내에 등록하지 못하면 무효처리 됩니다.)"
-        />
-        <AlarmItem
-          teamId={1}
-          title="방탈출 모임 설문조사 알림"
-          date={new Date()}
-          content="지금 당장 설문조사를 작성해주세요 ~!
-          (48시간내에 등록하지 못하면 무효처리 됩니다.)"
-        />
-        <AlarmItem
-          teamId={1}
-          title="방탈출 모임 설문조사 알림"
-          date={new Date()}
-          content="지금 당장 설문조사를 작성해주세요 ~!
-          (48시간내에 등록하지 못하면 무효처리 됩니다.)"
-        />
-        <AlarmItem
-          teamId={1}
-          title="방탈출 모임 설문조사 알림"
-          date={new Date()}
-          content="지금 당장 설문조사를 작성해주세요 ~!
-          (48시간내에 등록하지 못하면 무효처리 됩니다.)"
-        />
+      <div className="flex flex-col px-10 pt-4 pb-7">
+        {alarms?.data?.map((item, index) => (
+          <AlarmItem
+            key={index}
+            teamId={item.teamId}
+            title={item.title}
+            content={item.body}
+            image={item.image}
+            date={new Date(item.createdAt)}
+            isSeen={item.isSeen}
+            type={item.type}
+          />
+        ))}
       </div>
     </section>
   );

@@ -9,10 +9,10 @@ interface IProps {
   changeBtn?: boolean;
   isChair?: boolean;
   setChangeBtn?: (value: boolean) => void;
-  changeLeader?: () => void;
+  changeChair?: (teamMemberId: number) => void;
   onDeny?: (teamMemberId: number) => void;
   onAccept?: (teamMemberId: number) => void;
-  onReject?: () => void;
+  onReject?: (teamMemberId: number) => void;
 }
 
 const MemberItem: FC<IProps> = ({
@@ -23,8 +23,10 @@ const MemberItem: FC<IProps> = ({
   changeBtn,
   isChair,
   setChangeBtn = () => {},
+  changeChair,
   onDeny,
   onAccept,
+  onReject,
 }) => {
   return (
     <div
@@ -34,12 +36,12 @@ const MemberItem: FC<IProps> = ({
     >
       <div className="flex flex-row items-center">
         <img
-          src={gender === "m" ? "/img/별돌이.png" : "/img/별순이.png"}
+          src={gender === "M" ? "/img/별돌이.png" : "/img/별순이.png"}
           alt="profile"
           className="w-12 h-12"
         />
         <p className="font-hanaRegular text-3xl ml-4">{name}</p>
-        {gender === "m" ? (
+        {gender === "M" ? (
           <MdMale color="#002CC9" size={18} />
         ) : (
           <MdFemale color="#DD0092" size={18} />
@@ -58,7 +60,15 @@ const MemberItem: FC<IProps> = ({
             className={`py-1 px-5 text-lg ${
               changeBtn ? "bg-hanaLightMint text-black" : "bg-hanaPink"
             } rounded-3xl`}
-            onClick={changeBtn ? () => {} : () => {}}
+            onClick={
+              changeBtn
+                ? () => {
+                    changeChair!(teamMemberId);
+                  }
+                : () => {
+                    onReject!(teamMemberId);
+                  }
+            }
           >
             {changeBtn ? "임명하기" : "내보내기"}
           </div>

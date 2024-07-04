@@ -16,8 +16,8 @@ const queryClient = new QueryClient({
 function App() {
   const [showAlarm, setShowAlarm] = useState<boolean>(false);
   const [content, setContent] = useState({
-    title: "설문조사 요청 알림😁",
-    body: "모임은 즐거우셨나요?\n지금 당장 설문조사에 참여해 내 모임의 등급을\n올려보세요 ~!",
+    title: "",
+    body: "",
     teamId: -1,
   });
 
@@ -33,7 +33,7 @@ function App() {
         setContent({
           title: payload.notification.title,
           body: payload.notification.body,
-          teamId: payload.data.teamId,
+          teamId: payload.data?.teamId,
         });
         setShowAlarm(true);
       });

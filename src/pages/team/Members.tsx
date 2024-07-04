@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button, MemberItem, Topbar } from "../../components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { surveyApi } from "../../apis/domains/surveyApi";
 import { teamMemberApi } from "../../apis/domains/teamMemberApi";
 
 const Members = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
 
@@ -15,6 +16,7 @@ const Members = () => {
   };
 
   const [changeBtn, setChangeBtn] = useState<boolean>(false);
+  const [type, setType] = useState<string>("");
 
   const memberQuery = useQuery({
     queryKey: ["memberList"],
@@ -49,11 +51,38 @@ const Members = () => {
       return response;
     },
     onSuccess: () => {
-      alert("모임원을 내보냈습니다.");
-      queryClient.invalidateQueries({ queryKey: ["memberList"] });
+      alert(
+        `${
+          type === "DENY"
+            ? "가입 신청을 거절했습니다."
+            : type === "REJECT"
+            ? "모임원을 내보냈습니다."
+            : "모임에서 탈퇴했습니다"
+        }`
+      );
+      type === "LEAVE"
+        ? navigate("/home")
+        : queryClient.invalidateQueries({ queryKey: ["memberList"] });
     },
     onError: (err) => {
       alert("모임원 내보내기에 실패했습니다.");
+      console.log(err.message);
+    },
+  });
+
+  const { mutate: changeChair } = useMutation({
+    mutationFn: (teamMemberId: number) => {
+      const response = teamMemberApi
+        .getInstance()
+        .postChangeChair(locationState.teamId, teamMemberId);
+      return response;
+    },
+    onSuccess: () => {
+      alert("총무를 변경했습니다.");
+      queryClient.invalidateQueries({ queryKey: ["memberList"] });
+    },
+    onError: (err) => {
+      alert("총무 변경에 실패했습니다.");
       console.log(err.message);
     },
   });
@@ -66,7 +95,7 @@ const Members = () => {
       return response;
     },
     onSuccess: () => {
-      alert("가입을 승낙했습니다.");
+      alert("가입 신청을 수락했습니다.");
       queryClient.invalidateQueries({ queryKey: ["memberList"] });
     },
     onError: (err) => {
@@ -75,8 +104,22 @@ const Members = () => {
     },
   });
 
+  // 거절
   const onDeny = (teamMemberId: number) => {
+    setType("DENY");
+    deleteMember({ teamMemberId: teamMemberId, type: "DENY" });
+  };
+
+  // 내보내기
+  const onReject = (teamMemberId: number) => {
+    setType("REJECT");
     deleteMember({ teamMemberId: teamMemberId, type: "REJECT" });
+  };
+
+  // 탈퇴하기
+  const onLeave = (teamMemberId: number) => {
+    setType("LEAVE");
+    deleteMember({ teamMemberId: teamMemberId, type: "LEAVE" });
   };
 
   useEffect(() => {
@@ -145,11 +188,16 @@ const Members = () => {
                     gender={item.gender}
                     role="모임원"
                     changeBtn={changeBtn}
+                    changeChair={changeChair}
+                    onReject={onReject}
                     isChair={locationState.role === "CHAIR"}
                   />
                 ))}
               {locationState.role !== "CHAIR" && (
-                <p className="w-full text-end text-xl font-hanaMedium underline underline-offset-2 text-hanaSilver2 mt-7 pr-3">
+                <p
+                  className="w-full text-end text-xl font-hanaMedium underline underline-offset-2 text-hanaSilver2 mt-7 pr-3 cursor-pointer"
+                  onClick={() => onLeave(locationState.teamId)}
+                >
                   탈퇴하기
                 </p>
               )}

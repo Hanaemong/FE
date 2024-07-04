@@ -1,19 +1,48 @@
 import { useState } from "react";
 import { Button, ConfirmCard, SurveyCard, Topbar } from "../../components";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { surveyApi } from "../../apis/domains/surveyApi";
 
 const Survey = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const locationState = location.state as {
+    teamId: number;
+  };
 
   const [step, setStep] = useState<number>(1);
   const [scoreArr, setScoreArr] = useState<number[]>([1, 1, 1, 1]);
 
+  const { mutate: postSurvey } = useMutation({
+    mutationFn: (req: { teamId: number; score: number }) => {
+      const response = surveyApi
+        .getInstance()
+        .postSurvey(req.teamId, req.score);
+      return response;
+    },
+    onSuccess: () => {
+      console.log("설문조사 참여 성공");
+    },
+    onError: (err) => {
+      console.log(err.message);
+    },
+  });
+
   const stepHandler = () => {
-    if (step <= 2) {
+    if (step === 1) {
       setStep(step + 1);
+    } else if (step === 2) {
+      setStep(step + 1);
+      postSurvey({
+        teamId: locationState.teamId,
+        score:
+          Math.round((scoreArr.reduce((acc, val) => acc + val, 0) / 4) * 10) /
+          10,
+      });
     } else if (step === 3) {
-      // 설문조사 완료 api 전송
-      navigate(-1);
+      navigate("/alarm");
     }
   };
 
