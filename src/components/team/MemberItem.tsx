@@ -36,12 +36,12 @@ const MemberItem: FC<IProps> = ({
     >
       <div className="flex flex-row items-center">
         <img
-          src={gender === "m" ? "/img/별돌이.png" : "/img/별순이.png"}
+          src={gender === "M" ? "/img/별돌이.png" : "/img/별순이.png"}
           alt="profile"
           className="w-12 h-12"
         />
         <p className="font-hanaRegular text-3xl ml-4">{name}</p>
-        {gender === "m" ? (
+        {gender === "M" ? (
           <MdMale color="#002CC9" size={18} />
         ) : (
           <MdFemale color="#DD0092" size={18} />

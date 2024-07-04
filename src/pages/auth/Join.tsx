@@ -183,7 +183,7 @@ const Join = () => {
 
     if (step === 4 && gender !== "") {
       setInputs({ ...inputs, gender: gender });
-      if (gender === "m") {
+      if (gender === "M") {
         setInputs({
           ...inputs,
           profile:
@@ -529,21 +529,21 @@ const Join = () => {
               <div className="w-full flex justify-between">
                 <div
                   className={`border border-[#D6D6D6] text-3xl font-hanaRegular rounded-2xl px-24 py-10 ${
-                    gender === "m"
+                    gender === "M"
                       ? "text-hanaPurple border-hanaPurple"
                       : "text-[#979797]"
                   }`}
-                  onClick={() => selectGender("m")}
+                  onClick={() => selectGender("M")}
                 >
                   남성
                 </div>
                 <div
                   className={`border border-[#D6D6D6] text-[#979797] text-3xl font-hanaRegular rounded-2xl px-24 py-10 ${
-                    gender === "f"
+                    gender === "W"
                       ? "text-hanaPurple border-hanaPurple"
                       : "text-[#979797]"
                   }`}
-                  onClick={() => selectGender("f")}
+                  onClick={() => selectGender("W")}
                 >
                   여성
                 </div>

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 interface IProps {
   title: string;
   body: string;
-  teamId: number;
+  teamId: number | null;
   toggleShowAlarm: (toggle: boolean) => void;
 }
 
