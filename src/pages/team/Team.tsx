@@ -72,6 +72,7 @@ const Team = () => {
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["teamDetail"] });
+    queryClient.invalidateQueries({ queryKey: ["plan"] });
   }, []);
 
   return (
@@ -151,15 +152,17 @@ const Team = () => {
               {/* 배너 */}
               <div
                 className="w-full flex justify-end h-80 bg-contain"
-                style={{ backgroundImage: "url(/img/배드민턴.png)" }}
+                style={{ backgroundImage: "url(/img/banner.png)" }}
                 onClick={() =>
                   console.log(role, role === "CHAIR" || role === "REGULAR")
                 }
               >
-                <HiPencilSquare
-                  size={20}
-                  className="text-hanaSilver2 mt-3 mr-7"
-                />
+                {role === "CHAIR" && (
+                  <HiPencilSquare
+                    size={30}
+                    className="text-hanaGray2 mt-3 mr-7"
+                  />
+                )}
               </div>
               {(role === "CHAIR" || role === "REGULAR") && (
                 <>
@@ -218,7 +221,7 @@ const Team = () => {
                       <PlanItem
                         key={item.planId}
                         title={item.planName}
-                        date={item.planDate}
+                        date={item.planDate.toString()}
                         place={item.place}
                         cost={item.cost}
                         image={item.planImg}
