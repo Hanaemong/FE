@@ -10,6 +10,7 @@ const Login = () => {
   const [confirm, setConfirm] = useState<boolean>(true);
 
   const phone = getCookie("phone");
+  const fcmToken = getCookie("fcmToken");
 
   const { mutate: login, data } = useMutation({
     mutationFn: (user: LoginType) => {
@@ -20,6 +21,7 @@ const Login = () => {
       console.log(response.data?.siGunGu!);
       setCookie("token", response.data?.accessToken!);
       setCookie("siGunGu", response.data?.siGunGu!);
+      setCookie("name", response.data?.name!);
       navigate("/home");
     },
     onError: (err) => {
@@ -29,7 +31,7 @@ const Login = () => {
   });
 
   const onPasswordComplete = (password: string) => {
-    login({ phone, password });
+    login({ phone, password, fcmToken });
   };
 
   return (

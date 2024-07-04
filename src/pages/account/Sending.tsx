@@ -48,13 +48,14 @@ const Sending = () => {
   });
 
   const phone = getCookie("phone");
+  const fcmToken = getCookie("fcmToken");
 
-  const { mutate: login, data } = useMutation({
+  const { mutate: login } = useMutation({
     mutationFn: (user: LoginType) => {
       return memberApi.getInstance().postLogin(user);
     },
-    onSuccess: (response) => {
-      console.log(data);
+    onSuccess: (res) => {
+      console.log(res.data);
       console.log(price);
       postDue({
         teamId: locationState.teamId,
@@ -70,12 +71,12 @@ const Sending = () => {
     },
   });
 
-  const { mutate: postDue, data: result } = useMutation({
+  const { mutate: postDue } = useMutation({
     mutationFn: (req: { teamId: number; due: DueType }) => {
       return transacionApi.getInstance().postDue(req.teamId, req.due);
     },
-    onSuccess: (reponse) => {
-      console.log(result);
+    onSuccess: (res) => {
+      console.log(res.data);
       setIsActive(true);
       setStep((prev) => prev + 1);
     },
@@ -151,7 +152,7 @@ const Sending = () => {
   };
 
   const onPasswordComplete = (password: string) => {
-    login({ phone, password });
+    login({ phone, password, fcmToken });
   };
 
   const stepHandler = () => {

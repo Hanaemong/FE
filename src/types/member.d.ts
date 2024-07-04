@@ -1,11 +1,13 @@
 interface LoginType {
   phone: string;
   password: string;
+  fcmToken: string;
 }
 
 interface LoginResponseType {
   accessToken: string;
   memberId: number;
+  name: string;
   siGunGu: string;
 }
 

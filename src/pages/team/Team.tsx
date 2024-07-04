@@ -141,7 +141,13 @@ const Team = () => {
                     </div>
                     <div
                       className="w-1/2 cursor-pointer"
-                      onClick={() => navigate("/team/dues")}
+                      onClick={() =>
+                        navigate("/search", {
+                          state: {
+                            teamId: locationState.teamId,
+                          },
+                        })
+                      }
                     >
                       회비내역
                     </div>
@@ -152,10 +158,7 @@ const Team = () => {
               {/* 배너 */}
               <div
                 className="w-full flex justify-end h-80 bg-contain"
-                style={{ backgroundImage: "url(/img/banner.png)" }}
-                onClick={() =>
-                  console.log(role, role === "CHAIR" || role === "REGULAR")
-                }
+                style={{ backgroundImage: `url(${detail.data.banner})` }}
               >
                 {role === "CHAIR" && (
                   <HiPencilSquare

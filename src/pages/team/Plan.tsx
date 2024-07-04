@@ -35,7 +35,7 @@ const Plan = () => {
     teamId: number;
   };
 
-  const { mutate: postPlan, data } = useMutation({
+  const { mutate: postPlan } = useMutation({
     mutationFn: (req: { teamId: number; plan: FormData }) => {
       return planApi.getInstance().postPlan(req);
     },
