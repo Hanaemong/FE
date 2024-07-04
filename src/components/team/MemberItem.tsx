@@ -9,10 +9,10 @@ interface IProps {
   changeBtn?: boolean;
   isChair?: boolean;
   setChangeBtn?: (value: boolean) => void;
-  changeLeader?: () => void;
+  changeChair?: (teamMemberId: number) => void;
   onDeny?: (teamMemberId: number) => void;
   onAccept?: (teamMemberId: number) => void;
-  onReject?: () => void;
+  onReject?: (teamMemberId: number) => void;
 }
 
 const MemberItem: FC<IProps> = ({
@@ -23,8 +23,10 @@ const MemberItem: FC<IProps> = ({
   changeBtn,
   isChair,
   setChangeBtn = () => {},
+  changeChair,
   onDeny,
   onAccept,
+  onReject,
 }) => {
   return (
     <div
@@ -58,7 +60,15 @@ const MemberItem: FC<IProps> = ({
             className={`py-1 px-5 text-lg ${
               changeBtn ? "bg-hanaLightMint text-black" : "bg-hanaPink"
             } rounded-3xl`}
-            onClick={changeBtn ? () => {} : () => {}}
+            onClick={
+              changeBtn
+                ? () => {
+                    changeChair!(teamMemberId);
+                  }
+                : () => {
+                    onReject!(teamMemberId);
+                  }
+            }
           >
             {changeBtn ? "임명하기" : "내보내기"}
           </div>

@@ -21,8 +21,10 @@ export class teamMemberApi extends ApiClient {
     return response;
   }
 
-  async postChangeChair(teamMemberId: number) {
-    const response = await this._http.post(`/teamMember/${teamMemberId}`);
+  async postChangeChair(teamId: number, teamMemberId: number) {
+    const response = await this._http.post(`/teamMember/${teamId}`, {
+      teamMemberId: teamMemberId,
+    });
     return response;
   }
 
