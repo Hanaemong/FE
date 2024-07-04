@@ -112,8 +112,6 @@ const Plan = () => {
     }
   };
 
-  // useEffect(() => {}, []);
-
   return (
     <section>
       <Topbar title="일정 개설" />

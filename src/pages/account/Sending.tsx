@@ -11,6 +11,10 @@ import {
 } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getCookie } from "../../utils/cookie";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { accountApi } from "../../apis/domains/accountApi";
+import { memberApi } from "../../apis/domains/memberApi";
+import { transacionApi } from "../../apis/domains/transactionApi";
 
 const Sending = () => {
   const navigate = useNavigate();
@@ -33,6 +37,53 @@ const Sending = () => {
   const [accountModal, setAccountModal] = useState<boolean>(false);
   const [sendModal, setSendModal] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [confirm, setConfirm] = useState<boolean>(true);
+
+  const { data: accountInfo } = useQuery({
+    queryKey: ["accountInfo"],
+    queryFn: () => {
+      const response = accountApi.getInstance().getAccount();
+      return response;
+    },
+  });
+
+  const phone = getCookie("phone");
+  const fcmToken = getCookie("fcmToken");
+
+  const { mutate: login } = useMutation({
+    mutationFn: (user: LoginType) => {
+      return memberApi.getInstance().postLogin(user);
+    },
+    onSuccess: (res) => {
+      console.log(res.data);
+      console.log(price);
+      postDue({
+        teamId: locationState.teamId,
+        due: {
+          accountId: account.accountId,
+          amount: Number(price!.toString().replace(/[^0-9]/g, "")),
+        },
+      });
+    },
+    onError: (err) => {
+      console.log(err.message);
+      setConfirm(false);
+    },
+  });
+
+  const { mutate: postDue } = useMutation({
+    mutationFn: (req: { teamId: number; due: DueType }) => {
+      return transacionApi.getInstance().postDue(req.teamId, req.due);
+    },
+    onSuccess: (res) => {
+      console.log(res.data);
+      setIsActive(true);
+      setStep((prev) => prev + 1);
+    },
+    onError: (err) => {
+      console.log(err.message);
+    },
+  });
 
   const onClickBack = () => {
     if (step > 1) {
@@ -100,6 +151,10 @@ const Sending = () => {
     setIsActive(true);
   };
 
+  const onPasswordComplete = (password: string) => {
+    login({ phone, password, fcmToken });
+  };
+
   const stepHandler = () => {
     if (step === 1) {
       setIsActive(false);
@@ -109,12 +164,14 @@ const Sending = () => {
     } else if (step === 3) {
       setSendModal(false);
     } else if (step === 4) {
-      setIsActive(true);
+      return;
+      // 간편비밀번호 입력
+      // setIsActive(true);
     } else if (step === 5) {
       // api 전송하고 모임상세 페이지로 되돌아가기
       navigate("/team", {
         state: {
-          teamId: 1,
+          teamId: locationState.teamId,
         },
       });
     }
@@ -126,10 +183,10 @@ const Sending = () => {
       {accountModal && (
         <SelectModal title="계좌 선택" onClose={() => setAccountModal(false)}>
           <AccountItem
-            accountId={1}
-            title="영하나 플러스"
-            accountNumber="123-543-6323451"
-            balance={200000}
+            accountId={accountInfo?.data?.accountId!}
+            title={accountInfo?.data?.accountName!}
+            accountNumber={accountInfo?.data?.accountNumber!}
+            balance={accountInfo?.data?.balance!}
             onClick={onClickAccount}
           />
         </SelectModal>
@@ -192,7 +249,14 @@ const Sending = () => {
             </p>
           </div>
         )}
-        {step === 4 && <Password onPasswordComplete={() => stepHandler()} />}
+        {step === 4 && (
+          <Password
+            onPasswordComplete={(password: string) => {
+              onPasswordComplete(password);
+            }}
+            confirm={confirm}
+          />
+        )}
         {step === 5 && <ConfirmCard text="회비 납부 완료!" />}
         {/* 버튼 영역 */}
         {step != 4 && (

@@ -20,14 +20,8 @@ const CreateTeam = () => {
   const navigate = useNavigate();
 
   const { mutate: createTeam } = useMutation({
-    mutationFn: (team: TeamCreateType) => {
-      const response = teamApi.getInstance().postCreateTeam({
-        teamName: team.teamName,
-        teamDesc: team.teamDesc,
-        category: team.category,
-        capacity: team.capacity,
-        thumbNail: team.thumbNail,
-      });
+    mutationFn: (team: FormData) => {
+      const response = teamApi.getInstance().postCreateTeam(team);
       return response;
     },
     onSuccess: () => {
@@ -48,7 +42,7 @@ const CreateTeam = () => {
     teamName: "",
     teamDesc: "",
     capacity: 0,
-    thumbNail: "",
+    thumbNail: new File([], ""),
   });
   const [memberText, setMemberText] = useState<string>("");
   const [account, setAccount] = useState({
@@ -58,12 +52,14 @@ const CreateTeam = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [categoryModal, setCategoryModal] = useState<boolean>(false);
   const [accountModal, setAccountModal] = useState<boolean>(false);
+  const [attachment, setAttachment] = useState<string>("");
 
   const nameRef = useRef<HTMLInputElement | null>(null);
   const descRef = useRef<HTMLTextAreaElement | null>(null);
   const memberRef = useRef<HTMLInputElement | null>(null);
 
   const stepHandler = () => {
+    const formData = new FormData();
     if (step === 1) {
       console.log(
         nameRef.current!.value,
@@ -72,23 +68,33 @@ const CreateTeam = () => {
         Number(memberRef.current!.value)
       );
       setContent({
+        ...content,
         teamName: nameRef.current!.value,
         teamDesc: descRef.current!.value,
         capacity: Number(memberRef.current!.value),
-        thumbNail: "/img/별돌이.png",
       });
       setIsActive(false);
       setStep(2);
     } else if (step === 2) {
+      formData.append(
+        "createTeam",
+        new Blob(
+          [
+            JSON.stringify({
+              teamName: content.teamName,
+              teamDesc: content.teamDesc,
+              capacity: content.capacity,
+              category: category.name,
+            }),
+          ],
+          { type: "application/json" }
+        )
+      );
+      formData.append("thumbNail", content.thumbNail);
+      createTeam(formData);
       setStep(3);
     } else if (step === 3) {
-      createTeam({
-        teamName: content.teamName,
-        teamDesc: content.teamDesc,
-        category: category.name,
-        capacity: content.capacity,
-        thumbNail: content.thumbNail,
-      });
+      navigate("/home");
     }
   };
 
@@ -142,6 +148,19 @@ const CreateTeam = () => {
     }
 
     setIsActive(true);
+  };
+
+  const handleImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (!files) return;
+
+    if (files.length > 0) {
+      const file = files[0];
+      setContent({ ...content, thumbNail: file });
+
+      const url = URL.createObjectURL(file);
+      setAttachment(url);
+    }
   };
 
   return (
@@ -233,12 +252,22 @@ const CreateTeam = () => {
               </div>
               <div className="flex flex-row justify-center">
                 <div className="flex w-full h-48 bg-[#EBEBEB] rounded-2xl justify-center items-center">
-                  <div
+                  <label
+                    htmlFor="imgInput"
+                    className="flex w-36 h-36 justify-center items-center border-dashed border-[3px] border-white my-2 rounded-3xl"
+                  >
+                    {/* <div
                     className="flex w-36 h-36 justify-center items-center border-dashed border-[3px] border-white my-2 rounded-3xl"
                     onClick={() => console.log("이미지 추가")}
-                  >
+                  > */}
                     <GoPlus color="ffffff" size={64} />
-                  </div>
+                    <input
+                      id="imgInput"
+                      type="file"
+                      className="hidden"
+                      onChange={handleImg}
+                    />
+                  </label>
                 </div>
               </div>
             </div>

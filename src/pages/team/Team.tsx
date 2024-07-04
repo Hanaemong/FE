@@ -72,6 +72,7 @@ const Team = () => {
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["teamDetail"] });
+    queryClient.invalidateQueries({ queryKey: ["plan"] });
   }, []);
 
   return (
@@ -140,7 +141,13 @@ const Team = () => {
                     </div>
                     <div
                       className="w-1/2 cursor-pointer"
-                      onClick={() => navigate("/team/dues")}
+                      onClick={() =>
+                        navigate("/search", {
+                          state: {
+                            teamId: locationState.teamId,
+                          },
+                        })
+                      }
                     >
                       회비내역
                     </div>
@@ -151,15 +158,14 @@ const Team = () => {
               {/* 배너 */}
               <div
                 className="w-full flex justify-end h-80 bg-contain"
-                style={{ backgroundImage: "url(/img/배드민턴.png)" }}
-                onClick={() =>
-                  console.log(role, role === "CHAIR" || role === "REGULAR")
-                }
+                style={{ backgroundImage: `url(${detail.data.banner})` }}
               >
-                <HiPencilSquare
-                  size={20}
-                  className="text-hanaSilver2 mt-3 mr-7"
-                />
+                {role === "CHAIR" && (
+                  <HiPencilSquare
+                    size={30}
+                    className="text-hanaGray2 mt-3 mr-7"
+                  />
+                )}
               </div>
               {(role === "CHAIR" || role === "REGULAR") && (
                 <>

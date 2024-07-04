@@ -22,8 +22,8 @@ export class teamApi extends ApiClient {
     return response;
   }
 
-  async postCreateTeam(team: TeamCreateType) {
-    const response = await this._http.post("/team", team);
+  async postCreateTeam(team: FormData) {
+    const response = await this._http2.post("/team", team);
     return response;
   }
 

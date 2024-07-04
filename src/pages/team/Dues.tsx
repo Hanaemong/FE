@@ -1,15 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, DueHistoryItem, Topbar } from "../../components";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { dateMonth, dateYear } from "../../utils/getDate";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { transacionApi } from "../../apis/domains/transactionApi";
 
 const Dues = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryClient = useQueryClient();
+
+  const locationState = location.state as {
+    teamId: number;
+  };
 
   const [isDeposit, setIsDeposit] = useState<boolean>(true);
   const [year, setYear] = useState<number>(dateYear);
   const [month, setMonth] = useState<number>(dateMonth);
+
+  const { data: transactions } = useQuery({
+    queryKey: ["teamTransaction"],
+    queryFn: () => {
+      const res = transacionApi
+        .getInstance()
+        .getTeamTransaction(
+          locationState.teamId,
+          dateYear.toString().concat(dateMonth.toString().padStart(2, "0"))
+        );
+      return res;
+    },
+  });
 
   const onClickArrow = (value: number) => {
     if (year === dateYear && month === dateMonth && value === 1) return;
@@ -26,6 +47,10 @@ const Dues = () => {
     }
   };
 
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["teamTransaction"] });
+  }, [month, year]);
+
   return (
     <section>
       <Topbar title="회비 내역" />
@@ -34,9 +59,11 @@ const Dues = () => {
           {/* 모임 정보 카드 */}
           <div className="flex flex-col w-full h-64 py-24 bg-custom-light-gradient gap-10 justify-center items-center">
             <p className="font-hanaRegular text-2xl">
-              모임 계좌번호 111-222222-33333
+              모임 계좌번호 {transactions?.data?.accountNumber}
             </p>
-            <p className="font-hanaBold text-5xl">150,000 원</p>
+            <p className="font-hanaBold text-5xl">
+              {transactions?.data?.balance} 원
+            </p>
           </div>
           {/* 입금 출금 버튼 영역 */}
           <div className="flex w-full h-[4.5rem] flex-row justify-around items-center px-7">
@@ -78,118 +105,31 @@ const Dues = () => {
                 onClick={() => onClickArrow(1)}
               />
             </div>
-            <DueHistoryItem
-              name="김현우"
-              gender="M"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="김지윤"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="안나영"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="신명지"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="김현우"
-              gender="M"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="김지윤"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="안나영"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="신명지"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="김현우"
-              gender="M"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="김지윤"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="안나영"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="신명지"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="김현우"
-              gender="M"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="김지윤"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="안나영"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
-            <DueHistoryItem
-              name="신명지"
-              gender="W"
-              balance={50000}
-              isDeposit
-              date={new Date()}
-            />
+            {isDeposit
+              ? transactions?.data?.transactionResList
+                  .filter((item) => item.type === "TRANSFER")
+                  .map((item, index) => (
+                    <DueHistoryItem
+                      key={index}
+                      name={item.memberName}
+                      gender={item.memberGender}
+                      balance={item.amount}
+                      date={item.paidDate}
+                      isDeposit
+                    />
+                  ))
+              : transactions?.data?.transactionResList
+                  .filter((item) => item.type === "PAYMENT")
+                  .map((item, index) => (
+                    <DueHistoryItem
+                      key={index}
+                      name={item.memberName}
+                      gender={item.memberGender}
+                      balance={item.amount}
+                      date={item.paidDate}
+                      isDeposit
+                    />
+                  ))}
           </div>
         </div>
         <div className="flex flex-row justify-center pb-10">

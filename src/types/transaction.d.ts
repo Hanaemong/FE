@@ -4,6 +4,7 @@ interface TransactionType {
   memberGender: string;
   amount: number;
   type: string;
+  paidDate: Date;
 }
 
 interface TeamTransactionType {
