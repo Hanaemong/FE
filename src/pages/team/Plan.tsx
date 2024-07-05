@@ -16,6 +16,7 @@ const Plan = () => {
   const location = useLocation();
   const [complete, setComlpete] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [prohibit, setProhibit] = useState<boolean>(false);
   const [attachment, setAttachment] = useState<string>("");
   const [price, setPrice] = useState<number>();
   const nameRef = useRef<HTMLInputElement | null>(null);
@@ -43,6 +44,7 @@ const Plan = () => {
     },
     onSuccess: (response) => {
       console.log(response);
+      setProhibit(true);
       setComlpete(true);
     },
     onError: (err) => {
@@ -133,7 +135,7 @@ const Plan = () => {
 
   return (
     <section>
-      <Topbar title="일정 개설" />
+      <Topbar title="일정 개설" prohibit={prohibit} />
       <div className="min-h-real-screen2 flex flex-col pb-12 justify-between items-center">
         {!complete && (
           <div className="w-full flex flex-col p-7 gap-7">

@@ -45,6 +45,7 @@ const Join = () => {
   const [pwd, setPwd] = useState<string>("");
   const [confirm, checkConfirm] = useState<boolean>(true);
   const [regionCheckResult, setRegionCheckResult] = useState<string>("");
+  const [prohibit, setProhibit] = useState<boolean>(false);
 
   const { mutate: checkPhone, data: result } = useMutation({
     mutationFn: (phone: string) => {
@@ -138,6 +139,7 @@ const Join = () => {
       console.log(response);
       setCookie("name", inputs.name);
       setCookie("phone", inputs.phone);
+      setProhibit(true);
       setStep((prev) => prev + 1);
     },
     onError: (err) => {
@@ -378,7 +380,11 @@ const Join = () => {
       }
       <section className="min-h-real-screen2 h-screen flex flex-col items-center relative z-10">
         {step !== 1 && step !== 8 && (
-          <Topbar title="회원가입" onClick={() => prevStep()} />
+          <Topbar
+            title="회원가입"
+            onClick={() => prevStep()}
+            prohibit={prohibit}
+          />
         )}
         <div className="h-full w-full flex flex-col items-center justify-between py-8 pb-16">
           {step === 1 ? (

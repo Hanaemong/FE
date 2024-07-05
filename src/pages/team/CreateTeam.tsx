@@ -26,7 +26,8 @@ const CreateTeam = () => {
       return response;
     },
     onSuccess: () => {
-      navigate("/home");
+      setProhibit(true);
+      setStep(3);
     },
     onError: (err) => {
       console.log(err.message);
@@ -62,6 +63,7 @@ const CreateTeam = () => {
   const [categoryModal, setCategoryModal] = useState<boolean>(false);
   const [accountModal, setAccountModal] = useState<boolean>(false);
   const [attachment, setAttachment] = useState<string>("");
+  const [prohibit, setProhibit] = useState<boolean>(false);
 
   const nameRef = useRef<HTMLInputElement | null>(null);
   const descRef = useRef<HTMLTextAreaElement | null>(null);
@@ -101,7 +103,6 @@ const CreateTeam = () => {
       );
       formData.append("thumbNail", content.thumbNail);
       createTeam(formData);
-      setStep(3);
     } else if (step === 3) {
       navigate("/home");
     }
@@ -200,7 +201,7 @@ const CreateTeam = () => {
           />
         </SelectModal>
       )}
-      <Topbar title="모임 개설" onClick={onClickBack} />
+      <Topbar title="모임 개설" onClick={onClickBack} prohibit={prohibit} />
       <div className="flex flex-col min-h-real-screen2 justify-between">
         {/* 1페이지 */}
         {step === 1 && (

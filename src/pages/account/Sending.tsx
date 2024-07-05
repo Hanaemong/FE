@@ -38,6 +38,7 @@ const Sending = () => {
   const [sendModal, setSendModal] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(true);
+  const [prohibit, setProhibit] = useState<boolean>(false);
 
   const { data: accountInfo } = useQuery({
     queryKey: ["accountInfo"],
@@ -64,6 +65,7 @@ const Sending = () => {
           amount: Number(price!.toString().replace(/[^0-9]/g, "")),
         },
       });
+      setProhibit(true);
     },
     onError: (err) => {
       console.log(err.message);
@@ -202,7 +204,11 @@ const Sending = () => {
           onClick={() => stepHandler()}
         />
       )}
-      <Topbar title="회비 납부" onClick={() => onClickBack()} />
+      <Topbar
+        title="회비 납부"
+        onClick={() => onClickBack()}
+        prohibit={prohibit}
+      />
       <div className="flex flex-col min-h-real-screen2 justify-between px-10 py-12">
         {/* 참여 확인 */}
         {step === 1 && (
