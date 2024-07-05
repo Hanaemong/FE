@@ -4,7 +4,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import { dateMonth, dateYear } from "../../utils/getDate";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { transacionApi } from "../../apis/domains/transactionApi";
+import { transactionApi } from "../../apis/domains/transactionApi";
 
 const Dues = () => {
   const navigate = useNavigate();
@@ -22,11 +22,11 @@ const Dues = () => {
   const { data: transactions } = useQuery({
     queryKey: ["teamTransaction"],
     queryFn: () => {
-      const res = transacionApi
+      const res = transactionApi
         .getInstance()
         .getTeamTransaction(
           locationState.teamId,
-          dateYear.toString().concat(dateMonth.toString().padStart(2, "0"))
+          `${year}-${month.toString().padStart(2, "0")}`
         );
       return res;
     },
@@ -62,7 +62,7 @@ const Dues = () => {
               모임 계좌번호 {transactions?.data?.accountNumber}
             </p>
             <p className="font-hanaBold text-5xl">
-              {transactions?.data?.balance} 원
+              {transactions?.data?.balance.toLocaleString()} 원
             </p>
           </div>
           {/* 입금 출금 버튼 영역 */}
@@ -114,7 +114,7 @@ const Dues = () => {
                       name={item.memberName}
                       gender={item.memberGender}
                       balance={item.amount}
-                      date={item.paidDate}
+                      date={new Date(item.paidDate)}
                       isDeposit
                     />
                   ))
@@ -126,8 +126,8 @@ const Dues = () => {
                       name={item.memberName}
                       gender={item.memberGender}
                       balance={item.amount}
-                      date={item.paidDate}
-                      isDeposit
+                      date={new Date(item.paidDate)}
+                      isDeposit={false}
                     />
                   ))}
           </div>

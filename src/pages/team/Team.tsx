@@ -142,7 +142,7 @@ const Team = () => {
                     <div
                       className="w-1/2 cursor-pointer"
                       onClick={() =>
-                        navigate("/search", {
+                        navigate("/team/dues", {
                           state: {
                             teamId: locationState.teamId,
                           },

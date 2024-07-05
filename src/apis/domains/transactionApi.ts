@@ -1,15 +1,15 @@
 import { ApiClient } from "../apiClient";
 
-export class transacionApi extends ApiClient {
-  private static instance: transacionApi;
+export class transactionApi extends ApiClient {
+  private static instance: transactionApi;
 
-  static getInstance(): transacionApi {
+  static getInstance(): transactionApi {
     return this.instance || (this.instance = new this());
   }
 
   async getTeamTransaction(teamId: number, date: string) {
     const response = await this._http.get<TeamTransactionType>(
-      `/transaction/?teamId=${teamId}&date=${date}`
+      `/transaction/${teamId}?date=${date}`
     );
     return response;
   }
