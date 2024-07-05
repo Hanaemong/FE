@@ -52,7 +52,7 @@ const MemberItem: FC<IProps> = ({
           className="font-hanaMedium underline underline-offset-2 pr-3 text-xl"
           onClick={() => setChangeBtn(!changeBtn)}
         >
-          총무변경
+          {changeBtn ? "취소하기" : "총무변경"}
         </div>
       ) : role === "모임원" && isChair ? (
         <div className="flex flex-row gap-3 font-hanaRegular text-white cursor-pointer">

@@ -29,21 +29,6 @@ const Members = () => {
     },
   });
 
-  const { mutate: requestSurvey } = useMutation({
-    mutationFn: (teamId: number) => {
-      const response = surveyApi.getInstance().postRequestSurvey(teamId, 1);
-      return response;
-    },
-    onSuccess: (response) => {
-      alert("모임원에게 설문조사를 요청했습니다.");
-      console.log(response.data);
-    },
-    onError: (err) => {
-      alert("설문조사 요청에 실패했습니다.");
-      console.log(err.message);
-    },
-  });
-
   const { mutate: deleteMember } = useMutation({
     mutationFn: (param: { teamMemberId: number; type: string }) => {
       const response = teamMemberApi
@@ -218,7 +203,7 @@ const Members = () => {
             </div>
           </div>
         </div>
-        {locationState.role === "CHAIR" && (
+        {/* {locationState.role === "CHAIR" && (
           <div className="flex flex-row justify-center mb-7">
             <Button
               text="설문조사 보내기"
@@ -227,7 +212,7 @@ const Members = () => {
               }}
             />
           </div>
-        )}
+        )} */}
       </div>
     </section>
   );
