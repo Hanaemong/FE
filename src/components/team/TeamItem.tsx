@@ -11,7 +11,14 @@ interface Iprops {
   rating: number;
 }
 
-const TeamItem: FC<Iprops> = ({ teamId, name, category, member, rating }) => {
+const TeamItem: FC<Iprops> = ({
+  teamId,
+  name,
+  image,
+  category,
+  member,
+  rating,
+}) => {
   const navigate = useNavigate();
   const onClickItem = () => {
     navigate("/team", {
@@ -24,7 +31,7 @@ const TeamItem: FC<Iprops> = ({ teamId, name, category, member, rating }) => {
   return (
     <div className="flex flex-row gap-4" onClick={() => onClickItem()}>
       <img
-        src="/img/배드민턴.png"
+        src={image}
         alt="image"
         className="flex w-24 h-24 rounded-2xl justify-center items-center drop-shadow-md"
       />
