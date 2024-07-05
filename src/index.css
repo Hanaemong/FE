@@ -4,49 +4,49 @@
 
 @font-face {
   font-family: "Hana-Heavy";
-  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Heavy.otf")
+  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Heavy.otf")
       format("opentype"),
-    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Heavy.ttf")
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Heavy.ttf")
       format("truetype");
 }
 
 @font-face {
   font-family: "Hana-Bold";
-  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Bold.otf")
+  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Bold.otf")
       format("opentype"),
-    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Bold.ttf")
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Bold.ttf")
       format("truetype");
 }
 
 @font-face {
   font-family: "Hana-CM";
-  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-CM.otf")
+  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-CM.otf")
       format("opentype"),
-    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-CM.ttf")
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-CM.ttf")
       format("truetype");
 }
 
 @font-face {
   font-family: "Hana-Medium";
-  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Medium.otf")
+  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Medium.otf")
       format("opentype"),
-    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Medium.ttf")
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Medium.ttf")
       format("truetype");
 }
 
 @font-face {
   font-family: "Hana-Regular";
-  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Regular.otf")
+  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Regular.otf")
       format("opentype"),
-    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Regular.ttf")
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Regular.ttf")
       format("truetype");
 }
 
 @font-face {
   font-family: "Hana-Light";
-  src: url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Light.otf")
+  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Light.otf")
       format("opentype"),
-    url("https://ddok-bucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Light.ttf")
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Light.ttf")
       format("truetype");
 }
 
