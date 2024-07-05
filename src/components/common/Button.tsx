@@ -15,7 +15,7 @@ const Button: FC<Iprops> = ({ text, onClick, isActive }) => {
 
   return (
     <div
-      className={`flex bg-custom-gradient justify-center h-[4rem] w-5/6 rounded-full text-white font-hanaBold text-2xl ${
+      className={`flex bg-custom-gradient justify-center h-[4.5rem] w-5/6 rounded-full text-white font-hanaBold text-3xl ${
         isActive == null || isActive ? "cursor-pointer" : "opacity-35"
       }`}
       onClick={() => {

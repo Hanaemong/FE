@@ -2,7 +2,7 @@ import { GoChevronRight } from "react-icons/go";
 import { TeamItem } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../utils/cookie";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { memberApi } from "../../apis/domains/memberApi";
 import { accountApi } from "../../apis/domains/accountApi";
 import { teamApi } from "../../apis/domains/teamApi";
@@ -10,6 +10,7 @@ import { useEffect } from "react";
 
 const My = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { data: memberInfo } = useQuery({
     queryKey: ["memberInfo"],
@@ -45,6 +46,11 @@ const My = () => {
       alert("내 모임을 불러오는 데 실패했습니다.");
     }
   }, [isError]);
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["list"] });
+    queryClient.invalidateQueries({ queryKey: ["accountInfo"] });
+  }, []);
 
   return (
     <section className="min-h-real-screen bg-hanaGray">
@@ -88,6 +94,7 @@ const My = () => {
                 category={item.category}
                 member={item.memberCnt}
                 rating={item.score}
+                from="my"
               />
             ))}
           </div>

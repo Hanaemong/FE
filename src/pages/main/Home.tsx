@@ -92,6 +92,7 @@ const Home = () => {
                   category={item.category}
                   member={item.memberCnt}
                   rating={item.score}
+                  from="home"
                 />
               ))}
               {teams?.data!.length == 0 && (

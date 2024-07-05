@@ -13,6 +13,7 @@ const Members = () => {
   const locationState = location.state as {
     role: string;
     teamId: number;
+    from: string;
   };
 
   const [changeBtn, setChangeBtn] = useState<boolean>(false);
@@ -30,7 +31,7 @@ const Members = () => {
 
   const { mutate: requestSurvey } = useMutation({
     mutationFn: (teamId: number) => {
-      const response = surveyApi.getInstance().postRequestSurvey(teamId);
+      const response = surveyApi.getInstance().postRequestSurvey(teamId, 1);
       return response;
     },
     onSuccess: (response) => {
@@ -79,7 +80,12 @@ const Members = () => {
     },
     onSuccess: () => {
       alert("총무를 변경했습니다.");
-      queryClient.invalidateQueries({ queryKey: ["memberList"] });
+      navigate("/team", {
+        state: {
+          teamId: locationState.teamId,
+          from: locationState.from,
+        },
+      });
     },
     onError: (err) => {
       alert("총무 변경에 실패했습니다.");
@@ -133,7 +139,11 @@ const Members = () => {
         <div className="flex flex-col p-7 gap-10">
           {/* 모임 멤버수 */}
           <div className="font-hanaBold text-2xl pb-2 border-b-2 border-hanaGray">
-            {memberQuery.data?.data?.length}명 참여중
+            {
+              memberQuery.data?.data?.filter((item) => item.role !== "PENDING")
+                .length
+            }
+            명 참여중
           </div>
           {/* 모임 총무 */}
           <div className="flex flex-col">

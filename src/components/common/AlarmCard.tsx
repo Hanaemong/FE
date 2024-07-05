@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 interface IProps {
   title: string;
   body: string;
-  teamId: number | null;
+  teamId: number | undefined;
   toggleShowAlarm: (toggle: boolean) => void;
 }
 
@@ -12,7 +12,7 @@ const AlarmCard: FC<IProps> = ({ title, body, teamId, toggleShowAlarm }) => {
   const navigate = useNavigate();
 
   const onClickAlarm = () => {
-    if (teamId === -1) {
+    if (teamId == undefined) {
       return;
     }
 

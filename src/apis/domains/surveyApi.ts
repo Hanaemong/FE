@@ -14,8 +14,10 @@ export class surveyApi extends ApiClient {
     return response;
   }
 
-  async postRequestSurvey(teamId: number) {
-    const response = await this._http.post(`/survey/request/${teamId}`);
+  async postRequestSurvey(teamId: number, planId: number) {
+    const response = await this._http.post(
+      `/survey/request/${teamId}/${planId}`
+    );
     return response;
   }
 }
