@@ -169,6 +169,7 @@ const Search = () => {
                     category={item.category}
                     member={item.memberCnt}
                     rating={item.score}
+                    from="home"
                   />
                 ))}
                 {teamList.length === 0 && (
