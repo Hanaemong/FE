@@ -127,7 +127,7 @@ const Dues = () => {
                       gender={item.memberGender}
                       balance={item.amount}
                       date={new Date(item.paidDate)}
-                      isDeposit
+                      isDeposit={false}
                     />
                   ))}
           </div>
