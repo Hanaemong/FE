@@ -37,9 +37,7 @@ const Survey = () => {
       setStep(step + 1);
       postSurvey({
         teamId: locationState.teamId,
-        score:
-          Math.round((scoreArr.reduce((acc, val) => acc + val, 0) / 4) * 10) /
-          10,
+        score: scoreArr.reduce((acc, val) => acc + val, 0),
       });
     } else if (step === 3) {
       navigate("/alarm");

@@ -14,6 +14,7 @@ const Team = () => {
 
   const locationState = location.state as {
     teamId: number;
+    from: string;
   };
 
   const {
@@ -63,6 +64,10 @@ const Team = () => {
   const [modal, openModal] = useState<boolean>(false);
 
   const helloRef = useRef<HTMLInputElement | null>(null);
+
+  const onClickBack = () => {
+    navigate(`/${locationState.from}`);
+  };
 
   useEffect(() => {
     if (detail?.data) {
@@ -114,7 +119,7 @@ const Team = () => {
       )}
       {detail?.data && (
         <section>
-          <Topbar title={detail.data.teamName} />
+          <Topbar title={detail.data.teamName} onClick={() => onClickBack()} />
           <div
             className={`min-h-real-screen2 flex flex-col justify-between ${
               selected === "plan" ? "bg-hanaGray" : ""
@@ -133,6 +138,7 @@ const Team = () => {
                           state: {
                             role: role,
                             teamId: locationState.teamId,
+                            from: locationState.from,
                           },
                         })
                       }
@@ -238,6 +244,7 @@ const Team = () => {
                           navigate("/create-plan", {
                             state: {
                               teamId: locationState.teamId,
+                              from: locationState.from,
                             },
                           });
                         }}

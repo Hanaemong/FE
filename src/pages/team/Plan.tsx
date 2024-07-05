@@ -34,6 +34,7 @@ const Plan = () => {
 
   const locationState = location.state as {
     teamId: number;
+    from: string;
   };
 
   const { mutate: postPlan } = useMutation({
@@ -62,7 +63,10 @@ const Plan = () => {
       setPlan({ ...plan, planPlace: placeRef.current.value });
     }
     if (!!costRef.current?.value.length) {
-      setPlan({ ...plan, planCost: Number(costRef.current.value) });
+      setPlan({
+        ...plan,
+        planCost: Number(costRef.current.value.replace(/[^0-9]/g, "")),
+      });
     }
     if (
       nameRef.current?.value.length &&
@@ -101,6 +105,7 @@ const Plan = () => {
       navigate("/team", {
         state: {
           teamId: locationState.teamId,
+          from: locationState.from,
         },
       });
   };

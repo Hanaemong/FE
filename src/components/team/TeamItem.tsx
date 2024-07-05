@@ -9,6 +9,7 @@ interface Iprops {
   category: string;
   member: number;
   rating: number;
+  from: string;
 }
 
 const TeamItem: FC<Iprops> = ({
@@ -18,12 +19,14 @@ const TeamItem: FC<Iprops> = ({
   category,
   member,
   rating,
+  from,
 }) => {
   const navigate = useNavigate();
   const onClickItem = () => {
     navigate("/team", {
       state: {
         teamId: teamId,
+        from: from,
       },
     });
   };

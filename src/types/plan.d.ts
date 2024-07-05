@@ -13,4 +13,5 @@ interface PlanResType {
   place: string;
   cost: number;
   planImg: string;
+  isSurveyed: boolean;
 }
