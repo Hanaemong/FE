@@ -35,6 +35,7 @@ function App() {
           body: payload.notification.body,
           teamId: payload.data?.teamId,
         });
+        console.log(payload);
         setShowAlarm(true);
       });
     }

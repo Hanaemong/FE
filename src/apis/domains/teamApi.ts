@@ -45,4 +45,9 @@ export class teamApi extends ApiClient {
     );
     return response;
   }
+
+  async updateBanner(teamId: number, banner: FormData) {
+    const response = await this._http2.put(`/team/${teamId}`, banner);
+    return response;
+  }
 }

@@ -182,16 +182,17 @@ const Join = () => {
     }
 
     if (step === 4 && gender !== "") {
-      setInputs({ ...inputs, gender: gender });
       if (gender === "M") {
         setInputs({
           ...inputs,
+          gender: gender,
           profile:
             "https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/%E1%84%87%E1%85%A7%E1%86%AF%E1%84%83%E1%85%A9%E1%86%AF%E1%84%8B%E1%85%B5.svg",
         });
       } else {
         setInputs({
           ...inputs,
+          gender: gender,
           profile:
             "https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/%E1%84%87%E1%85%A7%E1%86%AF%E1%84%89%E1%85%A9%E1%86%BC%E1%84%8B%E1%85%B5.svg",
         });

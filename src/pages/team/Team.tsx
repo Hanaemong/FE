@@ -6,6 +6,7 @@ import { HiPencilSquare } from "react-icons/hi2";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { teamApi } from "../../apis/domains/teamApi";
 import { planApi } from "../../apis/domains/planApi";
+import { TbCheckbox } from "react-icons/tb";
 
 const Team = () => {
   const navigate = useNavigate();
@@ -52,6 +53,23 @@ const Team = () => {
     },
   });
 
+  const { mutate: changeBanner } = useMutation({
+    mutationFn: (req: { teamId: number; banner: FormData }) => {
+      const response = teamApi
+        .getInstance()
+        .updateBanner(req.teamId, req.banner);
+      return response;
+    },
+    onSuccess: (res) => {
+      console.log(res);
+      alert("배너가 수정되었습니다.");
+      setAttachment("");
+    },
+    onError: (err) => {
+      console.log(err.message);
+    },
+  });
+
   useEffect(() => {
     if (isError) {
       console.log(error.message);
@@ -62,7 +80,8 @@ const Team = () => {
   const [role, setRole] = useState<string | null>("");
   const [selected, setSelected] = useState<string>("desc");
   const [modal, openModal] = useState<boolean>(false);
-
+  const [attachment, setAttachment] = useState<string>("");
+  const [file, setFile] = useState<File>(new File([], ""));
   const helloRef = useRef<HTMLInputElement | null>(null);
 
   const onClickBack = () => {
@@ -79,6 +98,24 @@ const Team = () => {
     queryClient.invalidateQueries({ queryKey: ["teamDetail"] });
     queryClient.invalidateQueries({ queryKey: ["plan"] });
   }, []);
+
+  const handleImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (!files) return;
+
+    if (files.length > 0) {
+      const file = files[0];
+      setFile(file);
+      const url = URL.createObjectURL(file);
+      setAttachment(url);
+    }
+  };
+
+  const clickHandler = () => {
+    const formData = new FormData();
+    formData.append("banner", file);
+    changeBanner({ teamId: locationState.teamId, banner: formData });
+  };
 
   return (
     <>
@@ -163,16 +200,13 @@ const Team = () => {
               )}
               {/* 배너 */}
               <div
-                className="w-full flex justify-end h-80 bg-contain"
-                style={{ backgroundImage: `url(${detail.data.banner})` }}
-              >
-                {role === "CHAIR" && (
-                  <HiPencilSquare
-                    size={30}
-                    className="text-hanaGray2 mt-3 mr-7"
-                  />
-                )}
-              </div>
+                className="w-full flex h-80 bg-contain"
+                style={{
+                  backgroundImage: `url(${
+                    attachment ? attachment : detail.data.banner
+                  })`,
+                }}
+              ></div>
               {(role === "CHAIR" || role === "REGULAR") && (
                 <>
                   {/* 내용 or 일정 메뉴 */}
@@ -202,8 +236,35 @@ const Team = () => {
                 <>
                   <div className="w-full p-10 flex flex-col gap-7">
                     {/* 모임명 */}
-                    <div className="text-3xl font-hanaMedium">
-                      {detail.data.teamName}
+                    <div className="flex flex-row items-center justify-between w-full ">
+                      <div className="text-3xl font-hanaMedium">
+                        {detail.data.teamName}
+                      </div>
+                      {/* 배너 수정하기 버튼 */}
+                      {role === "CHAIR" && (
+                        <div className="flex flex-row justify-center items-center w-14 h-14">
+                          {!attachment ? (
+                            <label htmlFor="bannerImg">
+                              <HiPencilSquare
+                                size={30}
+                                className="text-hanaPurple drop-shadow-lg"
+                              />
+                            </label>
+                          ) : (
+                            <TbCheckbox
+                              size={30}
+                              className="bg-blend-lighten text-hanaPurple drop-shadow-lg"
+                              onClick={() => clickHandler()}
+                            />
+                          )}
+                          <input
+                            id="bannerImg"
+                            type="file"
+                            className="hidden"
+                            onChange={handleImg}
+                          />
+                        </div>
+                      )}
                     </div>
                     {/* 모임 지역 & 카테고리 */}
                     <div className="flex gap-4">
