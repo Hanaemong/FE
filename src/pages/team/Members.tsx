@@ -88,7 +88,11 @@ const Members = () => {
       });
     },
     onError: (err) => {
-      alert("총무 변경에 실패했습니다.");
+      if (err.message == "Access Denied") {
+        alert("해당 모임원은 총무로 임명할 수 없습니다.");
+      } else {
+        alert("총무 변경에 실패했습니다.");
+      }
       console.log(err.message);
     },
   });
