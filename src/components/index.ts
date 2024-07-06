@@ -14,7 +14,7 @@ export { default as DueHistoryItem } from "./team/DueHistoryItem";
 export { default as MemberItem } from "./team/MemberItem";
 export { default as ChatListItem } from "./chat/ChatListItem";
 export { default as ChatTopbar } from "./chat/ChatTopbar";
-export { default as SenderChat } from "./chat/SenderChat";
+export { default as ChatCard } from "./chat/ChatCard";
 export { default as ChatBalloon } from "./chat/ChatBalloon";
 export { default as SelectAccount } from "./account/SelectAccount";
 export { default as AccountItem } from "./account/AccountItem";

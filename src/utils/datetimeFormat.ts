@@ -55,3 +55,5 @@ export function chatFormatter(date: Date): string {
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
+
+// 2024-07-06 13:20
