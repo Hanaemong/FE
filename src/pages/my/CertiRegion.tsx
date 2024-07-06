@@ -1,21 +1,15 @@
 import { useEffect, useState } from "react";
 import { Button, RegionItem, RegionModal, Topbar } from "../../components";
 import { useNavigate } from "react-router-dom";
-import { useGeolocation } from "../../hooks/useGeolocation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { regionApi } from "../../apis/domains/regionApi";
 import { memberApi } from "../../apis/domains/memberApi";
 import { setCookie } from "../../utils/cookie";
 
-const geolocationOptions = {
-  enableHighAccuracy: false,
-  timeout: 0,
-};
-
 const CertiRegion = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { location } = useGeolocation(geolocationOptions);
+  // const { location } = useGeolocation(geolocationOptions);
 
   const [modal, openModal] = useState<boolean>(false);
   const [sigun, setSigun] = useState<{ id: number; name: string }>({
@@ -94,11 +88,20 @@ const CertiRegion = () => {
     openModal((prev) => !prev);
   };
 
-  const getCurrentRegion = () => {
-    const latitude = location?.latitude!;
-    const longitude = location?.longitude!;
-    console.log(latitude);
-    console.log(longitude);
+  const getCurrentRegion = async () => {
+    const result = await new Promise<GeolocationPosition>((res, rej) => {
+      window.navigator.geolocation.getCurrentPosition(
+        (position) => {
+          res(position);
+        },
+        (err) => rej(err)
+      );
+    });
+
+    console.log(result.coords.latitude, result.coords.longitude);
+
+    const latitude = result.coords.latitude;
+    const longitude = result.coords.longitude;
 
     setRegionCheckResult("");
     setIsActive(false);
