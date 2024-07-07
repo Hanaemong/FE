@@ -48,7 +48,11 @@ const Team = () => {
       setRole("PENDING");
     },
     onError: (err) => {
-      alert("가입 신청에 실패했습니다.");
+      if (err.message === "NicknameAlreadyExists") {
+        setDuplicated(true);
+      } else {
+        alert("가입 신청에 실패했습니다.");
+      }
       console.log(err.message);
     },
   });
@@ -82,7 +86,8 @@ const Team = () => {
   const [modal, openModal] = useState<boolean>(false);
   const [attachment, setAttachment] = useState<string>("");
   const [file, setFile] = useState<File>(new File([], ""));
-  const helloRef = useRef<HTMLInputElement | null>(null);
+  const nicknameRef = useRef<HTMLInputElement | null>(null);
+  const [duplicated, setDuplicated] = useState<boolean>(false);
 
   const onClickBack = () => {
     navigate(`/${locationState.from}`);
@@ -124,13 +129,20 @@ const Team = () => {
         <div className="absolute flex flex-col items-center justify-center bg-black bg-opacity-40 w-full h-full top-0 left-0 z-50">
           <div className="flex flex-col justify-center items-center bg-white py-9 px-14 rounded-2xl gap-4 z-50">
             <div className="font-hanaMedium text-xl">
-              가입인사를 작성해주세요.
+              닉네임을 작성해주세요.
             </div>
             <input
-              className="px-7 py-3 rounded-2xl bg-hanaGray font-hanaRegular text-xl placeholder:text-hanaSilver2"
-              placeholder="가입인사를 작성해주세요!"
-              ref={helloRef}
+              className={`px-7 py-3 rounded-2xl bg-hanaGray ${
+                duplicated && "border-2 border-red-500"
+              } font-hanaRegular text-xl placeholder:text-hanaSilver2`}
+              placeholder="닉네임을 작성해주세요!"
+              ref={nicknameRef}
             />
+            {duplicated && (
+              <div className="font-hanaLight text-red-500">
+                중복된 닉네임입니다.
+              </div>
+            )}
             <div className="flex gap-2 font-hanaRegular text-lg">
               <button
                 className="py-3 px-9 bg-hanaGray rounded-3xl"
@@ -144,7 +156,7 @@ const Team = () => {
                   openModal(false);
                   joinTeam({
                     teamId: locationState.teamId,
-                    hello: helloRef.current!.value,
+                    nickname: nicknameRef.current!.value,
                   });
                 }}
               >
@@ -184,13 +196,14 @@ const Team = () => {
                     </div>
                     <div
                       className="w-1/2 cursor-pointer"
-                      onClick={() =>
+                      onClick={() => {
                         navigate("/team/dues", {
                           state: {
                             teamId: locationState.teamId,
+                            nickname: detail.data?.nickName,
                           },
-                        })
-                      }
+                        });
+                      }}
                     >
                       회비내역
                     </div>

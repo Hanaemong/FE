@@ -4,6 +4,7 @@ import { formatter2, formatter2_2 } from "../../utils/datetimeFormat";
 
 interface Iprops {
   name: string;
+  nickname: string;
   gender: string; // M or W
   balance: number;
   isDeposit: boolean;
@@ -12,6 +13,7 @@ interface Iprops {
 
 const DueHistoryItem: FC<Iprops> = ({
   name,
+  nickname,
   gender,
   balance,
   isDeposit,
@@ -27,6 +29,7 @@ const DueHistoryItem: FC<Iprops> = ({
             className="w-12 h-12"
           />
           <p className="font-hanaRegular text-3xl ml-3">{name}</p>
+          <p className="font-hanaRegular text-3xl">{`(${nickname})`}</p>
           {gender === "M" ? (
             <MdMale color="#002CC9" size={20} />
           ) : (

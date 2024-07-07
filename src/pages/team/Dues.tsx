@@ -13,6 +13,7 @@ const Dues = () => {
 
   const locationState = location.state as {
     teamId: number;
+    nickname: string;
   };
 
   const [isDeposit, setIsDeposit] = useState<boolean>(true);
@@ -112,6 +113,7 @@ const Dues = () => {
                     <DueHistoryItem
                       key={index}
                       name={item.memberName}
+                      nickname={item.memberNickname}
                       gender={item.memberGender}
                       balance={item.amount}
                       date={new Date(item.paidDate)}
@@ -124,6 +126,7 @@ const Dues = () => {
                     <DueHistoryItem
                       key={index}
                       name={item.memberName}
+                      nickname={item.memberNickname}
                       gender={item.memberGender}
                       balance={item.amount}
                       date={new Date(item.paidDate)}
@@ -140,7 +143,8 @@ const Dues = () => {
                 state: {
                   receiveName: "성동구 미나리 모임",
                   receiveAccount: "542-116273-43174",
-                  teamId: 1,
+                  teamId: locationState.teamId,
+                  nickname: locationState.nickname,
                 },
               })
             }

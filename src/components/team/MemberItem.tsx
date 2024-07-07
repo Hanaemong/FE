@@ -3,9 +3,9 @@ import { MdFemale, MdMale } from "react-icons/md";
 
 interface IProps {
   teamMemberId: number;
-  name: string;
   gender: string;
   role: string;
+  nickname: string;
   changeBtn?: boolean;
   isChair?: boolean;
   setChangeBtn?: (value: boolean) => void;
@@ -17,7 +17,7 @@ interface IProps {
 
 const MemberItem: FC<IProps> = ({
   teamMemberId,
-  name,
+  nickname,
   gender,
   role,
   changeBtn,
@@ -40,7 +40,7 @@ const MemberItem: FC<IProps> = ({
           alt="profile"
           className="w-12 h-12"
         />
-        <p className="font-hanaRegular text-3xl ml-4">{name}</p>
+        <p className="font-hanaRegular text-3xl ml-4">{nickname}</p>
         {gender === "M" ? (
           <MdMale color="#002CC9" size={18} />
         ) : (
