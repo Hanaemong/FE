@@ -24,6 +24,7 @@ const Sending = () => {
     receiveName: string;
     receiveAccount: string;
     teamId: number;
+    nickname: string;
   };
 
   const [step, setStep] = useState<number>(1);
@@ -55,14 +56,13 @@ const Sending = () => {
     mutationFn: (user: LoginType) => {
       return memberApi.getInstance().postLogin(user);
     },
-    onSuccess: (res) => {
-      console.log(res.data);
-      console.log(price);
+    onSuccess: () => {
       postDue({
         teamId: locationState.teamId,
         due: {
           accountId: account.accountId,
           amount: Number(price!.toString().replace(/[^0-9]/g, "")),
+          nickName: locationState.nickname,
         },
       });
       setProhibit(true);

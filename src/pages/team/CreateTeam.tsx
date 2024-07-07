@@ -31,7 +31,11 @@ const CreateTeam = () => {
     },
     onError: (err) => {
       console.log(err.message);
-      alert("모임 생성에 실패했습니다.");
+      if (err.message === "NicknameAlreadyExists") {
+        setDuplicated(true);
+        setIsActive(false);
+      }
+      // alert("모임 생성에 실패했습니다.");
     },
   });
 
@@ -53,6 +57,7 @@ const CreateTeam = () => {
     teamDesc: "",
     capacity: 0,
     thumbNail: new File([], ""),
+    nickname: "",
   });
   const [memberText, setMemberText] = useState<string>("");
   const [account, setAccount] = useState({
@@ -64,10 +69,12 @@ const CreateTeam = () => {
   const [accountModal, setAccountModal] = useState<boolean>(false);
   const [attachment, setAttachment] = useState<string>("");
   const [prohibit, setProhibit] = useState<boolean>(false);
+  const [duplicated, setDuplicated] = useState<boolean>(false);
 
   const nameRef = useRef<HTMLInputElement | null>(null);
   const descRef = useRef<HTMLTextAreaElement | null>(null);
   const memberRef = useRef<HTMLInputElement | null>(null);
+  const nicknameRef = useRef<HTMLInputElement | null>(null);
 
   const stepHandler = () => {
     const formData = new FormData();
@@ -87,23 +94,34 @@ const CreateTeam = () => {
       setIsActive(false);
       setStep(2);
     } else if (step === 2) {
-      formData.append(
-        "createTeam",
-        new Blob(
-          [
-            JSON.stringify({
-              teamName: content.teamName,
-              teamDesc: content.teamDesc,
-              capacity: content.capacity,
-              category: category.name,
-            }),
-          ],
-          { type: "application/json" }
-        )
-      );
-      formData.append("thumbNail", content.thumbNail);
+      setContent((prevContents) => {
+        const updatedContents = {
+          ...prevContents,
+          nickname: nicknameRef.current!.value,
+        };
+        formData.append(
+          "createTeam",
+          new Blob(
+            [
+              JSON.stringify({
+                teamName: content.teamName,
+                teamDesc: content.teamDesc,
+                capacity: content.capacity,
+                category: category.name,
+                nickname: updatedContents.nickname,
+              }),
+            ],
+            { type: "application/json" }
+          )
+        );
+        formData.append("thumbNail", content.thumbNail);
+        return updatedContents;
+      });
       createTeam(formData);
+      // setStep(3);
     } else if (step === 3) {
+      setStep(4);
+    } else if (step === 4) {
       navigate("/home");
     }
   };
@@ -154,6 +172,15 @@ const CreateTeam = () => {
       memberRef.current!.value.length === 0 ||
       attachment === ""
     ) {
+      setIsActive(false);
+      return;
+    }
+
+    setIsActive(true);
+  };
+
+  const checkStep2Value = () => {
+    if (nicknameRef.current?.value.length === 0) {
       setIsActive(false);
       return;
     }
@@ -296,6 +323,29 @@ const CreateTeam = () => {
         {/* 2 페이지 */}
         {step === 2 && (
           <div className="flex flex-col px-10">
+            <p className="font-hanaRegular text-3xl my-10">
+              닉네임을 설정해주세요
+            </p>
+            <input
+              type="text"
+              className={`w-5/6 h-[4.5rem] ${
+                duplicated && "border-2 border-red-500"
+              } focus:border-2 focus:border-hanaSilver text-[#A0A0A0] bg-[#EBEBEB] p-4 text-3xl font-hanaRegular rounded-2xl`}
+              placeholder="닉네임"
+              maxLength={20}
+              onBlur={() => checkStep2Value()}
+              ref={nicknameRef}
+            />
+            {duplicated && (
+              <div className="self-start text-xl font-hanaMedium text-red-500 text-left">
+                중복된 닉네임입니다.
+              </div>
+            )}
+          </div>
+        )}
+        {/* 3 페이지 */}
+        {step === 3 && (
+          <div className="flex flex-col px-10">
             <p className="font-hanaRegular text-3xl my-14">
               어떤 계좌로 시작할까요?
             </p>
@@ -313,11 +363,11 @@ const CreateTeam = () => {
             </div>
           </div>
         )}
-        {/* 3 페이지 */}
-        {step === 3 && <ConfirmCard text="모임 등록 완료!" />}
+        {/* 4 페이지 */}
+        {step === 4 && <ConfirmCard text="모임 등록 완료!" />}
         <div className="flex flex-row justify-center mb-7">
           <Button
-            text={step <= 2 ? "다음" : "완료"}
+            text={step <= 3 ? "다음" : "완료"}
             onClick={() => stepHandler()}
             isActive={isActive}
           />

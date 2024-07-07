@@ -1,7 +1,7 @@
 interface TeamMemberType {
   teamMemberId: number;
   profile: string;
-  name: string;
+  nickName: string;
   gender: string;
   role: string;
 }
