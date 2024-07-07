@@ -22,6 +22,7 @@ const ChatCard: FC<Iprops> = ({ msgs, isSender, nickname, gender }) => {
         {nickname && <p className="font-hanaMedium text-2xl">{nickname}</p>}
         {msgs.map((item, index) => (
           <ChatBalloon
+            key={index}
             isSend={!!!nickname}
             msg={item.msg}
             time={item.time}

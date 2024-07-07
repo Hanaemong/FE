@@ -8,7 +8,7 @@ export class chatApi extends ApiClient {
   }
 
   async getChatHistory(teamId: number) {
-    const response = await this._http.get(`/chat/${teamId}`);
+    const response = await this.axiosInstance<ChatType[]>(`/chat/${teamId}`);
     return response;
   }
 }

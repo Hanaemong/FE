@@ -10,7 +10,7 @@ interface Iprops {
 
 const ChatBalloon: FC<Iprops> = ({ msg, isSend, time, isLast }) => {
   return (
-    <div className="flex flex-row items-end gap-3 text-xl font-hanaRegular">
+    <div className="flex flex-row items-end gap-3 text-lg font-hanaRegular">
       {isLast && isSend && chatFormatter(new Date(time))}
       <div
         className={`p-4 max-w-80 font-hanaRegular text-2xl rounded-3xl ${
