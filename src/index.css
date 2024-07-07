@@ -4,7 +4,8 @@
 
 @font-face {
   font-family: "Hana-Heavy";
-  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Heavy.otf")
+  src: local("Hana2.0 H"),
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Heavy.otf")
       format("opentype"),
     url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Heavy.ttf")
       format("truetype");
@@ -12,7 +13,8 @@
 
 @font-face {
   font-family: "Hana-Bold";
-  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Bold.otf")
+  src: local("Hana2.0 B"),
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Bold.otf")
       format("opentype"),
     url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Bold.ttf")
       format("truetype");
@@ -20,7 +22,8 @@
 
 @font-face {
   font-family: "Hana-CM";
-  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-CM.otf")
+  src: local("Hana2.0 CM"),
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-CM.otf")
       format("opentype"),
     url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-CM.ttf")
       format("truetype");
@@ -28,7 +31,8 @@
 
 @font-face {
   font-family: "Hana-Medium";
-  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Medium.otf")
+  src: local("Hana2.0 M"),
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Medium.otf")
       format("opentype"),
     url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Medium.ttf")
       format("truetype");
@@ -36,7 +40,8 @@
 
 @font-face {
   font-family: "Hana-Regular";
-  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Regular.otf")
+  src: local("Hana2.0 R"),
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Regular.otf")
       format("opentype"),
     url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Regular.ttf")
       format("truetype");
@@ -44,7 +49,8 @@
 
 @font-face {
   font-family: "Hana-Light";
-  src: url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Light.otf")
+  src: local("Hana2.0 L"),
+    url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Light.otf")
       format("opentype"),
     url("https://hanalinkbucket.s3.ap-northeast-2.amazonaws.com/fonts/Hana2-Light.ttf")
       format("truetype");
@@ -148,9 +154,11 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 textarea {
   resize: none;
 }
+
 b {
   font-family: "Hana-Bold";
 }

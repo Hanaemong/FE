@@ -158,7 +158,7 @@ const Members = () => {
                 <MemberItem
                   key={index}
                   teamMemberId={item.teamMemberId}
-                  name={item.name}
+                  nickname={item.nickName}
                   gender={item.gender}
                   role="총무"
                   changeBtn={changeBtn}
@@ -178,7 +178,7 @@ const Members = () => {
                     <MemberItem
                       key={index}
                       teamMemberId={item.teamMemberId}
-                      name={item.name}
+                      nickname={item.nickName}
                       gender={item.gender}
                       role="가입요청"
                       onDeny={onDeny}
@@ -198,7 +198,7 @@ const Members = () => {
                   <MemberItem
                     key={index}
                     teamMemberId={item.teamMemberId}
-                    name={item.name}
+                    nickname={item.nickName}
                     gender={item.gender}
                     role="모임원"
                     changeBtn={changeBtn}

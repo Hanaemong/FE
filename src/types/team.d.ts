@@ -20,4 +20,6 @@ interface TeamDetailType extends TeamItemType {
   teamDesc: string;
   banner: string | null;
   role: string | null;
+  nickname?: string;
+  nickName?: string;
 }
