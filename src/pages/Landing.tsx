@@ -7,11 +7,12 @@ const Landing = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (getCookie("phone")) {
-        navigate("/login");
-      } else {
-        navigate("/join");
-      }
+      // if (getCookie("phone")) {
+      //   navigate("/login");
+      // } else {
+      //   navigate("/join");
+      // }
+      navigate("/create-Team");
     }, 3000);
     return () => {
       clearTimeout(timeout);
