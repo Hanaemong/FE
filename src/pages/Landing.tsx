@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { getCookie } from "../utils/cookie";
 
 const Landing = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      // if (getCookie("phone")) {
-      //   navigate("/login");
-      // } else {
-      //   navigate("/join");
-      // }
-      navigate("/create-Team");
+      if (getCookie("phone")) {
+        navigate("/login");
+      } else {
+        navigate("/join");
+      }
     }, 3000);
     return () => {
       clearTimeout(timeout);
