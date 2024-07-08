@@ -40,14 +40,14 @@ const ChatList = () => {
           >
             전체
           </div>
-          <div
+          {/* <div
             className={`py-2 px-5 flex justify-center items-center text-2xl font-hanaMedium rounded-[2.5rem] cursor-pointer ${
               !isAll ? "text-white bg-hanaBlue" : "border-2 border-hanaBlue"
             } `}
             onClick={() => isAll && setIsAll(false)}
           >
             안 읽은 채팅방
-          </div>
+          </div> */}
         </div>
         {/* 채팅 리스트 */}
         <div className="flex flex-col gap-7 py-10">
@@ -58,7 +58,6 @@ const ChatList = () => {
               member={item.memberCnt}
               date={new Date()}
               image={item.thumbNail}
-              lastMsg="오늘 오후에 배드민턴 치실분 성수역으로"
               teamId={item.teamId}
               isNew={false}
             />

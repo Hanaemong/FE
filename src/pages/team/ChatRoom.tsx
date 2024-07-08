@@ -46,7 +46,6 @@ const ChatRoom = () => {
         client.current.subscribe(
           `/topic/${locationState.teamId}`,
           (message: any) => {
-            console.log("메세지:", message);
             setMessage(JSON.parse(message.body));
           }
         );
@@ -55,9 +54,7 @@ const ChatRoom = () => {
 
   const disconnectHandler = () => {
     if (client.current && client.current.connected) {
-      client.current.disconnect(() => {
-        console.log("Disconnected");
-      });
+      client.current.disconnect(() => {});
     }
   };
 
@@ -93,7 +90,6 @@ const ChatRoom = () => {
             .getInstance()
             .getChatHistory(locationState.teamId)
             .then((res) => {
-              console.log(res.data);
               setOldMsg(toChatArr(res.data));
             });
         });
@@ -112,14 +108,12 @@ const ChatRoom = () => {
     if (oldMsg && oldMsg.length !== 0) {
       setLastSender(oldMsg[oldMsg.length - 1][0].nickname);
       setLastTime(timeConvertor(new Date(oldMsg[oldMsg.length - 1][0].time)));
-      console.log(oldMsg);
       setIsTyping(!isTyping);
     }
   }, [oldMsg]);
 
   useEffect(() => {
     if (message) {
-      console.log(message);
       let newMsg = [...oldMsg!];
       if (
         message.nickname === lastSender &&
@@ -139,9 +133,7 @@ const ChatRoom = () => {
   }, [message]);
 
   useEffect(() => {
-    textareaRef.current &&
-      (textareaRef.current.scrollTop =
-        textareaRef.current.scrollHeight - textareaRef.current.clientHeight);
+    textareaRef.current && setTimeout(scrollToBottom, 0);
   }, [textareaRef.current?.scrollHeight]);
 
   useEffect(() => {
@@ -150,16 +142,7 @@ const ChatRoom = () => {
 
   const scrollToBottom = () => {
     if (divRef.current) {
-      console.log("Scrolling to bottom");
       divRef.current.scrollTop = divRef.current.scrollHeight;
-      console.log(
-        "scrollTop:",
-        divRef.current.scrollTop,
-        "scrollHeight:",
-        divRef.current.scrollHeight,
-        "clientHeight:",
-        divRef.current.clientHeight
-      );
     }
   };
 
@@ -178,7 +161,7 @@ const ChatRoom = () => {
         teamId={locationState.teamId}
       />
       <div className="flex-grow flex flex-col overflow-auto" ref={divRef}>
-        <div className="flex flex-col p-7 gap-7">
+        <div className="flex flex-col p-7 gap-7 transition-chats">
           {oldMsg?.map((item, index) => (
             <ChatCard
               key={index}
@@ -190,7 +173,7 @@ const ChatRoom = () => {
           ))}
         </div>
       </div>
-      <div className="sticky bottom-4 mb-4 flex justify-center items-center bg-white w-full">
+      <div className="sticky bottom-2 pt-4 flex justify-center items-center w-full">
         <textarea
           maxLength={100}
           rows={1}
