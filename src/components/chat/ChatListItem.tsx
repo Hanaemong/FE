@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { chatFormatter } from "../../utils/datetimeFormat";
 import { useNavigate } from "react-router-dom";
 import { chatApi } from "../../apis/domains/chatApi";
+import { teamMemberApi } from "../../apis/domains/teamMemberApi";
 
 interface Iprops {
   title: string;
@@ -23,8 +24,14 @@ const ChatListItem: FC<Iprops> = ({
   const navigate = useNavigate();
 
   const [lastMsg, setLastMsg] = useState<string>();
+  const [role, setRole] = useState<string>();
 
   const onClickItem = () => {
+    if (role === "PENDING") {
+      alert("가입 대기중인 모임입니다.");
+      return;
+    }
+
     navigate("/chat-room", {
       state: {
         teamId: teamId,
@@ -36,11 +43,21 @@ const ChatListItem: FC<Iprops> = ({
 
   useEffect(() => {
     try {
-      chatApi
+      teamMemberApi
         .getInstance()
-        .getLastChat(teamId)
+        .getMyTeamNickname(teamId)
         .then((res) => {
-          setLastMsg(res.data.msg);
+          setRole(res.data?.role);
+          if (res.data?.role !== "PENDING") {
+            chatApi
+              .getInstance()
+              .getLastChat(teamId)
+              .then((res) => {
+                setLastMsg(res.data.msg);
+              });
+          } else {
+            setLastMsg("");
+          }
         });
     } catch (err) {
       console.log(err);

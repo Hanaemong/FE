@@ -37,6 +37,7 @@ export class teamMemberApi extends ApiClient {
     const response = await this._http.get<{
       nickname: string;
       profile: string;
+      role: string;
     }>(`/teamMember/my/${teamId}`);
     return response;
   }

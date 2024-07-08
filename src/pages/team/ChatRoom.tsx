@@ -67,7 +67,6 @@ const ChatRoom = () => {
       profile: myProfile,
       msg: textareaRef.current!.value,
       time: new Date().toISOString(), // ISO 형식으로 변환
-      type: "chat",
     };
     client.current!.send("/pub/send", {}, JSON.stringify(chatDto));
     textareaRef.current!.value = "";

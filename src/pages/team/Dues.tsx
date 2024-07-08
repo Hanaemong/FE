@@ -13,8 +13,9 @@ const Dues = () => {
 
   const locationState = location.state as {
     teamId: number;
+    teamName: string;
     nickname: string;
-    receiveName: string;
+    memberCnt: number;
     role: string;
   };
 
@@ -144,10 +145,11 @@ const Dues = () => {
               onClick={() =>
                 navigate("/sending", {
                   state: {
-                    receiveName: locationState.receiveName,
+                    receiveName: locationState.teamName,
                     receiveAccount: transactions?.data?.accountNumber,
                     teamId: locationState.teamId,
                     nickname: locationState.nickname,
+                    memberCnt: locationState.memberCnt,
                   },
                 })
               }

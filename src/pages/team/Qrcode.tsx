@@ -12,6 +12,7 @@ const Qrcode = () => {
   const locationState = location.state as {
     teamId: number;
     from: string;
+    memberCnt: number;
   };
   const videoRef = useRef<HTMLVideoElement>(null);
   const [confirm, setConfirm] = useState<boolean>(false);
@@ -98,6 +99,8 @@ const Qrcode = () => {
                   navigate("/team", {
                     state: {
                       teamId: locationState.teamId,
+                      from: locationState.from,
+                      memberCnt: locationState.memberCnt,
                     },
                   })
                 }
