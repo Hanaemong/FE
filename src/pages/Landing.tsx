@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../utils/cookie";
 import { useEffect } from "react";
 
 const Landing = () => {
@@ -7,11 +6,12 @@ const Landing = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (getCookie("phone")) {
-        navigate("/login");
-      } else {
-        navigate("/join");
-      }
+      // if (getCookie("phone")) {
+      //   navigate("/login");
+      // } else {
+      //   navigate("/join");
+      // }
+      navigate("/create-Team");
     }, 3000);
     return () => {
       clearTimeout(timeout);
