@@ -14,6 +14,7 @@ const Survey = () => {
 
   const [step, setStep] = useState<number>(1);
   const [scoreArr, setScoreArr] = useState<number[]>([1, 1, 1, 1]);
+  const [prohibit, setProhibit] = useState<boolean>(false);
 
   const { mutate: postSurvey } = useMutation({
     mutationFn: (req: { teamId: number; score: number }) => {
@@ -24,6 +25,7 @@ const Survey = () => {
     },
     onSuccess: () => {
       console.log("설문조사 참여 성공");
+      setProhibit(true);
     },
     onError: (err) => {
       console.log(err.message);
@@ -34,11 +36,12 @@ const Survey = () => {
     if (step === 1) {
       setStep(step + 1);
     } else if (step === 2) {
-      setStep(step + 1);
       postSurvey({
         teamId: locationState.teamId,
         score: scoreArr.reduce((acc, val) => acc + val, 0),
       });
+      setProhibit(true);
+      setStep(step + 1);
     } else if (step === 3) {
       navigate("/alarm");
     }
@@ -54,7 +57,7 @@ const Survey = () => {
 
   return (
     <section>
-      <Topbar title="설문조사" />
+      <Topbar title="설문조사" prohibit={prohibit} />
       <div className="w-full bg-custom-light-gradient h-[0.15rem]"></div>
       <div className="flex flex-col min-h-real-screen2 justify-between px-10 py-12">
         {/* 참여 확인 */}

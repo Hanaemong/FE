@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { formatter3 } from "../../utils/datetimeFormat";
+import { RiSurveyLine } from "react-icons/ri";
 
 interface IProps {
   title: string;
@@ -7,11 +8,25 @@ interface IProps {
   place: string;
   cost: number;
   image: string;
+  isSurveyed: boolean;
+  isChair: boolean;
+  onRequest?: () => void;
 }
 
-const PlanItem: FC<IProps> = ({ title, date, place, cost, image }) => {
+const PlanItem: FC<IProps> = ({
+  title,
+  date,
+  place,
+  cost,
+  image,
+  isSurveyed,
+  isChair,
+  onRequest = () => {},
+}) => {
   return (
-    <div className="w-full flex gap-20 p-7 bg-white rounded-3xl drop-shadow-lg">
+    <div
+      className={`w-full flex gap-20 p-7 bg-white rounded-3xl drop-shadow-lg`}
+    >
       <div className="flex flex-col gap-4">
         <div className="w-40 font-hanaMedium text-2xl truncate">{title}</div>
         <div
@@ -19,7 +34,18 @@ const PlanItem: FC<IProps> = ({ title, date, place, cost, image }) => {
           style={{ backgroundImage: `url(${image})` }}
         ></div>
       </div>
-      <div className="w-64 mt-10 flex flex-col gap-3 font-hanaRegular text-xl">
+      <div
+        className={`w-64 ${
+          !isChair && "mt-10"
+        } flex flex-col gap-3 font-hanaRegular text-xl`}
+      >
+        {isChair && (
+          <RiSurveyLine
+            size={18}
+            className={`self-end ${isSurveyed ? "text-hanaGray2" : ""}`}
+            onClick={() => onRequest()}
+          />
+        )}
         <div className="flex justify-between">
           <div className="text-hanaSilver2">일시</div>
           <div className="text-right">{formatter3(new Date(date))}</div>

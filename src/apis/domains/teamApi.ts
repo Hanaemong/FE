@@ -27,8 +27,10 @@ export class teamApi extends ApiClient {
     return response;
   }
 
-  async postJoinTeam(teamId: number, hello: string) {
-    const response = await this._http.post(`/team/${teamId}`, { hello: hello });
+  async postJoinTeam(teamId: number, nickname: string) {
+    const response = await this._http.post(`/team/${teamId}`, {
+      nickname: nickname,
+    });
     return response;
   }
 

@@ -26,8 +26,8 @@ const CreateTeam = () => {
       return response;
     },
     onSuccess: () => {
+      setProhibit(true);
       setStep(3);
-      // navigate("/home");
     },
     onError: (err) => {
       console.log(err.message);
@@ -68,6 +68,7 @@ const CreateTeam = () => {
   const [categoryModal, setCategoryModal] = useState<boolean>(false);
   const [accountModal, setAccountModal] = useState<boolean>(false);
   const [attachment, setAttachment] = useState<string>("");
+  const [prohibit, setProhibit] = useState<boolean>(false);
   const [duplicated, setDuplicated] = useState<boolean>(false);
 
   const nameRef = useRef<HTMLInputElement | null>(null);
@@ -227,7 +228,7 @@ const CreateTeam = () => {
           />
         </SelectModal>
       )}
-      <Topbar title="모임 개설" onClick={onClickBack} />
+      <Topbar title="모임 개설" onClick={onClickBack} prohibit={prohibit} />
       <div className="flex flex-col min-h-real-screen2 justify-between">
         {/* 1페이지 */}
         {step === 1 && (

@@ -11,21 +11,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import { PiCaretDown } from "react-icons/pi";
 import { phoneNumAutoHyphen } from "../../utils/phonNumAutoHyphen";
-import { useGeolocation } from "../../hooks/useGeolocation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { regionApi } from "../../apis/domains/regionApi";
 import { memberApi } from "../../apis/domains/memberApi";
 import { getCookie, setCookie } from "../../utils/cookie";
 
-const geolocationOptions = {
-  enableHighAccuracy: false,
-  timeout: 0,
-};
-
 const Join = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { location } = useGeolocation(geolocationOptions);
 
   const [step, setStep] = useState<number>(1);
   const nameRef = useRef<HTMLInputElement | null>(null);
@@ -45,6 +38,7 @@ const Join = () => {
   const [pwd, setPwd] = useState<string>("");
   const [confirm, checkConfirm] = useState<boolean>(true);
   const [regionCheckResult, setRegionCheckResult] = useState<string>("");
+  const [prohibit, setProhibit] = useState<boolean>(false);
 
   const { mutate: checkPhone, data: result } = useMutation({
     mutationFn: (phone: string) => {
@@ -138,6 +132,7 @@ const Join = () => {
       console.log(response);
       setCookie("name", inputs.name);
       setCookie("phone", inputs.phone);
+      setProhibit(true);
       setStep((prev) => prev + 1);
     },
     onError: (err) => {
@@ -299,11 +294,20 @@ const Join = () => {
     openModal((prev) => !prev);
   };
 
-  const getCurrentRegion = () => {
-    const latitude = location?.latitude!;
-    const longitude = location?.longitude!;
-    console.log(latitude);
-    console.log(longitude);
+  const getCurrentRegion = async () => {
+    const result = await new Promise<GeolocationPosition>((res, rej) => {
+      window.navigator.geolocation.getCurrentPosition(
+        (position) => {
+          res(position);
+        },
+        (err) => rej(err)
+      );
+    });
+
+    console.log(result.coords.latitude, result.coords.longitude);
+
+    const latitude = result.coords.latitude;
+    const longitude = result.coords.longitude;
 
     setRegionCheckResult("");
     setIsActive(false);
@@ -378,7 +382,11 @@ const Join = () => {
       }
       <section className="min-h-real-screen2 h-screen flex flex-col items-center relative z-10">
         {step !== 1 && step !== 8 && (
-          <Topbar title="회원가입" onClick={() => prevStep()} />
+          <Topbar
+            title="회원가입"
+            onClick={() => prevStep()}
+            prohibit={prohibit}
+          />
         )}
         <div className="h-full w-full flex flex-col items-center justify-between py-8 pb-16">
           {step === 1 ? (

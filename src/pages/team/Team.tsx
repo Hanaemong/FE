@@ -6,6 +6,7 @@ import { HiPencilSquare } from "react-icons/hi2";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { teamApi } from "../../apis/domains/teamApi";
 import { planApi } from "../../apis/domains/planApi";
+import { surveyApi } from "../../apis/domains/surveyApi";
 import { TbCheckbox } from "react-icons/tb";
 
 const Team = () => {
@@ -39,20 +40,47 @@ const Team = () => {
   });
 
   const { mutate: joinTeam } = useMutation({
-    mutationFn: ({ teamId, hello }: any) => {
-      const response = teamApi.getInstance().postJoinTeam(teamId, hello);
+    mutationFn: ({ teamId, nickname }: any) => {
+      const response = teamApi.getInstance().postJoinTeam(teamId, nickname);
       return response;
     },
     onSuccess: () => {
+      setDuplicated(false);
+      openModal(false);
       alert("가입 신청이 완료되었습니다.");
       setRole("PENDING");
     },
     onError: (err) => {
       if (err.message === "NicknameAlreadyExists") {
+        // openModal(true);
         setDuplicated(true);
       } else {
         alert("가입 신청에 실패했습니다.");
       }
+      console.log(err.message);
+    },
+  });
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error.message);
+      alert("모임 정보를 불러오는 데 실패했습니다.");
+    }
+  }, [isError]);
+
+  const { mutate: requestSurvey } = useMutation({
+    mutationFn: (req: { teamId: number; planId: number }) => {
+      const response = surveyApi
+        .getInstance()
+        .postRequestSurvey(req.teamId, req.planId);
+      return response;
+    },
+    onSuccess: (response) => {
+      alert("모임원에게 설문조사를 요청했습니다.");
+      console.log(response.data);
+    },
+    onError: (err) => {
+      alert("설문조사 요청에 실패했습니다.");
       console.log(err.message);
     },
   });
@@ -73,13 +101,6 @@ const Team = () => {
       console.log(err.message);
     },
   });
-
-  useEffect(() => {
-    if (isError) {
-      console.log(error.message);
-      alert("모임 정보를 불러오는 데 실패했습니다.");
-    }
-  }, [isError]);
 
   const [role, setRole] = useState<string | null>("");
   const [selected, setSelected] = useState<string>("desc");
@@ -122,6 +143,14 @@ const Team = () => {
     changeBanner({ teamId: locationState.teamId, banner: formData });
   };
 
+  const handleJoin = () => {
+    console.log(nicknameRef.current!.value);
+    joinTeam({
+      teamId: locationState.teamId,
+      nickname: nicknameRef.current!.value,
+    });
+  };
+
   return (
     <>
       {/* 모임 가입신청 모달 */}
@@ -153,11 +182,8 @@ const Team = () => {
               <button
                 className="py-3 px-9 bg-hanaMint text-white rounded-3xl"
                 onClick={() => {
-                  openModal(false);
-                  joinTeam({
-                    teamId: locationState.teamId,
-                    nickname: nicknameRef.current!.value,
-                  });
+                  // openModal(false);
+                  handleJoin();
                 }}
               >
                 확인
@@ -308,6 +334,14 @@ const Team = () => {
                         place={item.place}
                         cost={item.cost}
                         image={item.planImg}
+                        isSurveyed={item.isSurveyed}
+                        isChair={role === "CHAIR"}
+                        onRequest={() =>
+                          requestSurvey({
+                            teamId: locationState.teamId,
+                            planId: item.planId,
+                          })
+                        }
                       />
                     ))}
                     {/* 일정 추가 버튼 */}
@@ -342,9 +376,19 @@ const Team = () => {
                 />
               </div>
             )}
+            {/* QR 코드 */}
             {selected === "desc" && role === "CHAIR" && (
               <div className="fixed flex bottom-10 right-10">
-                <div className="flex w-24 h-24 bg-custom-gradient rounded-full justify-center items-center">
+                <div
+                  className="flex w-24 h-24 bg-custom-gradient rounded-full justify-center items-center"
+                  onClick={() => {
+                    navigate("/qrcode", {
+                      state: {
+                        teamId: locationState.teamId,
+                      },
+                    });
+                  }}
+                >
                   <img src="/img/qrcode.png" className="w-40" />
                 </div>
               </div>

@@ -17,6 +17,7 @@ import {
   Members,
   My,
   Plan,
+  Qrcode,
   Search,
   Sending,
   Survey,
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
       { path: "chat-room", element: <ChatRoom /> },
       { path: "sending", element: <Sending /> },
       { path: "create-plan", element: <Plan /> },
+      { path: "qrcode", element: <Qrcode /> },
       {
         element: <Navbar />,
         children: [

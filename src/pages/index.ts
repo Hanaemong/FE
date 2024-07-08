@@ -15,3 +15,4 @@ export { default as ChatList } from "./team/ChatList";
 export { default as ChatRoom } from "./team/ChatRoom";
 export { default as Plan } from "./team/Plan";
 export { default as Landing } from "./Landing";
+export { default as Qrcode } from "./team/Qrcode";
