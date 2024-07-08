@@ -8,7 +8,6 @@ import { teamApi } from "../../apis/domains/teamApi";
 import { planApi } from "../../apis/domains/planApi";
 import { surveyApi } from "../../apis/domains/surveyApi";
 import { TbCheckbox } from "react-icons/tb";
-import { dateDay, dateMonth, dateYear } from "../../utils/getDate";
 
 const Team = () => {
   const navigate = useNavigate();
