@@ -6,8 +6,16 @@ import { chatApi } from "../../apis/domains/chatApi";
 import SockJS from "sockjs-client";
 import { timeConvertor } from "../../utils/datetimeFormat";
 import { teamMemberApi } from "../../apis/domains/teamMemberApi";
+import { useLocation } from "react-router-dom";
 
 const ChatRoom = () => {
+  const location = useLocation();
+  const locationState = location.state as {
+    teamId: number;
+    teamName: string;
+    memberCnt: number;
+  };
+
   const client = useRef<CompatClient>();
   const divRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -24,10 +32,6 @@ const ChatRoom = () => {
     textareaRef.current!.style.height = "auto";
     textareaRef.current!.style.height =
       textareaRef.current!.scrollHeight + "px";
-    // 채팅리스트 높이 재조정
-    // divRef.current!.style.height = "auto";
-    // divRef.current!.style.height =
-    //   divRef.current!.scrollHeight - textareaRef.current!.scrollHeight + "px";
   };
 
   const connectHandler = () => {
@@ -39,10 +43,13 @@ const ChatRoom = () => {
     });
     client.current.connect({}, () => {
       client.current &&
-        client.current.subscribe(`/topic/${2}`, (message: any) => {
-          console.log("메세지:", message);
-          setMessage(JSON.parse(message.body));
-        });
+        client.current.subscribe(
+          `/topic/${locationState.teamId}`,
+          (message: any) => {
+            console.log("메세지:", message);
+            setMessage(JSON.parse(message.body));
+          }
+        );
     });
   };
 
@@ -55,11 +62,11 @@ const ChatRoom = () => {
   };
 
   const sendHandler = () => {
-    if (textareaRef.current!.value === "") return;
+    if (textareaRef.current!.value.trim() === "") return;
 
     const chatDto = {
       nickname: myNickname,
-      roomId: 2,
+      roomId: locationState.teamId,
       profile: myProfile,
       msg: textareaRef.current!.value,
       time: new Date().toISOString(), // ISO 형식으로 변환
@@ -78,13 +85,13 @@ const ChatRoom = () => {
     try {
       teamMemberApi
         .getInstance()
-        .getMyTeamNickname(2)
+        .getMyTeamNickname(locationState.teamId)
         .then((res) => {
           setMyNickname(res.data?.nickname!);
           setMyProfile(res.data?.profile!);
           chatApi
             .getInstance()
-            .getChatHistory(2)
+            .getChatHistory(locationState.teamId)
             .then((res) => {
               console.log(res.data);
               setOldMsg(toChatArr(res.data));
@@ -143,27 +150,34 @@ const ChatRoom = () => {
 
   const scrollToBottom = () => {
     if (divRef.current) {
+      console.log("Scrolling to bottom");
+      divRef.current.scrollTop = divRef.current.scrollHeight;
       console.log(
+        "scrollTop:",
         divRef.current.scrollTop,
+        "scrollHeight:",
         divRef.current.scrollHeight,
+        "clientHeight:",
         divRef.current.clientHeight
       );
-      divRef.current.scrollTop = divRef.current.scrollHeight;
     }
   };
 
   const activeEnter = (e: any) => {
     if (e.key === "Enter") {
-      textareaRef.current!.value && sendHandler();
       e.preventDefault();
+      textareaRef.current!.value && sendHandler();
     }
   };
 
   return (
-    <section ref={divRef}>
-      <ChatTopbar title="배드민턴 동호회" member={20} teamId={1} />
-      <div className="min-h-real-screen4 flex flex-col">
-        {/* 채팅리스트 구현 필요 */}
+    <section className="relative flex flex-col h-screen">
+      <ChatTopbar
+        title={locationState.teamName}
+        member={locationState.memberCnt}
+        teamId={locationState.teamId}
+      />
+      <div className="flex-grow flex flex-col overflow-auto" ref={divRef}>
         <div className="flex flex-col p-7 gap-7">
           {oldMsg?.map((item, index) => (
             <ChatCard
@@ -176,14 +190,14 @@ const ChatRoom = () => {
           ))}
         </div>
       </div>
-      <div className="sticky mb-4 flex justify-center items-center">
+      <div className="sticky bottom-4 mb-4 flex justify-center items-center bg-white w-full">
         <textarea
           maxLength={100}
           rows={1}
           onChange={() => handleResizeHeight()}
           onKeyDown={(e) => activeEnter(e)}
           ref={textareaRef}
-          className={`bg-[#D9D9D9] bottom-4 w-11/12 font-hanaRegular text-xl focus:outline-none py-4 pl-4 pr-14 rounded-3xl overflow-y-hidden`}
+          className={`bg-[#D9D9D9] w-11/12 font-hanaRegular text-xl focus:outline-none py-4 pl-4 pr-14 rounded-3xl overflow-y-hidden`}
         />
         <div
           className="absolute right-9 text-hanaPurple text-2xl font-hanaMedium"

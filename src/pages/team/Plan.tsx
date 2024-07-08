@@ -36,6 +36,7 @@ const Plan = () => {
   const locationState = location.state as {
     teamId: number;
     from: string;
+    memberCnt: number;
   };
 
   const { mutate: postPlan } = useMutation({
@@ -108,6 +109,7 @@ const Plan = () => {
         state: {
           teamId: locationState.teamId,
           from: locationState.from,
+          memberCnt: locationState.memberCnt,
         },
       });
   };

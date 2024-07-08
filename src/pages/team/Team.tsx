@@ -17,6 +17,7 @@ const Team = () => {
   const locationState = location.state as {
     teamId: number;
     from: string;
+    memberCnt: number;
   };
 
   const {
@@ -114,6 +115,16 @@ const Team = () => {
     navigate(`/${locationState.from}`);
   };
 
+  const onClickChat = () => {
+    navigate("/chat-room", {
+      state: {
+        teamId: locationState.teamId,
+        memberCnt: locationState.memberCnt,
+        teamName: detail?.data?.teamName,
+      },
+    });
+  };
+
   useEffect(() => {
     if (detail?.data) {
       setRole(detail.data.role);
@@ -194,7 +205,11 @@ const Team = () => {
       )}
       {detail?.data && (
         <section>
-          <Topbar title={detail.data.teamName} onClick={() => onClickBack()} />
+          <Topbar
+            title={detail.data.teamName}
+            onClick={() => onClickBack()}
+            onClickChat={() => onClickChat()}
+          />
           <div
             className={`min-h-real-screen2 flex flex-col justify-between ${
               selected === "plan" ? "bg-hanaGray" : ""
@@ -214,6 +229,7 @@ const Team = () => {
                             role: role,
                             teamId: locationState.teamId,
                             from: locationState.from,
+                            memberCnt: locationState.memberCnt,
                           },
                         })
                       }
@@ -353,6 +369,7 @@ const Team = () => {
                             state: {
                               teamId: locationState.teamId,
                               from: locationState.from,
+                              memberCnt: locationState.memberCnt,
                             },
                           });
                         }}
@@ -385,6 +402,8 @@ const Team = () => {
                     navigate("/qrcode", {
                       state: {
                         teamId: locationState.teamId,
+                        from: locationState.from,
+                        memberCnt: locationState.memberCnt,
                       },
                     });
                   }}

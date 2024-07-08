@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { BsChatDots } from "react-icons/bs";
 import { GoChevronLeft } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
@@ -6,9 +7,10 @@ interface IProps {
   title: string;
   onClick?: () => void;
   prohibit?: boolean;
+  onClickChat?: () => void;
 }
 
-const Topbar: FC<IProps> = ({ title, onClick, prohibit }) => {
+const Topbar: FC<IProps> = ({ title, onClick, prohibit, onClickChat }) => {
   const navigate = useNavigate();
 
   return (
@@ -31,6 +33,15 @@ const Topbar: FC<IProps> = ({ title, onClick, prohibit }) => {
         </div>
       )}
       <div className="justify-center text-3xl font-hanaBold">{title}</div>
+      {onClickChat && (
+        <BsChatDots
+          className="absolute right-4"
+          size={25}
+          onClick={() => {
+            onClickChat();
+          }}
+        />
+      )}
     </div>
   );
 };
