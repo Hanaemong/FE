@@ -17,6 +17,7 @@ const ChatRoom = () => {
   const [message, setMessage] = useState<ChatType>();
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [myNickname, setMyNickname] = useState<string>("");
+  const [myProfile, setMyProfile] = useState<string>("");
 
   const handleResizeHeight = () => {
     // textarea 높이 재조정
@@ -59,6 +60,7 @@ const ChatRoom = () => {
     const chatDto = {
       nickname: myNickname,
       roomId: 2,
+      profile: myProfile,
       msg: textareaRef.current!.value,
       time: new Date().toISOString(), // ISO 형식으로 변환
       type: "chat",
@@ -79,6 +81,7 @@ const ChatRoom = () => {
         .getMyTeamNickname(2)
         .then((res) => {
           setMyNickname(res.data?.nickname!);
+          setMyProfile(res.data?.profile!);
           chatApi
             .getInstance()
             .getChatHistory(2)

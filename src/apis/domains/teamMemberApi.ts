@@ -34,9 +34,10 @@ export class teamMemberApi extends ApiClient {
   }
 
   async getMyTeamNickname(teamId: number) {
-    const response = await this._http.get<{ nickname: string }>(
-      `/teamMember/my/${teamId}`
-    );
+    const response = await this._http.get<{
+      nickname: string;
+      profile: string;
+    }>(`/teamMember/my/${teamId}`);
     return response;
   }
 }
