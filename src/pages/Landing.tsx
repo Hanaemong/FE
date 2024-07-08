@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../utils/cookie";
 import { useEffect } from "react";
 
 const Landing = () => {
