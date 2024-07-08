@@ -250,6 +250,7 @@ const Team = () => {
                             nickname: detail.data?.nickName,
                             memberCnt: locationState.memberCnt,
                             teamName: detail.data?.teamName,
+                            role: role,
                           },
                         });
                       }}

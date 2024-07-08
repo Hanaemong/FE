@@ -16,6 +16,7 @@ const Dues = () => {
     teamName: string;
     nickname: string;
     memberCnt: number;
+    role: string;
   };
 
   const [isDeposit, setIsDeposit] = useState<boolean>(true);
@@ -138,20 +139,22 @@ const Dues = () => {
           </div>
         </div>
         <div className="flex flex-row justify-center pb-10">
-          <Button
-            text="회비 납부하기"
-            onClick={() =>
-              navigate("/sending", {
-                state: {
-                  receiveName: locationState.teamName,
-                  receiveAccount: transactions?.data?.accountNumber,
-                  teamId: locationState.teamId,
-                  nickname: locationState.nickname,
-                  memberCnt: locationState.memberCnt,
-                },
-              })
-            }
-          />
+          {isDeposit && locationState.role !== "CHAIR" && (
+            <Button
+              text="회비 납부하기"
+              onClick={() =>
+                navigate("/sending", {
+                  state: {
+                    receiveName: locationState.teamName,
+                    receiveAccount: transactions?.data?.accountNumber,
+                    teamId: locationState.teamId,
+                    nickname: locationState.nickname,
+                    memberCnt: locationState.memberCnt,
+                  },
+                })
+              }
+            />
+          )}
         </div>
       </div>
     </section>
