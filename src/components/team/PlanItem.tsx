@@ -8,6 +8,7 @@ interface IProps {
   place: string;
   cost: number;
   image: string;
+  outdated: boolean;
   isSurveyed: boolean;
   isChair: boolean;
   onRequest?: () => void;
@@ -19,13 +20,16 @@ const PlanItem: FC<IProps> = ({
   place,
   cost,
   image,
+  outdated,
   isSurveyed,
   isChair,
   onRequest = () => {},
 }) => {
   return (
     <div
-      className={`w-full flex gap-20 p-7 bg-white rounded-3xl drop-shadow-lg`}
+      className={`w-full flex gap-20 p-7 bg-white rounded-3xl drop-shadow-lg ${
+        outdated && "contrast-50"
+      }`}
     >
       <div className="flex flex-col gap-4">
         <div className="w-40 font-hanaMedium text-2xl truncate">{title}</div>
@@ -35,16 +39,35 @@ const PlanItem: FC<IProps> = ({
         ></div>
       </div>
       <div
-        className={`w-64 ${
-          !isChair && "mt-10"
+        className={`w-64 ${!isChair && "mt-10"}  ${
+          isChair && !outdated && "mt-10"
         } flex flex-col gap-3 font-hanaRegular text-xl`}
       >
-        {isChair && (
-          <RiSurveyLine
-            size={18}
-            className={`self-end ${isSurveyed ? "text-hanaGray2" : ""}`}
-            onClick={() => onRequest()}
-          />
+        {isChair && outdated && (
+          <div
+            className="flex flex-row justify-end gap-2"
+            onClick={() => {
+              if (outdated) {
+                onRequest();
+              } else {
+                alert("지난 일정에 대해서만 설문을 요청할 수 있습니다.");
+              }
+            }}
+          >
+            <RiSurveyLine
+              size={18}
+              className={`self-end ${isSurveyed && "text-hanaGray2"}  ${
+                outdated && !isSurveyed && " text-hanaPurple"
+              }`}
+            />
+            <div
+              className={`${isSurveyed && "text-hanaGray2"} ${
+                outdated && !isSurveyed && " text-hanaPurple"
+              } `}
+            >
+              설문 요청하기
+            </div>
+          </div>
         )}
         <div className="flex justify-between">
           <div className="text-hanaSilver2">일시</div>
