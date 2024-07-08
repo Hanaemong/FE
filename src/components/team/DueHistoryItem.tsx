@@ -23,31 +23,45 @@ const DueHistoryItem: FC<Iprops> = ({
     <div className="w-full h-32 flex flex-col pt-3 px-10 justify-end">
       <div className="flex flex-row justify-between pr-2">
         <div className="flex flex-row items-center pb-9">
-          <img
-            src={gender === "M" ? "/img/별돌이.png" : "/img/별순이.png"}
-            alt="profile"
-            className="w-12 h-12"
-          />
-          <p className="font-hanaRegular text-3xl ml-3">{name}</p>
-          <p className="font-hanaRegular text-3xl">{`(${nickname})`}</p>
-          {gender === "M" ? (
-            <MdMale color="#002CC9" size={20} />
-          ) : (
-            <MdFemale color="#DD0092" size={20} />
+          {isDeposit && (
+            <img
+              src={gender === "M" ? "/img/별돌이.png" : "/img/별순이.png"}
+              alt="profile"
+              className="w-12 h-12"
+            />
+          )}
+          <p
+            className={`text-3xl ml-3 ${
+              isDeposit ? "font-hanaRegular" : "font-hanaMedium"
+            }`}
+          >
+            {name}
+          </p>
+          {isDeposit && (
+            <p className="font-hanaRegular text-3xl">{`(${nickname})`}</p>
+          )}
+          {isDeposit && (
+            <>
+              {gender === "M" ? (
+                <MdMale color="#002CC9" size={20} />
+              ) : (
+                <MdFemale color="#DD0092" size={20} />
+              )}
+            </>
           )}
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           <div className="flex flex-row gap-1 items-center">
             <p className="font-hanaRegular text-xl text-hanaSilver2 whitespace-pre">
               {formatter2(date)}
             </p>
-            <p className="font-hanaLight text-xl text-hanaSilver2 whitespace-pre">
+            <p className="font-hanaRegular text-xl text-hanaSilver2 whitespace-pre">
               {formatter2_2(date)}
             </p>
           </div>
           <p
             className={`font-hanaBold text-2xl text-right ${
-              isDeposit ? "text-red-500" : "text-blue-500"
+              isDeposit ? "text-red-500" : "text-blue-500 mb-2"
             }`}
           >
             {balance.toLocaleString()}원
