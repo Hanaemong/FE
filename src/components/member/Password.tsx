@@ -90,9 +90,9 @@ const Password: FC<IProps> = ({ confirm, join, onPasswordComplete }) => {
             onClick={() => handleClick(index)}
           >
             {item === 10 ? (
-              <img src="/img/별돌이1.png" className="size-10" />
+              <img src="/img/별돌이1.png" alt="별돌이" className="size-10" />
             ) : item === 11 ? (
-              <img src="/img/별돌이1.png" className="size-10" />
+              <img src="/img/별돌이1.png" alt="별돌이" className="size-10" />
             ) : (
               item
             )}

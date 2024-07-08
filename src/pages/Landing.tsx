@@ -27,11 +27,11 @@ const Landing = () => {
           className={`w-72 h-72 animate-fadeinbounceleft`}
         />
         <p
-          className={`text-[3.5rem] text-center font-hanaHeavy text-white drop-shadow-lg 
+          className={`text-[4.0rem] text-center font-hanaBold text-white drop-shadow-lg 
                 animate-fadeinbounceright
               `}
         >
-          Hana Link
+          하나링크
         </p>
       </div>
     </section>
