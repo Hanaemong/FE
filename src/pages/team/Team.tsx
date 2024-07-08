@@ -244,6 +244,8 @@ const Team = () => {
                           state: {
                             teamId: locationState.teamId,
                             nickname: detail.data?.nickName,
+                            receiveName: detail.data?.teamName,
+                            role: role,
                           },
                         });
                       }}
