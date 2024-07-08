@@ -15,6 +15,8 @@ const ChatTopbar: FC<IProps> = ({ title, member, teamId }) => {
     navigate("/team", {
       state: {
         teamId: teamId,
+        from: "chats",
+        memberCnt: member,
       },
     });
   };

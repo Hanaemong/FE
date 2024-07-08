@@ -13,6 +13,7 @@ const Members = () => {
     role: string;
     teamId: number;
     from: string;
+    memberCnt: number;
   };
 
   const [changeBtn, setChangeBtn] = useState<boolean>(false);
@@ -68,6 +69,7 @@ const Members = () => {
         state: {
           teamId: locationState.teamId,
           from: locationState.from,
+          memberCnt: locationState.memberCnt,
         },
       });
     },

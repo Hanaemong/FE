@@ -1,11 +1,11 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { chatFormatter } from "../../utils/datetimeFormat";
 import { useNavigate } from "react-router-dom";
+import { chatApi } from "../../apis/domains/chatApi";
 
 interface Iprops {
   title: string;
   member: number;
-  lastMsg: string;
   date: Date;
   image: string;
   teamId: number;
@@ -15,26 +15,43 @@ interface Iprops {
 const ChatListItem: FC<Iprops> = ({
   title,
   member,
-  lastMsg,
   date,
+  image,
   teamId,
   isNew,
 }) => {
   const navigate = useNavigate();
 
+  const [lastMsg, setLastMsg] = useState<string>();
+
   const onClickItem = () => {
     navigate("/chat-room", {
       state: {
         teamId: teamId,
+        memberCnt: member,
+        teamName: title,
       },
     });
   };
+
+  useEffect(() => {
+    try {
+      chatApi
+        .getInstance()
+        .getLastChat(teamId)
+        .then((res) => {
+          setLastMsg(res.data.msg);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
     <div className="flex flex-row w-full gap-6" onClick={() => onClickItem()}>
       {/* 이미지 영역 */}
       <div className="relative border-[1px] border-hanaPurple rounded-3xl">
-        <img src="/img/vip.png" alt="image" className="w-28 h-28 p-2" />
+        <img src={image} alt="image" className="size-28 p-2 rounded-3xl" />
         {isNew && (
           <div className="flex absolute right-1 top-1 justify-center items-center w-7 h-7 bg-red-500 text-white rounded-full font-hanaCM">
             N
