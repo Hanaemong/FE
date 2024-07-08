@@ -13,7 +13,9 @@ const Dues = () => {
 
   const locationState = location.state as {
     teamId: number;
+    teamName: string;
     nickname: string;
+    memberCnt: number;
   };
 
   const [isDeposit, setIsDeposit] = useState<boolean>(true);
@@ -141,10 +143,11 @@ const Dues = () => {
             onClick={() =>
               navigate("/sending", {
                 state: {
-                  receiveName: "성동구 미나리 모임",
-                  receiveAccount: "542-116273-43174",
+                  receiveName: locationState.teamName,
+                  receiveAccount: transactions?.data?.accountNumber,
                   teamId: locationState.teamId,
                   nickname: locationState.nickname,
+                  memberCnt: locationState.memberCnt,
                 },
               })
             }

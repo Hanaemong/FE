@@ -25,6 +25,7 @@ const Sending = () => {
     receiveAccount: string;
     teamId: number;
     nickname: string;
+    memberCnt: number;
   };
 
   const [step, setStep] = useState<number>(1);
@@ -174,6 +175,8 @@ const Sending = () => {
       navigate("/team", {
         state: {
           teamId: locationState.teamId,
+          from: "home",
+          memberCnt: locationState.memberCnt,
         },
       });
     }

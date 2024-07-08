@@ -117,13 +117,17 @@ const Team = () => {
   };
 
   const onClickChat = () => {
-    navigate("/chat-room", {
-      state: {
-        teamId: locationState.teamId,
-        memberCnt: locationState.memberCnt,
-        teamName: detail?.data?.teamName,
-      },
-    });
+    if (detail?.data?.role === "CHAIR" || detail?.data?.role === "REGULAR") {
+      navigate("/chat-room", {
+        state: {
+          teamId: locationState.teamId,
+          memberCnt: locationState.memberCnt,
+          teamName: detail?.data?.teamName,
+        },
+      });
+    } else {
+      alert("가입 대기중 상태입니다.");
+    }
   };
 
   useEffect(() => {
@@ -244,6 +248,8 @@ const Team = () => {
                           state: {
                             teamId: locationState.teamId,
                             nickname: detail.data?.nickName,
+                            memberCnt: locationState.memberCnt,
+                            teamName: detail.data?.teamName,
                           },
                         });
                       }}
