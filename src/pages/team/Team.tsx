@@ -40,16 +40,19 @@ const Team = () => {
   });
 
   const { mutate: joinTeam } = useMutation({
-    mutationFn: ({ teamId, hello }: any) => {
-      const response = teamApi.getInstance().postJoinTeam(teamId, hello);
+    mutationFn: ({ teamId, nickname }: any) => {
+      const response = teamApi.getInstance().postJoinTeam(teamId, nickname);
       return response;
     },
     onSuccess: () => {
+      setDuplicated(false);
+      openModal(false);
       alert("가입 신청이 완료되었습니다.");
       setRole("PENDING");
     },
     onError: (err) => {
       if (err.message === "NicknameAlreadyExists") {
+        // openModal(true);
         setDuplicated(true);
       } else {
         alert("가입 신청에 실패했습니다.");
@@ -140,6 +143,14 @@ const Team = () => {
     changeBanner({ teamId: locationState.teamId, banner: formData });
   };
 
+  const handleJoin = () => {
+    console.log(nicknameRef.current!.value);
+    joinTeam({
+      teamId: locationState.teamId,
+      nickname: nicknameRef.current!.value,
+    });
+  };
+
   return (
     <>
       {/* 모임 가입신청 모달 */}
@@ -171,11 +182,8 @@ const Team = () => {
               <button
                 className="py-3 px-9 bg-hanaMint text-white rounded-3xl"
                 onClick={() => {
-                  openModal(false);
-                  joinTeam({
-                    teamId: locationState.teamId,
-                    nickname: nicknameRef.current!.value,
-                  });
+                  // openModal(false);
+                  handleJoin();
                 }}
               >
                 확인
@@ -368,9 +376,19 @@ const Team = () => {
                 />
               </div>
             )}
+            {/* QR 코드 */}
             {selected === "desc" && role === "CHAIR" && (
               <div className="fixed flex bottom-10 right-10">
-                <div className="flex w-24 h-24 bg-custom-gradient rounded-full justify-center items-center">
+                <div
+                  className="flex w-24 h-24 bg-custom-gradient rounded-full justify-center items-center"
+                  onClick={() => {
+                    navigate("/qrcode", {
+                      state: {
+                        teamId: locationState.teamId,
+                      },
+                    });
+                  }}
+                >
                   <img src="/img/qrcode.png" className="w-40" />
                 </div>
               </div>
