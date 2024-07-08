@@ -7,7 +7,7 @@ import categories from "../../utils/categories";
 import { getCookie } from "../../utils/cookie";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { teamApi } from "../../apis/domains/teamApi";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -44,6 +44,80 @@ const Home = () => {
     }
   }, [isError]);
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startPosition, setStartPosition] = useState(0);
+  const [currentTranslate, setCurrentTranslate] = useState(0);
+  const [prevTranslate, setPrevTranslate] = useState(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const slideItems = [
+    "/img/banner1.png",
+    "/img/banner2.png",
+    "/img/banner3.png",
+    "/img/banner4.png",
+  ];
+
+  useEffect(() => {
+    const handleResize = () => {
+      setCurrentTranslate(0);
+      setPrevTranslate(0);
+      setCurrentIndex(0);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const handleMouseDown = (event: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartPosition(event.clientX);
+  };
+
+  const handleMouseMove = (event: React.MouseEvent) => {
+    if (isDragging) {
+      const currentPosition = event.clientX;
+      const diff = currentPosition - startPosition;
+      setCurrentTranslate(prevTranslate + diff);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    const movedBy = currentTranslate - prevTranslate;
+
+    if (movedBy < -100 && currentIndex < slideItems.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+
+    if (movedBy > 100 && currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+
+    setPrevTranslate(currentIndex * -sliderRef.current!.offsetWidth);
+    setCurrentTranslate(currentIndex * -sliderRef.current!.offsetWidth);
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      handleMouseUp();
+    }
+  };
+
+  const handleSlide = (index: number) => {
+    setCurrentIndex(index);
+    const newTranslate = index * -sliderRef.current!.offsetWidth;
+    setPrevTranslate(newTranslate);
+    setCurrentTranslate(newTranslate);
+  };
+
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (slider) {
+      slider.style.transform = `translateX(${currentTranslate}px)`;
+      slider.style.transition = "transform 0.3s ease-out";
+    }
+  }, [currentTranslate]);
+
   return (
     <section className="relative min-h-real-screen bg-hanaGray">
       <div className="flex flex-col gap-4">
@@ -69,7 +143,36 @@ const Home = () => {
               </div>
             </div>
             {/* 캐러셀 구역 */}
-            <img src="/img/banner_temp.png" alt="banner" />
+            <div className="w-full max-w-4xl mx-auto overflow-hidden relative">
+              <div
+                ref={sliderRef}
+                className="flex transition-transform duration-300 ease-out"
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+              >
+                {slideItems.map((item, index) => (
+                  <div
+                    key={index}
+                    className="w-full h-64 rounded-xl bg-cover bg-center flex-shrink-0"
+                    style={{ backgroundImage: `url(${item})` }}
+                  />
+                ))}
+              </div>
+              {/* 슬라이드 인디케이터 */}
+              <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-4">
+                {slideItems.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`w-2.5 h-2.5 rounded-full cursor-pointer ${
+                      currentIndex === index ? "bg-gray-800" : "bg-gray-400"
+                    }`}
+                    onClick={() => handleSlide(index)}
+                  ></div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex flex-col p-7 gap-7">
