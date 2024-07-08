@@ -5,6 +5,7 @@ import { requestPermission } from "./firebaseConfig.ts";
 import { useEffect, useState } from "react";
 import firebase from "firebase/app";
 import { AlarmCard } from "./components/index.ts";
+import "./../init.js";
 
 const queryClient = new QueryClient({
   defaultOptions: {
