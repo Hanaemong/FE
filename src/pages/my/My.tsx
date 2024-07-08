@@ -65,7 +65,10 @@ const My = () => {
         {/* 사용자 정보 */}
         <div className="w-full flex bg-white rounded-2xl p-5">
           <div className="w-1/3 flex flex-col gap-2 items-center justify-center">
-            <img src={memberInfo?.data?.profile} className="size-24" />
+            <img
+              src={memberInfo?.data?.profile}
+              className="size-24 rounded-2xl"
+            />
             <p className="font-hanaMedium text-2xl">{memberInfo?.data?.name}</p>
           </div>
           <div className="w-2/3 flex flex-col gap-2 rounded-2xl border font-hanaRegular p-5 text-xl">
