@@ -26,6 +26,8 @@ const ChatListItem: FC<Iprops> = ({
     navigate("/chat-room", {
       state: {
         teamId: teamId,
+        memberCnt: member,
+        teamName: title,
       },
     });
   };

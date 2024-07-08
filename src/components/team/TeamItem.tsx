@@ -27,6 +27,7 @@ const TeamItem: FC<Iprops> = ({
       state: {
         teamId: teamId,
         from: from,
+        memberCnt: member,
       },
     });
   };
