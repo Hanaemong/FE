@@ -1,7 +1,7 @@
 interface ChatType {
-  teamMemberId: number;
-  sender: string;
-  body: string;
-  type: string;
-  date: Date;
+  roomId: number;
+  nickname: string;
+  msg: string;
+  profile: string;
+  time: string;
 }

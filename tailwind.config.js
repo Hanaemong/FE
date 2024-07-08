@@ -104,6 +104,10 @@ export default {
       "real-screen": "calc(100vh - 75px)",
       "real-screen2": "calc(100vh - 50px)",
       "real-screen3": "calc(100vh - 125px)",
+      "real-screen4": "calc(100vh - 83.5px)",
+    },
+    transitionProperty: {
+      chats: "all 0.3s ease",
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],
