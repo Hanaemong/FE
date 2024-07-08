@@ -204,16 +204,6 @@ const Members = () => {
             </div>
           </div>
         </div>
-        {/* {locationState.role === "CHAIR" && (
-          <div className="flex flex-row justify-center mb-7">
-            <Button
-              text="설문조사 보내기"
-              onClick={() => {
-                requestSurvey(locationState.teamId);
-              }}
-            />
-          </div>
-        )} */}
       </div>
     </section>
   );

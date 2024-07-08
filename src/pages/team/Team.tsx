@@ -8,6 +8,7 @@ import { teamApi } from "../../apis/domains/teamApi";
 import { planApi } from "../../apis/domains/planApi";
 import { surveyApi } from "../../apis/domains/surveyApi";
 import { TbCheckbox } from "react-icons/tb";
+import { dateDay, dateMonth, dateYear } from "../../utils/getDate";
 
 const Team = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const Team = () => {
     },
   });
 
-  const { data: plans } = useQuery({
+  const { data: plans, refetch } = useQuery({
     queryKey: ["plan"],
     queryFn: () => {
       const res = planApi.getInstance().getPlan(locationState.teamId);
@@ -79,6 +80,7 @@ const Team = () => {
     onSuccess: (response) => {
       alert("모임원에게 설문조사를 요청했습니다.");
       console.log(response.data);
+      refetch();
     },
     onError: (err) => {
       alert("설문조사 요청에 실패했습니다.");
@@ -342,24 +344,29 @@ const Team = () => {
                 <>
                   <div className="w-full p-7 flex flex-col gap-4 ">
                     <p className="font-hanaMedium text-2xl">일정</p>
-                    {plans?.data?.map((item) => (
-                      <PlanItem
-                        key={item.planId}
-                        title={item.planName}
-                        date={item.planDate.toString()}
-                        place={item.place}
-                        cost={item.cost}
-                        image={item.planImg}
-                        isSurveyed={item.isSurveyed}
-                        isChair={role === "CHAIR"}
-                        onRequest={() =>
-                          requestSurvey({
-                            teamId: locationState.teamId,
-                            planId: item.planId,
-                          })
-                        }
-                      />
-                    ))}
+                    {plans?.data?.map((item: PlanResType) => {
+                      let temp = new Date(item.planDate);
+                      let currentDate = new Date();
+                      return (
+                        <PlanItem
+                          key={item.planId}
+                          title={item.planName}
+                          date={item.planDate.toString()}
+                          place={item.place}
+                          cost={item.cost}
+                          image={item.planImg}
+                          outdated={temp < currentDate}
+                          isSurveyed={item.isSurveyed}
+                          isChair={role === "CHAIR"}
+                          onRequest={() =>
+                            requestSurvey({
+                              teamId: locationState.teamId,
+                              planId: item.planId,
+                            })
+                          }
+                        />
+                      );
+                    })}
                     {/* 일정 추가 버튼 */}
                     {role === "CHAIR" && (
                       <div
