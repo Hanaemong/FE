@@ -2,6 +2,6 @@ interface ChatType {
   roomId: number;
   nickname: string;
   msg: string;
-  type: string;
+  profile: string;
   time: string;
 }

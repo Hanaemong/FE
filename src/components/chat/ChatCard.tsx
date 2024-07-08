@@ -4,20 +4,14 @@ import ChatBalloon from "./ChatBalloon";
 interface Iprops {
   msgs: ChatType[];
   isSender: boolean;
-  gender?: string;
+  profile: string;
   nickname?: string;
 }
 
-const ChatCard: FC<Iprops> = ({ msgs, isSender, nickname, gender }) => {
+const ChatCard: FC<Iprops> = ({ msgs, isSender, profile, nickname }) => {
   return (
     <div className={`flex flex-row gap-4 w-full ${isSender && "justify-end"}`}>
-      {nickname && (
-        <img
-          src={gender == "M" ? "/img/별돌이.png" : "/img/별순이.png"}
-          alt="profile"
-          className="size-16"
-        ></img>
-      )}
+      {nickname && <img src={profile} alt="profile" className="size-16"></img>}
       <div className={`flex flex-col gap-2 ${isSender && "items-end"}`}>
         {nickname && <p className="font-hanaMedium text-2xl">{nickname}</p>}
         {msgs.map((item, index) => (
