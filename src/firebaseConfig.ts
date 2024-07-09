@@ -17,12 +17,15 @@ if (!firebase.apps.length) {
   firebase.app(); // 이미 초기화되었다면, 초기화 된 것을 사용함
 }
 
-// navigator.serviceWorker.register("/firebase-messaging-sw.js", {
-//   scope: "/firebase-cloud-messaging-push-scope",
-// });
+navigator.serviceWorker.register("/firebase-messaging-sw.js", {
+  scope: "/firebase-cloud-messaging-push-scope",
+});
 
 export function requestPermission() {
-  if (!firebase.messaging.isSupported()) return null;
+  if (!firebase.messaging.isSupported()) {
+    alert("푸시 알림을 지원하지 않는 기종입니다.");
+    return null;
+  }
   const messaging = firebase.messaging();
   return Notification.requestPermission().then((permission) => {
     if (permission === "granted") {
