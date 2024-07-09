@@ -84,7 +84,7 @@ const Password: FC<IProps> = ({ confirm, join, onPasswordComplete }) => {
         {shuffledNumbers.map((item, index) => (
           <div
             key={index}
-            className={`flex items-center justify-center w-20 h-20 text-center ${
+            className={`flex items-center justify-center w-20 h-20 text-center cursor-pointer ${
               activeIndex === index ? "animate-flash" : ""
             }`}
             onClick={() => handleClick(index)}
