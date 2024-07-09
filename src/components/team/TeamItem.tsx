@@ -42,7 +42,7 @@ const TeamItem: FC<Iprops> = ({
       <div className="flex flex-col gap-2 py-2 justify-center">
         <p className="text-2xl font-hanaMedium">{name}</p>
         <div className="flex flex-row gap-6 font-hanaRegular items-center">
-          <div className="rounded-2xl py-1 px-2 bg-[#EBEBEB] text-[#9E9E9E] w-24 text-center">
+          <div className="rounded-2xl py-1 px-2 bg-[#EBEBEB] text-[#9E9E9E] w-28 text-center">
             {category}
           </div>
           <p>멤버 {member}</p>
