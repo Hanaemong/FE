@@ -4,6 +4,7 @@ export { default as Topbar } from "./common/Topbar";
 export { default as SelectModal } from "./common/SelectModal";
 export { default as ConfirmCard } from "./common/ConfirmCard";
 export { default as AlarmCard } from "./common/AlarmCard";
+export { default as AlertModal } from "./common/AlertModal";
 export { default as CategoryItem } from "./team/CategoryItem";
 export { default as TeamItem } from "./team/TeamItem";
 export { default as SurveyCard } from "./team/SurveyCard";

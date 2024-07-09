@@ -159,8 +159,11 @@ const ChatRoom = () => {
         member={locationState.memberCnt}
         teamId={locationState.teamId}
       />
-      <div className="flex-grow flex flex-col overflow-auto" ref={divRef}>
-        <div className="flex flex-col p-7 gap-7 transition-chats">
+      <div
+        className="flex-grow flex flex-col overflow-auto scrollbar-hide"
+        ref={divRef}
+      >
+        <div className="flex flex-col p-7 gap-7">
           {oldMsg?.map((item, index) => (
             <ChatCard
               key={index}

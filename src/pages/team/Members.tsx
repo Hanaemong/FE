@@ -147,6 +147,7 @@ const Members = () => {
                   nickname={item.nickName}
                   gender={item.gender}
                   role="총무"
+                  profile={item.profile}
                   changeBtn={changeBtn}
                   setChangeBtn={setChangeBtn}
                   isChair={locationState.role === "CHAIR"}
@@ -167,6 +168,7 @@ const Members = () => {
                       nickname={item.nickName}
                       gender={item.gender}
                       role="가입요청"
+                      profile={item.profile}
                       onDeny={onDeny}
                       onAccept={acceptMember}
                     />
@@ -187,6 +189,7 @@ const Members = () => {
                     nickname={item.nickName}
                     gender={item.gender}
                     role="모임원"
+                    profile={item.profile}
                     changeBtn={changeBtn}
                     changeChair={changeChair}
                     onReject={onReject}

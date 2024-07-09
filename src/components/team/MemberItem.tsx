@@ -6,6 +6,7 @@ interface IProps {
   gender: string;
   role: string;
   nickname: string;
+  profile: string;
   changeBtn?: boolean;
   isChair?: boolean;
   setChangeBtn?: (value: boolean) => void;
@@ -20,6 +21,7 @@ const MemberItem: FC<IProps> = ({
   nickname,
   gender,
   role,
+  profile,
   changeBtn,
   isChair,
   setChangeBtn = () => {},
@@ -35,11 +37,7 @@ const MemberItem: FC<IProps> = ({
       } `}
     >
       <div className="flex flex-row items-center">
-        <img
-          src={gender === "M" ? "/img/별돌이.png" : "/img/별순이.png"}
-          alt="profile"
-          className="w-12 h-12"
-        />
+        <img src={profile} alt="profile" className="size-12 rounded-xl" />
         <p className="font-hanaRegular text-3xl ml-4">{nickname}</p>
         {gender === "M" ? (
           <MdMale color="#002CC9" size={18} />
