@@ -48,6 +48,7 @@ const Join = () => {
       console.log(response);
       if (response.data) {
         setIsActive(false);
+        setCookie("phone", phoneNumRef.current!.value);
       } else if (!response.data) {
         setIsActive(true);
       }
