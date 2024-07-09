@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { getCookie } from "../utils/cookie";
+import { getCookie, setCookie } from "../utils/cookie";
 
 const Landing = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setCookie("fcmToken", "");
+
     const timeout = setTimeout(() => {
       if (getCookie("phone")) {
         navigate("/login");
