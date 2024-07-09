@@ -100,6 +100,11 @@ const My = () => {
                 from="my"
               />
             ))}
+            {list?.data!.length == 0 && (
+              <p className="w-full pt-16 text-center text-3xl font-hanaLight">
+                아직 가입한 모임이 없어요 :(
+              </p>
+            )}
           </div>
         </div>
       </div>
