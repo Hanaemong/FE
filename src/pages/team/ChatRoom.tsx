@@ -71,6 +71,7 @@ const ChatRoom = () => {
     client.current!.send("/pub/send", {}, JSON.stringify(chatDto));
     textareaRef.current!.value = "";
     textareaRef.current!.style.height = "auto";
+    textareaRef.current!.focus();
     scrollToBottom();
   };
 
