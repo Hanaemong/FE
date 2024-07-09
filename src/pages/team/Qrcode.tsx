@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, ConfirmCard, Topbar } from "../../components";
 import QrScanner from "qr-scanner";
-import QRCode from "qrcode.react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { transactionApi } from "../../apis/domains/transactionApi";
@@ -18,11 +17,17 @@ const Qrcode = () => {
   const [confirm, setConfirm] = useState<boolean>(false);
 
   const handleScan = (result: QrScanner.ScanResult) => {
-    const parsedData = JSON.parse(result.data);
-    console.log(`Scan: ${JSON.stringify(parsedData)}`);
+    try {
+      const parsedData = JSON.parse(result.data);
+      console.log(`Scan: ${JSON.stringify(parsedData)}`);
+      expense(parsedData.teamId);
+    } catch (err) {
+      console.error("Failed to parse QR code data", err);
+    }
   };
+
   const QrOptions = {
-    preferredCamera: "user",
+    preferredCamera: "environment",
     maxScansPerSecond: 5,
     highlightScanRegion: true,
   };
@@ -41,23 +46,9 @@ const Qrcode = () => {
 
   useEffect(() => {
     const videoElem = videoRef.current;
-    const canvas: HTMLCanvasElement = document.querySelector("canvas")!;
     if (videoElem) {
-      const qrScanner = new QrScanner(
-        videoElem,
-        (result) => handleScan(result),
-        QrOptions
-      );
+      const qrScanner = new QrScanner(videoElem, handleScan, QrOptions);
       qrScanner.start();
-      QrScanner.scanImage(canvas)
-        .then((result) => {
-          console.log(result);
-          const res = JSON.parse(result);
-          console.log(res);
-          expense(res.teamId);
-        })
-        .catch((error) => console.log(error || "No QR code found."));
-
       return () => qrScanner.destroy();
     }
   }, []);
@@ -107,10 +98,10 @@ const Qrcode = () => {
               />
             </>
           )}
-          <QRCode
+          {/* <QRCode
             className="size-24 hidden"
             value={JSON.stringify({ teamId: locationState.teamId })}
-          />
+          /> */}
         </div>
       </div>
     </section>
