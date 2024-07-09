@@ -163,7 +163,7 @@ const ChatRoom = () => {
         className="flex-grow flex flex-col overflow-auto scrollbar-hide"
         ref={divRef}
       >
-        <div className="flex flex-col p-7 gap-7">
+        <div className="flex flex-col p-7 gap-7 scrollbar-hide">
           {oldMsg?.map((item, index) => (
             <ChatCard
               key={index}
