@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { ChatListItem, Topbar } from "../../components";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { teamApi } from "../../apis/domains/teamApi";
 
 const ChatList = () => {
+  const queryClient = useQueryClient();
+
   const [isAll, setIsAll] = useState<boolean>(true);
 
   const {
@@ -24,6 +26,10 @@ const ChatList = () => {
       alert("채팅방을 불러오는 데 실패했습니다.");
     }
   }, [isError]);
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["list"] });
+  }, []);
 
   return (
     <section className="min-h-real-screen3">
