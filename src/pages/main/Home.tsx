@@ -1,6 +1,6 @@
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { PiMegaphone } from "react-icons/pi";
-import { CategoryCard, TeamItem } from "../../components";
+import { AlertModal, CategoryCard, TeamItem } from "../../components";
 import { GoPlus } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import categories from "../../utils/categories";
@@ -49,6 +49,7 @@ const Home = () => {
   const [startPosition, setStartPosition] = useState(0);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [prevTranslate, setPrevTranslate] = useState(0);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const slideItems = [
     "/img/banner1.png",
@@ -67,6 +68,16 @@ const Home = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const onClickModal = () => {
+    setOpenModal(true);
+    document.body.classList.add("overflow-hidden");
+  };
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+    document.body.classList.remove("overflow-hidden");
+  };
 
   const handleMouseDown = (event: React.MouseEvent) => {
     setIsDragging(true);
@@ -120,6 +131,40 @@ const Home = () => {
 
   return (
     <section className="relative min-h-real-screen bg-hanaGray">
+      {openModal && (
+        <AlertModal
+          title="📮하나링크 공지사항📢"
+          onClose={() => onCloseModal()}
+        >
+          <div className="flex flex-col gap-2 font-hanaRegular">
+            <div className="flex flex-row gap-3 items-center pb-2">
+              <img src="/img/vip.png" alt="image" className="size-7" />
+              <p className="text-3xl">하나체인 Level</p> <br />
+            </div>
+            <p className="text-2xl pb-2">
+              🔹<span className="text-amber-700">브론즈</span>-
+              <span className="text-gray-500">실버</span>-
+              <span className="text-yellow-500">골드</span>-
+              <span className="text-sky-500">다이아</span>-
+              <span className="text-hanaPurple">VIP</span>
+            </p>
+            <br />
+            <div className="flex flex-row gap-3 items-center pb-2">
+              <img src="/img/vip.png" alt="image" className="size-7" />
+              <p className="text-3xl">모일 개설 횟수 제한</p> <br />
+            </div>
+            <p className="text-2xl">🔹모임 개설은 한달에 한 번 가능</p>
+            <p className="text-2xl pb-2">🔹총무 변경시 즉시 개설 가능❗</p>
+            <br />
+            <div className="flex flex-row gap-3 items-center pb-2">
+              <img src="/img/vip.png" alt="image" className="size-7" />
+              <p className="text-3xl">모일 큐알 결제 혜택</p> <br />
+            </div>
+            <p className="text-2xl">🔹모임 큐알코드로 결제 후 이벤트 인증시</p>
+            <p className="text-2xl">🔹다양한 혜택이 뿜뿜뿜!!!🎁</p>
+          </div>
+        </AlertModal>
+      )}
       <div className="flex flex-col gap-4">
         {/* 카드 영역 */}
         <div className="w-full h-96 bg-custom-light-gradient">
@@ -139,7 +184,11 @@ const Home = () => {
                   className="cursor-pointer"
                   onClick={() => navigate("/search")}
                 />
-                <PiMegaphone size={20} />
+                <PiMegaphone
+                  size={20}
+                  className="cursor-pointer"
+                  onClick={() => onClickModal()}
+                />
               </div>
             </div>
             {/* 캐러셀 구역 */}

@@ -23,13 +23,13 @@ const DueHistoryItem: FC<Iprops> = ({
     <div className="w-full h-32 flex flex-col pt-3 px-10 justify-end">
       <div className="flex flex-row justify-between pr-2">
         <div className="flex flex-row items-center pb-9">
-          {isDeposit && (
+          {/* {isDeposit && (
             <img
               src={gender === "M" ? "/img/별돌이.png" : "/img/별순이.png"}
               alt="profile"
               className="w-12 h-12"
             />
-          )}
+          )} */}
           <p
             className={`text-3xl ml-3 ${
               isDeposit ? "font-hanaRegular" : "font-hanaMedium"

@@ -98,6 +98,7 @@ const Team = () => {
       console.log(res);
       alert("배너가 수정되었습니다.");
       setAttachment("");
+      queryClient.invalidateQueries({ queryKey: ["teamDetail"] });
     },
     onError: (err) => {
       console.log(err.message);
