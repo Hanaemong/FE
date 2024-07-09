@@ -19,7 +19,8 @@ const Qrcode = () => {
 
   const handleScan = (result: QrScanner.ScanResult) => {
     const parsedData = JSON.parse(result.data);
-    console.log(`Scan: ${JSON.stringify(parsedData)}`);
+    // console.log(`Scan: ${JSON.stringify(parsedData)}`);
+    expense(parsedData.teamId);
   };
   const QrOptions = {
     preferredCamera: "user",
@@ -41,7 +42,7 @@ const Qrcode = () => {
 
   useEffect(() => {
     const videoElem = videoRef.current;
-    const canvas: HTMLCanvasElement = document.querySelector("canvas")!;
+    // const canvas: HTMLCanvasElement = document.querySelector("canvas")!;
     if (videoElem) {
       const qrScanner = new QrScanner(
         videoElem,
@@ -49,14 +50,14 @@ const Qrcode = () => {
         QrOptions
       );
       qrScanner.start();
-      QrScanner.scanImage(canvas)
-        .then((result) => {
-          console.log(result);
-          const res = JSON.parse(result);
-          console.log(res);
-          expense(res.teamId);
-        })
-        .catch((error) => console.log(error || "No QR code found."));
+      // QrScanner.scanImage(canvas)
+      //   .then((result) => {
+      //     console.log(result);
+      //     const res = JSON.parse(result);
+      //     console.log(res);
+      //     expense(res.teamId);
+      //   })
+      //   .catch((error) => console.log(error || "No QR code found."));
 
       return () => qrScanner.destroy();
     }
