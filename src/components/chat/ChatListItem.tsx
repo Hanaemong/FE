@@ -65,10 +65,10 @@ const ChatListItem: FC<Iprops> = ({
   }, []);
 
   return (
-    <div className="flex flex-row w-full gap-6" onClick={() => onClickItem()}>
+    <div className="flex flex-row w-full gap-4" onClick={() => onClickItem()}>
       {/* 이미지 영역 */}
       <div className="relative border-[1px] border-hanaPurple rounded-3xl">
-        <img src={image} alt="image" className="size-28 p-2 rounded-3xl" />
+        <img src={image} alt="image" className="size-24 p-2 rounded-3xl" />
         {isNew && (
           <div className="flex absolute right-1 top-1 justify-center items-center w-7 h-7 bg-red-500 text-white rounded-full font-hanaCM">
             N
@@ -79,12 +79,14 @@ const ChatListItem: FC<Iprops> = ({
       <div className="w-3/4 flex flex-col gap-3 py-3">
         <div className="flex flex-row justify-between">
           <div className="flex flex-row gap-2">
-            <p className="font-hanaMedium text-3xl">{title}</p>
+            <p className="font-hanaMedium text-2xl max-w-80 truncate ">
+              {title}
+            </p>
             <p className="font-hanaRegular text-2xl text-hanaPurple opacity-50">
               {member}
             </p>
           </div>
-          <p className="font-hanaMedium text-xl">{chatFormatter(date)}</p>
+          <p className="font-hanaMedium text-lg">{chatFormatter(date)}</p>
         </div>
         <p className="line-clamp-1 w-2/3 text-2xl text-hanaSilver2 font-hanaRegular">
           {lastMsg}
