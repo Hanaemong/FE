@@ -16,4 +16,11 @@ export class chatApi extends ApiClient {
     const response = await this.axiosInstance<ChatType>(`/chat/last/${teamId}`);
     return response;
   }
+
+  async getNickDupl(nickname: string) {
+    const response = await this.axiosInstance<boolean>(
+      `/chat/dupl?nickname=${nickname}`
+    );
+    return response;
+  }
 }

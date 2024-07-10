@@ -7,6 +7,7 @@ import SockJS from "sockjs-client";
 import { timeConvertor } from "../../utils/datetimeFormat";
 import { teamMemberApi } from "../../apis/domains/teamMemberApi";
 import { useLocation } from "react-router-dom";
+import { getCookie } from "../../utils/cookie";
 
 const ChatRoom = () => {
   const location = useLocation();
@@ -80,19 +81,33 @@ const ChatRoom = () => {
       (divRef.current.scrollTop =
         divRef.current.scrollHeight - divRef.current.clientHeight);
     try {
-      teamMemberApi
-        .getInstance()
-        .getMyTeamNickname(locationState.teamId)
-        .then((res) => {
-          setMyNickname(res.data?.nickname!);
-          setMyProfile(res.data?.profile!);
-          chatApi
-            .getInstance()
-            .getChatHistory(locationState.teamId)
-            .then((res) => {
-              setOldMsg(toChatArr(res.data));
-            });
-        });
+      if (
+        getCookie("nickname") == undefined &&
+        getCookie("profile") == undefined
+      ) {
+        teamMemberApi
+          .getInstance()
+          .getMyTeamNickname(locationState.teamId)
+          .then((res) => {
+            setMyNickname(res.data?.nickname!);
+            setMyProfile(res.data?.profile!);
+            chatApi
+              .getInstance()
+              .getChatHistory(locationState.teamId)
+              .then((res) => {
+                setOldMsg(toChatArr(res.data));
+              });
+          });
+      } else {
+        setMyNickname(getCookie("nickname"));
+        setMyProfile(getCookie("profile"));
+        chatApi
+          .getInstance()
+          .getChatHistory(locationState.teamId)
+          .then((res) => {
+            setOldMsg(toChatArr(res.data));
+          });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -159,6 +174,7 @@ const ChatRoom = () => {
         title={locationState.teamName}
         member={locationState.memberCnt}
         teamId={locationState.teamId}
+        isQnA={getCookie("nickname") != undefined}
       />
       <div
         className="flex-grow flex flex-col overflow-auto scrollbar-hide"
@@ -186,7 +202,7 @@ const ChatRoom = () => {
           className={`bg-[#D9D9D9] w-11/12 font-hanaRegular text-xl focus:outline-none py-4 pl-4 pr-14 rounded-3xl overflow-y-hidden`}
         />
         <div
-          className="absolute right-9 text-hanaPurple text-2xl font-hanaMedium"
+          className="absolute right-11 text-hanaPurple text-2xl font-hanaMedium"
           onClick={() => sendHandler()}
         >
           전송

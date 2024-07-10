@@ -17,6 +17,7 @@ import {
   Members,
   My,
   Plan,
+  QnA,
   Qrcode,
   Search,
   Sending,
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
       { path: "sending", element: <Sending /> },
       { path: "create-plan", element: <Plan /> },
       { path: "qrcode", element: <Qrcode /> },
+      { path: "QnA", element: <QnA /> },
       {
         element: <Navbar />,
         children: [
