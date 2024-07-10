@@ -23,7 +23,6 @@ navigator.serviceWorker.register("/firebase-messaging-sw.js", {
 
 export function requestPermission() {
   if (!firebase.messaging.isSupported()) {
-    alert("푸시 알림을 지원하지 않는 기종입니다.");
     return null;
   }
   const messaging = firebase.messaging();
