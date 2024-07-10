@@ -16,3 +16,4 @@ export { default as ChatRoom } from "./team/ChatRoom";
 export { default as Plan } from "./team/Plan";
 export { default as Landing } from "./Landing";
 export { default as Qrcode } from "./team/Qrcode";
+export { default as QnA } from "./QnA";
