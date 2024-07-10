@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Password } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { getCookie, setCookie } from "../../utils/cookie";
@@ -10,7 +10,8 @@ const Login = () => {
   const [confirm, setConfirm] = useState<boolean>(true);
 
   const phone = getCookie("phone");
-  const fcmToken = getCookie("fcmToken");
+  const fcmToken =
+    getCookie("fcmToken") != undefined ? getCookie("fcmToken") : "fcm";
 
   const { mutate: login, data } = useMutation({
     mutationFn: (user: LoginType) => {
@@ -33,6 +34,12 @@ const Login = () => {
   const onPasswordComplete = (password: string) => {
     login({ phone, password, fcmToken });
   };
+
+  useEffect(() => {
+    if (getCookie("fcmToken") == undefined) {
+      setCookie("fcmToken", "fcm");
+    }
+  });
 
   return (
     <section className="min-h-screen">
