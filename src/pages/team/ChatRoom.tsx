@@ -169,7 +169,7 @@ const ChatRoom = () => {
   };
 
   return (
-    <section className="relative flex flex-col h-screen">
+    <section className="relative flex flex-col h-screen border-[1px] border-hanaPurple">
       <ChatTopbar
         title={locationState.teamName}
         member={locationState.memberCnt}
