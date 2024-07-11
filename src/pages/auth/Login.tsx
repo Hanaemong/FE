@@ -11,7 +11,9 @@ const Login = () => {
 
   const phone = getCookie("phone");
   const fcmToken =
-    getCookie("fcmToken") != undefined ? getCookie("fcmToken") : "fcm";
+    getCookie("fcmToken") != undefined && getCookie("fcmToken") != ""
+      ? getCookie("fcmToken")
+      : "fcm";
 
   const { mutate: login, data } = useMutation({
     mutationFn: (user: LoginType) => {

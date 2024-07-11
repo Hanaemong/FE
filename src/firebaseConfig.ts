@@ -35,7 +35,11 @@ export function requestPermission() {
         })
         .then((token: string) => {
           console.log(`푸시 토큰 발급 완료 : ${token}`);
-          setCookie("fcmToken", token);
+          if (token == undefined || token == "" || token == null) {
+            setCookie("fcmToken", "fcm");
+          } else {
+            setCookie("fcmToken", token);
+          }
         })
         .catch((e: any) => {
           console.log("푸시 토큰 가져오는 중에 에러 발생", e);
