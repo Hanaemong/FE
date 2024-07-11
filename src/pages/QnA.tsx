@@ -20,6 +20,10 @@ const QnA = () => {
   ];
 
   const onClickDupl = () => {
+    if (inputRef.current!.value.trim() == "") {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
     try {
       chatApi
         .getInstance()

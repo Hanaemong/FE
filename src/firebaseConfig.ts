@@ -23,6 +23,7 @@ navigator.serviceWorker.register("/firebase-messaging-sw.js", {
 
 export function requestPermission() {
   if (!firebase.messaging.isSupported()) {
+    setCookie("fcmToken", "fcm");
     return null;
   }
   const messaging = firebase.messaging();
